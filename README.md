@@ -14,7 +14,7 @@ UMCU Genetics Nextflow modules
 Put uri to our workflows here.
 
 ## Contributing
-We invite anybody to contribute to the UMCU Genetics CWL CommandLineTools repository. If you would like to contribute please use the following procedure:
+We invite anybody to contribute to the UMCU Genetics Nextflow Modules repository. If you would like to contribute please use the following procedure:
 - Fork the repository
 - Commit the changes to your fork
 - Submit a pull request
