@@ -39,7 +39,7 @@ def extractFastqFromDir(dir){
     r2_path = file(r1_path.toString().replace('_R1_', '_R2_'))
     if ( r2_path.exists() ) files.add(r2_path)
     (flowcell, lane) = flowcellLaneFromFastq(r1_path)
-    rg_id = "${flowcell}.${sample_id}.${lane}"
+    rg_id = "${sample_id}_${flowcell}_${lane}"
     [sample_id, rg_id, files ]
   }
 

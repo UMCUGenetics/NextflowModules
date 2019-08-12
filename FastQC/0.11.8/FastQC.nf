@@ -1,7 +1,8 @@
 
 process FastQC {
-    tag {sample_id + "-" + rg_id}
+    tag {"FastQC ${sample_id} - ${rg_id}"}
     publishDir "$params.out_dir/$sample_id/FastQC", mode: 'copy'
+    container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/fastqc-0.11.5.squashfs'
     cpus 1
     penv 'threaded'
     memory '1 GB'
@@ -14,8 +15,9 @@ process FastQC {
     file "*_fastqc.{zip,html}"
 
     script:
+    
     """
-    $params.fastqc_path --noextract -t ${task.cpus} $fastq
+    fastqc --noextract -t ${task.cpus} $fastq
     """
 
 }
