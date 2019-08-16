@@ -1,10 +1,15 @@
-*Creating (and running) singularity images using GNU guix*
+###Creating (and running) singularity images using GNU guix###
 
-1) guixr pack -f squashfs -S /bin=bin bash fastqc
+1) guixr pack -f squashfs -S /bin=bin <name of tool you need> bash glibc-utf8-locales tzdata coreutils procps grep sed 
 2) Copy *squashfs to appropriate directory (maybe rename)
 3) Add to nextflow.config:
 singularity {
   autoMounts = true
 }
-4) Run nextflow:
-nextflow run whatever.nf -with-singularity singularity-image.squashfs
+4) Add container to process:
+container = '<tool>.squashfs'
+
+
+###Making sure piped command provide the correct exit state upon failure###
+Before every piped command add:
+set -o pipefail
