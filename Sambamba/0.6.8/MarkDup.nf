@@ -6,7 +6,7 @@ process MarkDup {
   cpus 10
   penv 'threaded'
   memory '32 GB'
-  time '18h'
+  time '1h'
 
   input:
     set sample_id, rg_ids, file(bams), file(bais)

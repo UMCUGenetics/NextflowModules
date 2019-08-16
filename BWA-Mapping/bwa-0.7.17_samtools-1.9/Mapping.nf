@@ -1,6 +1,5 @@
 
 
-
 process BWAMapping {
     tag {"BWAMapping ${sample_id} - ${rg_id}"}
     publishDir "$params.out_dir/$sample_id/mapping", mode: 'copy'
@@ -8,7 +7,7 @@ process BWAMapping {
     cpus 12
     penv 'threaded'
     memory '32 GB'
-    time '18h'
+    time '1h'
 
     input:
     set sample_id, rg_id, file(fastq: "*")
@@ -23,7 +22,7 @@ process BWAMapping {
 
     """
     set -o pipefail
-    bwa mem -M -t ${task.cpus} -c 100 -R $bwa_readgroup $params.genome $fastq | \
+    bwa mem -M -t ${task.cpus} -c 100 -R $bwa_readgroup $params.genome_fasta $fastq | \
     samtools sort > ${rg_id}_sorted.bam
     samtools index ${rg_id}_sorted.bam ${rg_id}_sorted.bai
     """

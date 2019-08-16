@@ -15,7 +15,7 @@ process FastQC {
     file "*_fastqc.{zip,html}"
 
     script:
-    
+
     """
     fastqc --noextract -t ${task.cpus} $fastq
     """
