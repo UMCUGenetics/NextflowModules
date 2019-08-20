@@ -17,7 +17,7 @@ process AlignReads {
     file "*SJ.out.tab"
     file "*Log.out" 
 
-    script:
+    shell:
     def barcode = r1_fastqs[1].getName().split('_')[1]
     def r1_fastqs = r1_fastqs.collect{ "$it" }.join(",")
     def r2_fastqs = r2_fastqs.collect{ "$it" }.join(",")
