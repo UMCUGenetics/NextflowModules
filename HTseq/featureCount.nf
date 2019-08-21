@@ -1,20 +1,22 @@
         
 process featureCount {
     tag "featureCount"
-    publishDir "$params.outdir/bla/HTseq", mode: 'copy'
+    publishDir "$params.outdir/${sample}/HTseq", mode: 'copy'
     cpus 2
     penv 'threaded'
-    memory '1 GB'
+    memory '20 GB'
     time '1h'
 
     input:
-    set file(bam:"*")
+    set sample, file(bam)
+    
+	
     output:
-    file "read_counts_raw.txt" 
+    file "${sample}_read_counts_raw.txt" 
 
     shell:
     """
-    $params.sambama view $bam | python -m HTSeq.scripts.count -m union -r pos -s yes -i gene_id - $params.gtf > read_counts_raw.txt;
+    samtools view $bam | python -m HTSeq.scripts.count -m union -r pos -s reverse -i gene_id - $params.gtf > ${sample}_read_counts_raw.txt;
     """
 
 }

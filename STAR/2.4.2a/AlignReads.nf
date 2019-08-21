@@ -3,7 +3,7 @@ process AlignReads {
     publishDir "$params.outdir/$sample/STAR", mode: 'copy'
     cpus 4
     penv 'threaded'
-    memory '40 GB'
+    memory '70 GB'
     time '1h'
 
     input:
@@ -26,14 +26,11 @@ process AlignReads {
     """
     $params.star --runMode alignReads --readFilesIn $r1_fastqs $r2_fastqs \
         --runThreadN $task.cpus \
-        --outFileNamePrefix $sample \
+        --outFileNamePrefix $sample. \
         --genomeDir $index \
         --outSAMtype BAM SortedByCoordinate \
         --readFilesCommand zcat \
         --twopassMode Basic \
-        --outSJfilterIntronMaxVsReadN 10000000 \
-        --chimJunctionOverhangMin 15 \
-        --chimSegmentMin 15 \
         --outSAMattrRGline ID:"${sample}_${barcode}" PL:"ILLUMINA" PU:${barcode} SM:${sample} LB:${sample}
     """
 }
