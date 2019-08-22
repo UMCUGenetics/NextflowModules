@@ -1,7 +1,7 @@
 process AlignReads {
     tag "${sample}_STAR"
     publishDir "$params.outdir/$sample/STAR", mode: 'copy'
-    cpus 4
+    cpus 12
     penv 'threaded'
     memory '70 GB'
     time '1h'
@@ -11,19 +11,18 @@ process AlignReads {
     file(index)
 
     output:
-    file "*Log.final.out"
-    file '*.bam' 
-    file "*.out" 
-    file "*SJ.out.tab"
-    file "*Log.out" 
+    set val(sample), file ("${sample}.Aligned.sortedByCoord.mdup.out.bam" ), file ("${sample}.Aligned.sortedByCoord.mdup.out.bam.bai" ), file ("${sample}.Log.final.out"), file ("${sample}.Log.out"), file ("${sample}.SJ.out.tab"), file ("${sample}.Log.progress.out") 
 
     shell:
-    def barcode = r1_fastqs[1].getName().split('_')[1]
+    def barcode = r1_fastqs[1].simpleName
     def r1_fastqs = r1_fastqs.collect{ "$it" }.join(",")
     def r2_fastqs = r2_fastqs.collect{ "$it" }.join(",")
     
 
     """
+    module load sambamcram/sambamba/0.6.5 
+    module load python/2.7.10  
+    set -o pipefail
     $params.star --runMode alignReads --readFilesIn $r1_fastqs $r2_fastqs \
         --runThreadN $task.cpus \
         --outFileNamePrefix $sample. \
@@ -32,6 +31,10 @@ process AlignReads {
         --readFilesCommand zcat \
         --twopassMode Basic \
         --outSAMattrRGline ID:"${sample}_${barcode}" PL:"ILLUMINA" PU:${barcode} SM:${sample} LB:${sample}
+    
+    sambamba index -p -t $task.cpus ${sample}.Aligned.sortedByCoord.out.bam ${sample}.Aligned.sortedByCoord.out.bam.bai
+    sambamba markdup -p -t $task.cpus ${sample}.Aligned.sortedByCoord.out.bam  ${sample}.Aligned.sortedByCoord.mdup.out.bam
+    sambamba flagstat -p -t $task.cpus ${sample}.Aligned.sortedByCoord.mdup.out.bam
     """
 }
 
