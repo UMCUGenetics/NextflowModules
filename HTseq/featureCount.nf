@@ -16,7 +16,7 @@ process featureCount {
 
     shell:
     """
-    samtools view $bam | python -m HTSeq.scripts.count -m union -r pos -s reverse -i gene_id - $params.gtf > ${sample}_read_counts_raw.txt;
+    $params.sambamba view $bam | python -m HTSeq.scripts.count -m $params.htseq_count_mode -r pos -s $params.htseq_count_strand -i $params.htseq_count_feature - $params.gtf > ${sample}_read_counts_raw.txt;
     """
 
 }
