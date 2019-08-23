@@ -1,20 +1,21 @@
 process featureCount {
     tag "featureCount"
-    publishDir "$params.outdir/${sample}/HTseq", mode: 'copy'
-    cpus 2
+    publishDir "$params.outdir/${sample}/counts", mode: 'copy'
+    cpus 4
     penv 'threaded'
     memory '20 GB'
     time '1h'
 
     input:
-    set sample, file(bam)
+    set val(sample), file(bam)
     
 	
     output:
-    set (file "${sample}_read_counts_raw.txt") 
+    set val(sample), file("${sample}_read_counts_raw.txt") 
 
     shell:
     """
+    set -o pipefail
     module load python/2.7.10  
     module load sambamcram/sambamba/0.6.5 
 
