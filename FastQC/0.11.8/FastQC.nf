@@ -1,22 +1,24 @@
 params.fastqc
 
 process FastQC {
-    tag "${sample}_fastqc"
-    publishDir "$params.outdir/$sample/FastQC", mode: 'copy'
+    container = 'docker://quay.io/biocontainers/fastqc:0.11.8--1'
+    tag {"FastQC ${sample_id} - ${rg_id}"}
+    publishDir "$params.outdir/$sample_id/FastQC", mode: 'copy'
+
     cpus 1
     penv 'threaded'
     memory '1 GB'
     time '1h'
 
     input:
-    set val(sample), file(fastq: "*")
+    set sample_id, rg_id, file(fastq_files: "*")
 
     output:
-    file '*_fastqc.*'
+    file "*_fastqc.{zip,html}"
 
     script:
     """
-    $params.fastqc --noextract -t ${task.cpus} $fastq
+    fastqc --noextract -t ${task.cpus} $fastq_files
     """
 
 }
