@@ -1,7 +1,3 @@
-
-
-
-
 process featureCount {
     tag "featureCount"
     publishDir "$params.outdir/${sample}/HTseq", mode: 'copy'
@@ -15,7 +11,7 @@ process featureCount {
     
 	
     output:
-    file "${sample}_read_counts_raw.txt" 
+    set (file "${sample}_read_counts_raw.txt") 
 
     shell:
     """

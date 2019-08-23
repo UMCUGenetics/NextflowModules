@@ -17,12 +17,11 @@ process AlignReads {
     def barcode = r1_fastqs[1].simpleName
     def r1_fastqs = r1_fastqs.collect{ "$it" }.join(",")
     def r2_fastqs = r2_fastqs.collect{ "$it" }.join(",")
-    
 
     """
+    set -o pipefail
     module load sambamcram/sambamba/0.6.5 
     module load python/2.7.10  
-    set -o pipefail
     $params.star --runMode alignReads --readFilesIn $r1_fastqs $r2_fastqs \
         --runThreadN $task.cpus \
         --outFileNamePrefix $sample. \
@@ -33,8 +32,8 @@ process AlignReads {
         --outSAMattrRGline ID:"${sample}_${barcode}" PL:"ILLUMINA" PU:${barcode} SM:${sample} LB:${sample}
     
     sambamba index -p -t $task.cpus ${sample}.Aligned.sortedByCoord.out.bam ${sample}.Aligned.sortedByCoord.out.bam.bai
-    sambamba markdup -p -t $task.cpus ${sample}.Aligned.sortedByCoord.out.bam  ${sample}.Aligned.sortedByCoord.mdup.out.bam
-    sambamba flagstat -p -t $task.cpus ${sample}.Aligned.sortedByCoord.mdup.out.bam
+    sambamba markdup --tmpdir=\$PWD/tmp --overflow-list-size=${params.sambamba_listsize} -p -t $task.cpus ${sample}.Aligned.sortedByCoord.out.bam  ${sample}.sorted.mdup.bam
+    sambamba flagstat -p -t $task.cpus ${sample}.sorted.mdup.bam
     """
 }
 
