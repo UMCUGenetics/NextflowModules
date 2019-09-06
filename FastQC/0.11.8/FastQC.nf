@@ -1,7 +1,5 @@
-params.fastqc
-
 process FastQC {
-    container = 'docker://quay.io/biocontainers/fastqc:0.11.8--1'
+    container = 'quay.io/biocontainers/fastqc:0.11.8--1'
     tag {"FastQC ${sample_id} - ${rg_id}"}
     publishDir "$params.outdir/$sample_id/FastQC", mode: 'copy'
 
