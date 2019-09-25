@@ -5,8 +5,7 @@ process MEM {
     tag {"BWA MEM ${sample_id} - ${rg_id}"}
     publishDir "$params.outdir/$sample/BWA_MEM", mode: 'copy'
     cpus 1
-    penv 'threaded'
-    memory '1 GB'
+    memory '10 GB'
     time '1h'
 
     input:
