@@ -2,7 +2,7 @@
 
 process BWAMapping {
     tag {"BWAMapping ${sample_id} - ${rg_id}"}
-    publishDir "$params.out_dir/$sample_id/mapping", mode: 'copy'
+    //publishDir "$params.out_dir/$sample_id/mapping", mode: 'copy'
     container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/bwa-0.7.17_samtools-1.9.squashfs'
     cpus 12
     penv 'threaded'

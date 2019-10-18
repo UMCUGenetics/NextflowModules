@@ -10,11 +10,10 @@ process BaseRecalibration {
     time '1h'
 
     input:
-      set sample_id, file(bam), file(bai)
-      file(recal_table)
+      set sample_id, file(bam), file(bai),file(recal_table)
 
     output:
-      set sample_id, file("${sample_id}_dedup_recalibrated.bam")
+      set sample_id, file("${sample_id}_dedup_recalibrated.bam"), file("${sample_id}_dedup_recalibrated.bai")
 
     script:
     intervals = params.genome_intervals ? "-L ${params.genome_intervals} " : ''
