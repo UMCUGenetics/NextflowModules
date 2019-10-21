@@ -12,7 +12,7 @@ include HaplotypeCaller from '../GATK/4.1.3.0/HaplotypeCaller.nf' params(params)
 include SplitIntervals from '../GATK/4.1.3.0/SplitIntervals.nf' params(params)
 include GatherBaseRecalibrationTables from '../GATK/4.1.3.0/GatherBaseRecalibrationTables.nf' params(params)
 include MergeGVCFs from '../GATK/4.1.3.0/MergeGVCFs.nf' params(params)
-
+include GenotypeGVCFs from '../GATK/4.1.3.0/GenotypeGVCFs.nf' params(params)
 
 // Check if all necessary input parameters are present
 if (!params.fastq_path){
@@ -22,8 +22,6 @@ if (!params.fastq_path){
 if (!params.out_dir){
   exit 1, "No 'out_dir' parameter found in config file!"
 }
-
-
 
 input_fastq = extractFastqFromDir(params.fastq_path)
 
@@ -37,3 +35,4 @@ GatherBaseRecalibrationTables(BaseRecalibrationTable.out.groupTuple())
 BaseRecalibration(MarkDup.out.combine(GatherBaseRecalibrationTables.out, by:0).view())
 HaplotypeCaller(BaseRecalibration.out.spread(interval_files))
 MergeGVCFs(HaplotypeCaller.out.groupTuple())
+GenotypeGVCFs(MergeGVCFs.out.collect())
