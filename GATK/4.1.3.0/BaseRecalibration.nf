@@ -1,32 +1,27 @@
 
 
 process BaseRecalibration {
-    tag {"BaseRecalibration ${sample_id}"}
-    container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/gatk4.1.3.0.squashfs'
-    publishDir "$params.out_dir/$sample_id/mapping", mode: 'copy'
-    cpus 10
-    penv 'threaded'
-    memory '32 GB'
-    time '1h'
+    tag {"BaseRecalibration ${sample_id}.${int_tag}"}
+    label 'GATK'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.bqsr_mem }" : ""
 
     input:
-      set sample_id, file(bam), file(bai),file(recal_table)
+      tuple sample_id, file(bam), file(bai),file(recal_table), file(interval_file)
 
     output:
-      set sample_id, file("${sample_id}_dedup_recalibrated.bam"), file("${sample_id}_dedup_recalibrated.bai")
+      tuple sample_id, int_tag, file("${sample_id}.${int_tag}_dedup_recalibrated.bam"), file("${sample_id}.${int_tag}_dedup_recalibrated.bai"), file(interval_file)
 
     script:
-    intervals = params.genome_intervals ? "-L ${params.genome_intervals} " : ''
-
+    int_tag = interval_file.baseName
     """
-    gatk --java-options -Xmx${task.memory.toGiga()}g \
+    gatk --java-options -Xmx${task.memory.toGiga()-4}g \
     ApplyBQSR \
     --input $bam \
-    --output ${sample_id}_dedup_recalibrated.bam \
+    --output ${sample_id}.${int_tag}_dedup_recalibrated.bam \
     --tmp-dir /tmp \
     -R $params.genome_fasta \
     --create-output-bam-index true \
     --bqsr-recal-file ${recal_table} \
-    $intervals
+    -L $interval_file
     """
 }

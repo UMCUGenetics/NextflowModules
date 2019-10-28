@@ -2,18 +2,14 @@
 
 process BWAMapping {
     tag {"BWAMapping ${sample_id} - ${rg_id}"}
-    //publishDir "$params.out_dir/$sample_id/mapping", mode: 'copy'
-    container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/bwa-0.7.17_samtools-1.9.squashfs'
-    cpus 12
-    penv 'threaded'
-    memory '32 GB'
-    time '1h'
+
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.bwa_mem}" : ""
 
     input:
-    set sample_id, rg_id, file(fastq: "*")
+    tuple sample_id, rg_id, file(fastq: "*")
 
     output:
-    set sample_id, rg_id, file("${rg_id}_sorted.bam"),file("${rg_id}_sorted.bai")
+    tuple sample_id, rg_id, file("${rg_id}_sorted.bam"),file("${rg_id}_sorted.bai")
 
     script:
 
