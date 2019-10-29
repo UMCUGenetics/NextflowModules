@@ -1,10 +1,6 @@
 process AlignReads {
     tag "${sample}_STAR"
     publishDir "$params.outdir/$sample/STAR", mode: 'copy'
-    cpus 12
-    penv 'threaded'
-    memory '70 GB'
-    time '1h'
 
     input:
     set val(sample), file(r1_fastqs), file(r2_fastqs)
@@ -24,10 +20,8 @@ process AlignReads {
     def r2_fastqs = r2_fastqs.collect{ "$it" }.join(",")
 
     """
-    set -o pipefail
-    module load sambamcram/sambamba/0.6.5 
     $params.star --runMode alignReads --readFilesIn $r1_fastqs $r2_fastqs \
-        --runThreadN $task.cpus \
+        --runThreadN $params.star_mem \
         --outFileNamePrefix $sample. \
         --genomeDir $index \
         --outSAMtype BAM SortedByCoordinate \
