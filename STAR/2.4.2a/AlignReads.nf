@@ -1,5 +1,5 @@
 process alignReads {
-    tag "${sample}_STAR"
+    tag "${sample}_STAR_alignReads"
     publishDir "$params.outdir/$sample/STAR_alignReads", mode: 'copy'
 
     input:
