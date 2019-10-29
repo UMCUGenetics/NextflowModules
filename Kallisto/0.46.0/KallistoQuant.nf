@@ -1,5 +1,5 @@
         
-process kallisto_quant {
+process Kallisto_quant {
     tag "${sample}_Kallisto_quant"
     publishDir "$params.outdir/$sample/Kallisto_quant", mode: 'copy'
 
@@ -17,7 +17,7 @@ process kallisto_quant {
     cat $r1_fastqs > ${sample}_R1.fq.gz 
     cat $r2_fastqs > ${sample}_R2.fq.gz 
 
-    $params.kallisto quant -i $kallisto_index -t $task.cpus -o kallisto_${sample} ${sample}_R1.fq.gz ${sample}_R2.fq.gz 
+    $params.kallisto quant -i $kallisto_index -t $params.kallisto_cores -o kallisto_${sample} ${sample}_R1.fq.gz ${sample}_R2.fq.gz 
     """
 
 }
