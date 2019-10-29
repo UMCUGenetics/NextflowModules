@@ -1,5 +1,5 @@
         
-process Kallisto_quant {
+process quant {
     tag "${sample}_Kallisto_quant"
     publishDir "$params.outdir/$sample/Kallisto_quant", mode: 'copy'
 
