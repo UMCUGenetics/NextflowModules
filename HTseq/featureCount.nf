@@ -16,10 +16,7 @@ process featureCount {
     shell:
     """
     set -o pipefail
-    module load python/2.7.10  
-    module load sambamcram/sambamba/0.6.5 
-
-    sambamba view $bam | python -m HTSeq.scripts.count -m $params.htseq_count_mode -r pos -s $params.htseq_count_strand -i $params.htseq_count_feature - $params.gtf > ${sample}_read_counts_raw.txt;
+    $params.sambamba view $bam | $params.htseq-count -m $params.htseq_count_mode -r pos -s $params.htseq_count_strand -i $params.htseq_count_feature - $params.gtf > ${sample}_read_counts_raw.txt;
     """
 
 }
