@@ -28,10 +28,6 @@ process alignReads {
         --readFilesCommand zcat \
         --twopassMode Basic \
         --outSAMattrRGline ID:"${sample}_${barcode}" PL:"ILLUMINA" PU:${barcode} SM:${sample} LB:${sample}
-    
-    sambamba index -p -t $task.cpus ${sample}.Aligned.sortedByCoord.out.bam ${sample}.Aligned.sortedByCoord.out.bam.bai
-    sambamba markdup --tmpdir=\$PWD/tmp --overflow-list-size=${params.sambamba_listsize} -p -t $task.cpus ${sample}.Aligned.sortedByCoord.out.bam  ${sample}.sorted.mdup.bam
-    sambamba flagstat -p -t $task.cpus ${sample}.sorted.mdup.bam
     """
 }
 
