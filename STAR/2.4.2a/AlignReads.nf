@@ -1,6 +1,6 @@
 process alignReads {
     tag "${sample}_STAR"
-    publishDir "$params.outdir/$sample/STAR", mode: 'copy'
+    publishDir "$params.outdir/$sample/STAR_alignReads", mode: 'copy'
 
     input:
     set val(sample), file(r1_fastqs), file(r2_fastqs)
