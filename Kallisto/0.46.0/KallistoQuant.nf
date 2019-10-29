@@ -1,12 +1,11 @@
         
 process kallisto_quant {
-    tag "${sample}_Kallisto"
-    publishDir "$params.outdir/$sample/$params.process_outdir", mode: 'copy'
+    tag "${sample}_Kallisto_quant"
     publishDir "$params.outdir/$sample/Kallisto_quant", mode: 'copy'
 
     input:
     set val(sample), file(r1_fastqs), file(r2_fastqs)
-    file index 
+    file(index) 
 
     output:
     file "kallisto_${sample}/abundance.tsv"
