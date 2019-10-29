@@ -1,4 +1,4 @@
-process AlignReads {
+process alignReads {
     tag "${sample}_STAR"
     publishDir "$params.outdir/$sample/STAR", mode: 'copy'
 
