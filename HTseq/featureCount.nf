@@ -1,5 +1,5 @@
-process featureCount {
-    tag "featureCount"
+process htseq-count {
+    tag "${sample}_htseq-count"
     publishDir "$params.outdir/${sample}/counts", mode: 'copy'
     cpus 4
     penv 'threaded'
