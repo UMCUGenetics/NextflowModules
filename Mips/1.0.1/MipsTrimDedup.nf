@@ -5,12 +5,7 @@ params.uuid_read
 
 process MipsTrimDedup {
     tag {"MIPS Trim Dedup ${sample_id} - ${rg_id}"}
-    publishDir "$params.outdir/$sample/MipsTrimDedup", mode: 'copy'
-    cpus 1
-    penv 'threaded'
-    memory '1 GB'
-    time '1h'
-
+    
     input:
     set sample, rg_id, file(r1_fastqs: "*"), file(r2_fastqs: "*")
 

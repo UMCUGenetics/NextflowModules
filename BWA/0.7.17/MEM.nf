@@ -2,11 +2,7 @@ params.genome
 
 process MEM {
     container = 'quay.io/biocontainers/bwa:0.7.17--hed695b0_6'
-    tag {"BWA MEM ${sample_id} - ${rg_id}"}
-    publishDir "$params.outdir/$sample/BWA_MEM", mode: 'copy'
-    cpus 1
-    memory '10 GB'
-    time '1h'
+    tag {"BWAMEM ${sample_id} - ${rg_id}"}
 
     input:
     set sample, rg_id, file(r1_fastq), file(r2_fastq)

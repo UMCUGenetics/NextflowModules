@@ -1,11 +1,7 @@
 process view_sort {
     container = 'quay.io/biocontainers/sambamba:0.7.0--h89e63da_1'
-    tag {"Sambamba View Sort ${sample_id} - ${rg_id}"}
-    publishDir "$params.outdir/$sample/Sambamba_view_sort", mode: 'copy'
-    cpus 1
-    memory '1 GB'
-    time '1h'
-
+    tag {"SambambaViewSort ${sample_id} - ${rg_id}"}
+    
     input:
     set sample, rg_id, file(sam_file)
 
