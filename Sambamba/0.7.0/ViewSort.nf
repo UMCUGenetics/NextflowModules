@@ -1,7 +1,7 @@
-process view_sort {
+process ViewSort {
     container = 'quay.io/biocontainers/sambamba:0.7.0--h89e63da_1'
     tag {"SambambaViewSort ${sample_id} - ${rg_id}"}
-    
+
     input:
     set sample, rg_id, file(sam_file)
 
