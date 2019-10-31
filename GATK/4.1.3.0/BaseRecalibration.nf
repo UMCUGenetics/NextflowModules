@@ -12,7 +12,7 @@ process BaseRecalibration {
       tuple sample_id, int_tag, file("${sample_id}.${int_tag}_dedup_recalibrated.bam"), file("${sample_id}.${int_tag}_dedup_recalibrated.bai"), file(interval_file)
 
     script:
-    int_tag = interval_file.baseName
+    int_tag = interval_file.toRealPath().toString().split("/")[-2]
     """
     gatk --java-options -Xmx${task.memory.toGiga()-4}g \
     ApplyBQSR \

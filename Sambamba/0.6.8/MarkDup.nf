@@ -1,6 +1,6 @@
 
 process MarkDup {
-  tag {"MergeBams ${sample_id}"}
+  tag {"MarkDup ${sample_id}"}
   publishDir "$params.out_dir/$sample_id/mapping", mode: 'copy'
 
   clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.markdup_mem}" : ""
