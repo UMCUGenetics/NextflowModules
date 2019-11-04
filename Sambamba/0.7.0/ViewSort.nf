@@ -3,10 +3,10 @@ process ViewSort {
     tag {"SambambaViewSort ${sample_id} - ${rg_id}"}
 
     input:
-    set sample, rg_id, file(sam_file)
+    set sample_id, rg_id, file(sam_file)
 
     output:
-    set sample, rg_id, file("${rg_id}.sort.bam"), file("${rg_id}.sort.bam.bai")
+    set sample_id, rg_id, file("${rg_id}.sort.bam"), file("${rg_id}.sort.bam.bai")
 
     script:
     """

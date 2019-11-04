@@ -37,11 +37,11 @@ def extractFastqFromDir(dir) {
     .ifEmpty { error "No R1 fastq.gz files found in ${dir}!" }
     .filter { !(it =~ /.*Undetermined.*/) }
     .map { r1_path ->
-        sample = r1_path.getSimpleName().split('_')[0]
+        sample_id = r1_path.getSimpleName().split('_')[0]
         r2_path = file(r1_path.toString().replace('_R1_', '_R2_'))
         if (!r2_path.exists()) error "Path '${r2_path}' not found"
         (flowcell, lane) = flowcellLaneFromFastq(r1_path)
-        rg_id = "${sample}_${flowcell}_${lane}"
-        [sample, rg_id, r1_path, r2_path]
+        rg_id = "${sample_id}_${flowcell}_${lane}"
+        [sample_id, rg_id, r1_path, r2_path]
     }
 }
