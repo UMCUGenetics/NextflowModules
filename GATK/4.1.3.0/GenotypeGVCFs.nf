@@ -14,13 +14,12 @@ process GenotypeGVCFs {
 
 
     """
-    gatk --java-options -Xmx${task.memory.toGiga()-4}g \
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     GenotypeGVCFs \
     -V $gvcf \
     -O ${run_id}.${interval}.vcf \
     -R $params.genome_fasta \
     -D $params.genome_dbsnp \
-    --tmp-dir /tmp \
     -L $interval_file
     """
 }

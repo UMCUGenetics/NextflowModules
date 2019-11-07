@@ -13,7 +13,7 @@ process CombineGVCFs {
 
     """
 
-    gatk --java-options -Xmx${task.memory.toGiga()-4}g \
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     CombineGVCFs \
     -R $params.genome_fasta \
     -V $vcfs \

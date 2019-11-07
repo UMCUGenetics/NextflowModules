@@ -2,7 +2,6 @@ process MergeVCFs {
     tag {"MergeVCFs ${id}"}
     label 'GATK'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mergevcf_mem}" : ""
-    memory params.mergevcf_mem
     
     publishDir "$params.out_dir/vcf/", mode: 'copy'
 
@@ -17,7 +16,7 @@ process MergeVCFs {
     vcfs = vcf_chunks.join(' -INPUT ')
 
     """
-    gatk --java-options -Xmx${task.memory.toGiga()-4}g \
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$PWD" \
     SortVcf \
     --INPUT $vcfs \
     --OUTPUT ${id}${ext}

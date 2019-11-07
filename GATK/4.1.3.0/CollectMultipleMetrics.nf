@@ -14,7 +14,7 @@ process CollectMultipleMetrics {
 
   script:
   """
-  gatk --java-options -Xmx${task.memory.toGiga()-4}g \
+  gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
   CollectMultipleMetrics \
   -I $bam \
   -O multiple_metrics\
@@ -30,11 +30,3 @@ process CollectMultipleMetrics {
 
   """
 }
-//--PROGRAM CollectAlignmentSummaryMetrics \
-//--PROGRAM CollectInsertSizeMetrics \
-//--PROGRAM QualityScoreDistribution \
-//--PROGRAM MeanQualityByCycle \
-//--PROGRAM CollectBaseDistributionByCycle \
-//--PROGRAM CollectGcBiasMetrics \
-//--PROGRAM CollectSequencingArtifactMetrics \
-//--PROGRAM CollectQualityYieldMetrics

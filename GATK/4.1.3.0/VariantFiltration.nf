@@ -17,7 +17,7 @@ process VariantFiltration {
       filter_criteria = "--filter-expression 'QD < 2.0' --filter-expression 'ReadPosRankSum < -20.0' --filter-expression 'FS > 200.0' --filter-name 'INDEL_LowQualityDepth' --filter-name 'INDEL_ReadPosRankSumLow' --filter-name 'INDEL_StrandBias'"
     }
     """
-    gatk --java-options -Xmx${task.memory.toGiga()-4}g \
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     VariantFiltration \
     -R $params.genome_fasta \
     -V $vcf \

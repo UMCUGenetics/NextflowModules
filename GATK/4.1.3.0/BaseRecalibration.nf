@@ -14,11 +14,10 @@ process BaseRecalibration {
     script:
     int_tag = interval_file.toRealPath().toString().split("/")[-2]
     """
-    gatk --java-options -Xmx${task.memory.toGiga()-4}g \
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR"\
     ApplyBQSR \
     --input $bam \
     --output ${sample_id}.${int_tag}_dedup_recalibrated.bam \
-    --tmp-dir /tmp \
     -R $params.genome_fasta \
     --create-output-bam-index true \
     --bqsr-recal-file ${recal_table} \

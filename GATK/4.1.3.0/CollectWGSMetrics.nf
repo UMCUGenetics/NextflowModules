@@ -13,7 +13,7 @@ process CollectWGSMetrics {
 
   script:
   """
-  gatk --java-options -Xmx${task.memory.toGiga()-4}g \
+  gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
   CollectWgsMetrics \
   -I $bam \
   -O wgs_metrics.txt \

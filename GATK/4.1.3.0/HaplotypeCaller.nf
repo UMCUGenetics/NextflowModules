@@ -13,11 +13,10 @@ process HaplotypeCaller {
     int_tag = interval_file.toRealPath().toString().split("/")[-2]
 
     """
-    gatk --java-options -Xmx${task.memory.toGiga()-4}g \
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     HaplotypeCaller \
     -I $bam \
     --output ${sample_id}.${int_tag}.g.vcf \
-    --tmp-dir /tmp \
     -R $params.genome_fasta \
     -ERC GVCF \
     -L $interval_file

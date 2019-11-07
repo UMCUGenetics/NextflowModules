@@ -55,10 +55,10 @@ workflow {
   MarkDup(BWAMapping.out.groupTuple())
 
   /* Run CollectMultipleMetrics per sample */
-  //CollectMultipleMetrics(MarkDup.out.map{ sample_id, bam, bai -> [sample_id, bam]})
+  CollectMultipleMetrics(MarkDup.out.map{ sample_id, bam, bai -> [sample_id, bam]})
 
   /* Run WGSMetrics per sample */
-  //CollectWGSMetrics(MarkDup.out.map{ sample_id, bam, bai -> [sample_id, bam]})
+  CollectWGSMetrics(MarkDup.out.map{ sample_id, bam, bai -> [sample_id, bam]})
 
 
   /* Create base recalibration table per interval per sample*/

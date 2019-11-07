@@ -15,10 +15,9 @@ process GatherBaseRecalibrationTables {
     script:
     tables = bqsr_tables.join(' -I ')
     """
-    gatk --java-options -Xmx${task.memory.toGiga()-4}g \
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     GatherBQSRReports \
     -I $tables \
     --output ${sample_id}.recal.table \
-    --tmp-dir /tmp
     """
 }
