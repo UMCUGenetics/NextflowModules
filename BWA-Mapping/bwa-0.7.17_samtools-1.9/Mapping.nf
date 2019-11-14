@@ -1,9 +1,9 @@
 
 
 process BWAMapping {
-    tag {"BWAMapping ${sample_id} - ${rg_id}"}
-
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.bwa_mem}" : ""
+    tag {"BWA_mem ${sample_id} - ${rg_id}"}
+    label 'BWA_mem_0_7_17'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.bwa.mem}" : ""
 
     input:
     tuple sample_id, rg_id, file(fastq: "*")
@@ -18,7 +18,7 @@ process BWAMapping {
 
     """
     set -o pipefail
-    bwa mem -M -t ${task.cpus} -c 100 -R $bwa_readgroup $params.genome_fasta $fastq | \
+    bwa mem ${params.bwa.toolOptions} -t ${task.cpus} -R $bwa_readgroup $params.genome_fasta $fastq | \
     samtools sort > ${rg_id}_sorted.bam
     samtools index ${rg_id}_sorted.bam ${rg_id}_sorted.bai
     """

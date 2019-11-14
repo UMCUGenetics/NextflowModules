@@ -1,8 +1,10 @@
 
 process BaseRecalibrationTable {
-    tag {"BaseRecalibrationTable ${sample_id}.${int_tag}"}
-    label 'GATK'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.bqsrtable_mem}" : ""
+    tag {"GATK_baserecalibrator ${sample_id}.${int_tag}"}
+    label 'GATK_4_1_3_0'
+    label 'GATK_baserecalibrator_4_1_3_0'
+
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.baserecalibrator.mem}" : ""
 
     input:
       tuple sample_id, file(bam), file(bai), file(interval_file)

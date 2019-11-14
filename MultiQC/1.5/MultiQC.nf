@@ -1,8 +1,8 @@
 
 process MultiQC {
-    tag {"MultiQC ${id}"}
-    publishDir "$params.out_dir/MultiQC", mode: 'copy'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.multiqc_mem}" : ""
+    tag {"MULTIQC ${id}"}
+    label 'MULTIQC_1_5'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.multiqc.mem}" : ""
 
     input:
     val id
@@ -13,6 +13,7 @@ process MultiQC {
 
     script:
     """
-    multiqc $params.out_dir -n ${id}.html --interactive
+    
+    multiqc $params.out_dir -n ${id}.html ${params.multiqc.toolOptions}
     """
 }

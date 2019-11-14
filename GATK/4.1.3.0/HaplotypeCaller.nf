@@ -1,7 +1,8 @@
 process HaplotypeCaller {
-    tag {"HaplotypeCaller ${sample_id}.${int_tag}"}
-    label 'GATK'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.haplotypecaller_mem}" : ""
+    tag {"GATK_haplotypecaller ${sample_id}.${int_tag}"}
+    label 'GATK_4_1_3_0'
+    label 'GATK_haplotypecaller_4_1_3_0'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.haplotypecaller.mem}" : ""
 
     input:
       tuple sample_id, file(bam), file(bai), file(interval_file)
@@ -18,7 +19,7 @@ process HaplotypeCaller {
     -I $bam \
     --output ${sample_id}.${int_tag}.g.vcf \
     -R $params.genome_fasta \
-    -ERC GVCF \
+    ${params.splitintervals.toolOptions} \
     -L $interval_file
     """
 }

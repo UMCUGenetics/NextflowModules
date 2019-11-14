@@ -1,9 +1,9 @@
 
 process CollectWGSMetrics {
-  tag {"CollectWGSMetrics ${sample_id}"}
-  label 'GATK'
-  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.collectwgsmetrics_mem}" : ""
-  publishDir "$params.out_dir/$sample_id/wgs_metrics", mode: 'copy'
+  tag {"GATK_collectwgsmetrics ${sample_id}"}
+  label 'GATK_4_1_3_0'
+  label 'GATK_collectwgsmetrics_4_1_3_0'
+  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.collectwgsmetrics.mem}" : ""
 
   input:
     tuple sample_id, file(bam)

@@ -1,8 +1,9 @@
 
 process VariantFiltration {
-    tag {"VariantFiltration ${run_id}.${interval}.${type}"}
-    label 'GATK'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.variantfiltration_mem}" : ""
+    tag {"GATK_variantfiltration ${run_id}.${interval}.${type}"}
+    label 'GATK_4_1_3_0'
+    label 'GATK_variantfiltration_4_1_3_0'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.variantfiltration.mem}" : ""
 
     input:
       tuple run_id, interval, type, file(vcf), file(vcfidx)

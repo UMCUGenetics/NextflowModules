@@ -1,10 +1,9 @@
 
 process GatherBaseRecalibrationTables {
-    tag {"GatherBaseRecalibrationTables ${sample_id}"}
-    label 'GATK'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.gatherbqsrtables_mem}" : ""
-    publishDir "$params.out_dir/$sample_id/mapping", mode: 'copy'
-
+    tag {"GATK_gatherbaserecalibrator ${sample_id}"}
+    label 'GATK_4_1_3_0'
+    label 'GATK_gatherbaserecalibrator_4_1_3_0'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.gatherbaserecalibrator.mem}" : ""
 
     input:
       tuple sample_id, file(bqsr_tables)

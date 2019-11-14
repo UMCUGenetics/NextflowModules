@@ -1,7 +1,7 @@
 
 process FastQC {
     tag {"FastQC ${sample_id} - ${rg_id}"}
-    publishDir "$params.out_dir/$sample_id/FastQC", mode: 'copy'
+    label 'FASTQC_0_11_8'
 
     input:
     tuple sample_id, rg_id, file(fastq: "*")
@@ -10,9 +10,8 @@ process FastQC {
     file "*_fastqc.{zip,html}"
 
     script:
-
     """
-    fastqc --noextract -t ${task.cpus} $fastq
+    fastqc ${params.fastqc.toolOptions} -t ${task.cpus} $fastq
     """
 
 }

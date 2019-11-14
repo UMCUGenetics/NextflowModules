@@ -1,9 +1,8 @@
 process MergeVCFs {
-    tag {"MergeVCFs ${id}"}
-    label 'GATK'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mergevcf_mem}" : ""
-    
-    publishDir "$params.out_dir/vcf/", mode: 'copy'
+    tag {"GATK_mergevcfs ${id}"}
+    label 'GATK_4_1_3_0'
+    label 'GATK_mergevcfs_4_1_3_0'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mergevcf.mem}" : ""
 
     input:
       tuple id, file(vcf_chunks), file(vcfidxs)

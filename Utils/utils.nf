@@ -42,5 +42,4 @@ def extractFastqFromDir(dir){
     rg_id = "${sample_id}_${flowcell}_${lane}"
     [sample_id, rg_id, files ]
   }
-
 }

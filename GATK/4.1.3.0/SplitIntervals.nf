@@ -1,12 +1,13 @@
 process SplitIntervals {
-    tag {"SplitIntervals"}
-    label 'GATK'
+    tag {"GATK_splitintervals"}
+    label 'GATK_4_1_3_0'
+    label 'GATK_splitintervals_4_1_3_0'
     input:
       val mode
       file(scatter_interval_list)
 
     output:
-      file "temp_*/scattered.interval_list"
+      file("temp_*/scattered.interval_list")
 
     script:
 

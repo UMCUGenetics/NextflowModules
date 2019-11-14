@@ -1,7 +1,8 @@
 process CombineGVCFs {
-    tag {"CombineGVCFs ${run_id}.${interval}"}
-    label 'GATK'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.combinegvcfs_mem}" : ""
+    tag {"GATK_combinegvcfs ${run_id}.${interval}"}
+    label 'GATK_4_1_3_0'
+    label 'GATK_combinegvcfs_4_1_3_0'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.combinegvcfs.mem}" : ""
 
     input:
       tuple run_id, interval, file(gvcf_chunks), file(gvcf_chunk_idxs), file(interval_file)

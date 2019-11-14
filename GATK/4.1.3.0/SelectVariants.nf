@@ -1,7 +1,8 @@
 process SelectVariants {
-    tag {"SelectVariants ${run_id}.${interval}.${type}"}
-    label 'GATK'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.selectvariants_mem}" : ""
+    tag {"GATK_selectvariants ${run_id}.${interval}.${type}"}
+    label 'GATK_4_1_3_0'
+    label 'GATK_selectvariants_4_1_3_0'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.selectvariants.mem}" : ""
 
     input:
       tuple run_id, interval, file(vcf),file(vcfidx),type

@@ -1,10 +1,9 @@
 
 process CollectMultipleMetrics {
-  tag {"CollectMultipleMetrics ${sample_id}"}
-  label 'GATK'
-  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.collectmultiplemetrics_mem}" : ""
-  publishDir "$params.out_dir/$sample_id/multiple_metrics", mode: 'copy'
-
+  tag {"GATK_collectmultiplemetrics ${sample_id}"}
+  label 'GATK_4_1_3_0'
+  label 'GATK_collectmultiplemetrics_4_1_3_0'
+  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.collectmultiplemetrics.mem}" : ""
 
   input:
     tuple sample_id, file(bam)
@@ -19,14 +18,6 @@ process CollectMultipleMetrics {
   -I $bam \
   -O multiple_metrics\
   -R $params.genome_fasta \
-  --PROGRAM CollectAlignmentSummaryMetrics \
-  --PROGRAM CollectInsertSizeMetrics \
-  --PROGRAM QualityScoreDistribution \
-  --PROGRAM MeanQualityByCycle \
-  --PROGRAM CollectBaseDistributionByCycle \
-  --PROGRAM CollectGcBiasMetrics \
-  --PROGRAM CollectSequencingArtifactMetrics \
-  --PROGRAM CollectQualityYieldMetrics
-
+  ${params.collectmultiplemetrics.toolOptions}
   """
 }

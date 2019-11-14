@@ -1,7 +1,7 @@
 
 process MarkDup {
-  tag {"MarkDup ${sample_id}"}
-  publishDir "$params.out_dir/$sample_id/mapping", mode: 'copy'
+  tag {"SAMBAMBA_markdup ${sample_id}"}
+  label 'SAMBAMBA_markdup_0_6_8'
 
   clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.markdup_mem}" : ""
 
@@ -13,7 +13,7 @@ process MarkDup {
 
   script:
   """
-  sambamba markdup --tmpdir=\$PWD/tmp --overflow-list-size=${params.sambamba_listsize} -t ${task.cpus} ${bams} ${sample_id}_dedup.bam
+  sambamba markdup ${params.markdup.toolOptions} --tmpdir=\$PWD/tmp -t ${task.cpus} ${bams} ${sample_id}_dedup.bam
   sambamba index -t ${task.cpus} ${sample_id}_dedup.bam ${sample_id}_dedup.bai
   """
 }

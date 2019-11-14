@@ -1,8 +1,8 @@
 process MergeBams {
-  tag {"MergeBams ${sample_id}"}
-  //publishDir "$params.out_dir/$sample_id/mapping", mode: 'copy'
+  tag {"SAMBAMBA_mergebams ${sample_id}"}
+  label 'SAMBAMBA_mergebams_0_6_8'
 
-  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mergebams_mem}" : ""
+  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mergebams.mem}" : ""
 
   input:
     tuple sample_id, file(bams), file(bais)
@@ -12,7 +12,7 @@ process MergeBams {
 
   script:
   """
-  sambamba merge -t ${task.cpus} ${sample_id}_merge.bam ${bams} 
+  sambamba merge -t ${task.cpus} ${sample_id}_merge.bam ${bams}
   sambamba index -t ${task.cpus} ${sample_id}_merge.bam ${sample_id}_merge.bai
   """
 }
