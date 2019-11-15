@@ -1,22 +1,17 @@
-params.fastqc
 
 process FastQC {
-    tag "${sample}_fastqc"
-    publishDir "$params.outdir/$sample/FastQC", mode: 'copy'
-    cpus 1
-    penv 'threaded'
-    memory '1 GB'
-    time '1h'
+    tag {"FastQC ${sample_id} - ${rg_id}"}
+    label 'FASTQC_0_11_8'
 
     input:
-    set val(sample), file(fastq: "*")
+    tuple sample_id, rg_id, file(fastq: "*")
 
     output:
-    file '*_fastqc.*'
+    file "*_fastqc.{zip,html}"
 
     script:
     """
-    $params.fastqc --noextract -t ${task.cpus} $fastq
+    fastqc ${params.fastqc.toolOptions} -t ${task.cpus} $fastq
     """
 
 }
