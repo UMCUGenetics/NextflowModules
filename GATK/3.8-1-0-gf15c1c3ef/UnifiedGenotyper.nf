@@ -19,6 +19,6 @@ process UnifiedGenotyper {
     def intervals = params.intervals ? "--intervals $params.intervals" : ''
     def dbsnp = params.dbsnp ? "--dbsnp $params.dbsnp" : ''
     """
-    java -jar $params.gatk_path -T UnifiedGenotyper --reference_sequence $params.genome --input_file $input_bam --out ${sample_id}.vcf --output_mode $params.output_mode $intervals $dbsnp
+    java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T UnifiedGenotyper --reference_sequence $params.genome --input_file $input_bam --out ${sample_id}.vcf --output_mode $params.output_mode $intervals $dbsnp
     """
 }
