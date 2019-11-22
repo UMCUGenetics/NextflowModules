@@ -1,10 +1,7 @@
-params.cpus = 1
-params.penv
-
 process FastQC {
     container = 'quay.io/biocontainers/fastqc:0.11.8--1'
     tag {"FastQC ${sample_id} - ${rg_id}"}
-    
+
     input:
     set sample_id, rg_id, file(r1), file(r2)
 

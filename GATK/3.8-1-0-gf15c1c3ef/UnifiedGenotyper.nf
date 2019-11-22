@@ -6,13 +6,8 @@ params.dbsnp = ''
 params.output_mode = 'EMIT_VARIANTS_ONLY'
 
 process UnifiedGenotyper {
-    tag "${sample_id}_gatk_UG"
-    publishDir "$params.outdir/$params.process_outdir", mode: 'copy'
-    cpus 2
-    penv 'threaded'
-    memory '5 GB'
-    time '1h'
-
+    tag "GATKUnifiedGenotyper_${sample_id}"
+    
     input:
     set val(sample_id), file(input_bam), file(input_bai)
 
