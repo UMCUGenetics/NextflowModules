@@ -10,7 +10,7 @@ process UnifiedGenotyper {
     tag "GATKUnifiedGenotyper_${sample_id}"
 
     input:
-    set val(sample_id), file(input_bam), file(input_bai)
+    set val(sample_id), val(rg_id), file(input_bam), file(input_bai)
 
     output:
     set val(sample_id), file("${sample_id}.vcf")
