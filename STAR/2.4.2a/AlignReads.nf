@@ -7,11 +7,12 @@ process alignReads {
     file(index)
 
     output:
-    tuple sample_id,rg_id,file ("${sample_id}Aligned.sortedByCoord.out.bam" )
-    file ("${sample_id}Aligned.sortedByCoord.out.bam.bai" )
-    file ("${sample_id}.Log.final.out")
-    file ("${sample_id}.Log.out")
-    file ("${sample_id}.SJ.out.tab")
+    tuple sample_id, rg_id, 
+    file ("${sample_id}Aligned.sortedByCoord.out.bam" ),
+    file ("${sample_id}Aligned.sortedByCoord.out.bam.bai" ),
+    file ("${sample_id}.Log.final.out"),
+    file ("${sample_id}.Log.out"),
+    file ("${sample_id}.SJ.out.tab"),
     file ("${sample_id}.Log.progress.out") 
 
     shell:
