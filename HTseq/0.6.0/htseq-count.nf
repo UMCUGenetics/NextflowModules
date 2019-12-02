@@ -1,15 +1,16 @@
 process htseq-count {
-    tag "${sample}_htseq-count"
-    publishDir "$params.outdir/${sample}/htseq-count", mode: 'copy'
+    tag {"htseq-count ${sample_id} - ${rg_id}"}
+    label 'htseq-count_0_6_0'  
+
     input:
-    set val(sample), file(bam)
+    tuple sample_id, file(bam_file)
 
     output:
-    set val(sample), file("${sample}_read_counts_raw.txt") 
+    tuple sample_id, file("${sample_id}_read_counts_raw.txt") 
 
     shell:
     """
-    $params.htseq-count -m $params.htseq-count_mode -r pos -s $params.htseq-count_strand -i $params.htseq-count_feature - $params.genome_gtf > ${sample}_read_counts_raw.txt;
+    htseq-count -m $params.htseq-count_mode -r pos -s $params.htseq-count_strandness -i $params.htseq-count_feature -f bam ${bam_file} $params.genome_gtf > ${sample}_read_counts_raw.txt;
     """
 
 }
