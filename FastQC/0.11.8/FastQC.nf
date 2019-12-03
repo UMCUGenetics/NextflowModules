@@ -1,16 +1,17 @@
+
 process FastQC {
-    container = 'quay.io/biocontainers/fastqc:0.11.8--1'
     tag {"FastQC ${sample_id} - ${rg_id}"}
+    label 'FASTQC_0_11_8'
 
     input:
-    set sample_id, rg_id, file(r1), file(r2)
+    tuple sample_id, rg_id, file(fastq: "*")
 
     output:
     file "*_fastqc.{zip,html}"
 
     script:
     """
-    fastqc --noextract -t ${task.cpus} $r1 $r2
+    fastqc ${params.fastqc.toolOptions} -t ${task.cpus} $fastq
     """
 
 }
