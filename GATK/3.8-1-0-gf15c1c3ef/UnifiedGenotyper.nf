@@ -1,5 +1,4 @@
-params.process_outdir = 'UnifiedGenotyper'
-params.gatk
+params.gatk_path
 params.genome
 params.intervals = ''
 params.dbsnp = ''
