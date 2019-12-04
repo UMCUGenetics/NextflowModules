@@ -22,7 +22,8 @@ We invite anybody to contribute to the UMCU Genetics Nextflow Modules repository
 The pull request will be reviewed and included as fast as possible.
 
 ### Coding guidelines
-- Use the `tool/version/command.nf` folder structure of this repository.
+See `utils/template.nf` for a process template which uses the following guidelines.
+- Use the `Tool/version/Command.nf` folder structure of this repository.
 - Use the original tool version numbering
 - Use CamelCase for tool, command and process names
 - Use lowercase with words separated by underscores for params, inputs, outputs and scripts.
@@ -30,13 +31,16 @@ The pull request will be reviewed and included as fast as possible.
 - Use the following patterns for optional input (parameters) and output :
     - Input: https://github.com/nextflow-io/patterns/blob/master/docs/optional-input.adoc
     - Output: https://github.com/nextflow-io/patterns/blob/master/docs/optional-output.adoc
-- Define a label for each process, containing toolname and version seperated by a underscore.
-    - FastQC_0.11.8
-- Define a tag to each process, containing toolname, sample_id and/or rg_id.
-    - {"FastQC ${sample_id} - ${rg_id}"}
+- Define two labels for each process, containing toolname, version and command separated by an underscore.
+    - BWA_0.7.17
+    - BWA_0.7.17_MEM
+- Define a tag to each process, containing toolname, command, sample_id and/or rg_id.
+    - {"BWA MEM ${sample_id} - ${rg_id}"}
 - Set a (hosted) container for each process.
 - Add 'set -euo pipefail' to each process.
-    - ```shell = ['/bin/bash', '-euo', 'pipefail']```
+    - `shell = ['/bin/bash', '-euo', 'pipefail']`
+- Do not define any runtime settings like cpus, memory and time.
+-
 
 ## GUIX
 Creating squashfs immage
