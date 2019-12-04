@@ -43,7 +43,36 @@ See `utils/template.nf` for a process template which uses the following guidelin
 -
 
 ## GUIX
-Creating squashfs immage
+1. Creating squashfs immage
 ```bash
 guixr pack -f squashfs -RR -S /bin=bin <name of tool you need> bash glibc-utf8-locales tzdata coreutils procps grep sed bootstrap-binaries
+```
+2. Copy .squashfs to appropriate directory and rename `<Tool>_<version>.squashfs`.
+3. Add container to process: `container = '<Tool>_<version>.squashfs'`
+
+## Nextflow config for Utrecht HPC
+```
+profiles {
+    sge {
+        process {
+            executor = 'sge'
+            queue = 'all.q'
+            errorStrategy = 'finish'
+        }
+    }
+    slurm {
+        process {
+            executor = 'slurm'
+            queue = 'cpu'
+            errorStrategy = 'finish'
+        }
+    }
+}
+
+singularity {
+    enabled = true
+    runOptions = '-B /hpc:/hpc -B $TMPDIR:$TMPDIR'
+    autoMounts = true
+}
+
 ```
