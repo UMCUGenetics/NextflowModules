@@ -1,5 +1,5 @@
 params.bwa.mem.genome
-params.bwa.mem.optional = ''
+params.bwa.mem.optional
 
 process MEM {
     tag {"BWA MEM ${sample_id} - ${rg_id}"}
