@@ -5,8 +5,8 @@ params.mips.trim_dedup.uuid_read
 
 process MipsTrimDedup {
     tag {"MIPS TrimDedup ${sample_id} - ${rg_id}"}
-    label 'MIPS_1.0.1'
-    label 'MIPS_1.0.1_TrimDedup'
+    label 'MIPS_1_0_1'
+    label 'MIPS_1_0_1_TrimDedup'
     // container = 'container_url' not available
     shell = ['/bin/bash', '-euo', 'pipefail']
 

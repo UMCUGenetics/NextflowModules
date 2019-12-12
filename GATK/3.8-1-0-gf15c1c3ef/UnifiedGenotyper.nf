@@ -6,8 +6,8 @@ params.gatk.unified_genotyper.output_mode = 'EMIT_VARIANTS_ONLY'
 
 process UnifiedGenotyper {
     tag {"GATK UnifiedGenotyper ${sample_id} - ${rg_id}"}
-    label 'GATK_3.8-1-0-gf15c1c3ef'
-    label 'GATK_3.8-1-0-gf15c1c3ef_UnifiedGenotyper'
+    label 'GATK_3_8_1_0_gf15c1c3ef'
+    label 'GATK_3_8_1_0_gf15c1c3ef_UnifiedGenotyper'
     container = 'quay.io/biocontainers/gatk:3.8--py27_1'
     shell = ['/bin/bash', '-euo', 'pipefail']
 

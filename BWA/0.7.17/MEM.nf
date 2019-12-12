@@ -3,8 +3,8 @@ params.bwa.mem.optional = ''
 
 process MEM {
     tag {"BWA MEM ${sample_id} - ${rg_id}"}
-    label 'BWA_0.7.17'
-    label 'BWA_0.7.17_MEM'
+    label 'BWA_0_7_17'
+    label 'BWA_0_7_17_MEM'
     container = 'quay.io/biocontainers/bwa:0.7.17--hed695b0_6'
     shell = ['/bin/bash', '-euo', 'pipefail']
 

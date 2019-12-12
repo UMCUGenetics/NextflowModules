@@ -2,7 +2,7 @@ params.fastqc.optional = ''
 
 process FastQC {
     tag {"FastQC ${sample_id} - ${rg_id}"}
-    label 'FASTQC_0.11.8'
+    label 'FASTQC_0_11_8'
     container = 'quay.io/biocontainers/fastqc:0.11.8--1'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
