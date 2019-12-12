@@ -1,23 +1,27 @@
-params.gatk_path
-params.genome
-params.intervals = ''
-params.dbsnp = ''
-params.output_mode = 'EMIT_VARIANTS_ONLY'
+params.gatk.path
+params.gatk.genome
+params.gatk.unified_genotyper.intervals = ''
+params.gatk.unified_genotyper.dbsnp = ''
+params.gatk.unified_genotyper.output_mode = 'EMIT_VARIANTS_ONLY'
 
 process UnifiedGenotyper {
+    tag {"GATK UnifiedGenotyper ${sample_id} - ${rg_id}"}
+    label 'GATK_3.8-1-0-gf15c1c3ef'
+    label 'GATK_3.8-1-0-gf15c1c3ef_UnifiedGenotyper'
     container = 'quay.io/biocontainers/gatk:3.8--py27_1'
-    tag "GATKUnifiedGenotyper_${sample_id}"
+    shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    set val(sample_id), val(rg_id), file(input_bam), file(input_bai)
+    tuple val(sample_id), val(rg_id), file(input_bam), file(input_bai)
 
     output:
-    set val(sample_id), file("${sample_id}.vcf")
+    tuple val(sample_id), file("${sample_id}.vcf")
 
     script:
-    def intervals = params.intervals ? "--intervals $params.intervals" : ''
-    def dbsnp = params.dbsnp ? "--dbsnp $params.dbsnp" : ''
+    def intervals = params.gatk.unified_genotyper.intervals ? "--intervals $params.gatk.unified_genotyper.intervals" : ''
+    def dbsnp = params.gatk.unified_genotyper.dbsnp ? "--dbsnp $params.gatk.unified_genotyper.dbsnp" : ''
+
     """
-    java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T UnifiedGenotyper --reference_sequence $params.genome --input_file $input_bam --out ${sample_id}.vcf --output_mode $params.output_mode $intervals $dbsnp
+    java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk.path -T UnifiedGenotyper --reference_sequence $params.gatk.genome --input_file $input_bam --out ${sample_id}.vcf --output_mode $params.gatk.unified_genotyper.output_mode $intervals $dbsnp
     """
 }

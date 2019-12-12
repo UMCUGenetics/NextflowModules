@@ -1,16 +1,20 @@
-params.mips_trim_dedup
-params.design_file
-params.uuid_length
-params.uuid_read
+params.mips.trim_dedup.path
+params.mips.trim_dedup.design_file
+params.mips.trim_dedup.uuid_length
+params.mips.trim_dedup.uuid_read
 
 process MipsTrimDedup {
-    tag {"MIPS Trim Dedup ${sample_id} - ${rg_id}"}
+    tag {"MIPS TrimDedup ${sample_id} - ${rg_id}"}
+    label 'MIPS_1.0.1'
+    label 'MIPS_1.0.1_TrimDedup'
+    // container = 'container_url' not available
+    shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    set sample_id, rg_id, file(r1_fastqs: "*"), file(r2_fastqs: "*")
+    tuple sample_id, rg_id, file(r1_fastqs: "*"), file(r2_fastqs: "*")
 
     output:
-    set sample_id, rg_id, file('*_LMergedTrimmedDedup_R1_*.fastq.gz'), file('*_LMergedTrimmedDedup_R2_*.fastq.gz')
+    tuple sample_id, rg_id, file('*_LMergedTrimmedDedup_R1_*.fastq.gz'), file('*_LMergedTrimmedDedup_R2_*.fastq.gz')
 
     script:
     def r1_args = r1_fastqs.collect{ "$it" }.join(" ")
@@ -19,6 +23,6 @@ process MipsTrimDedup {
     rg_id = "${sample_id}_MergedTrimmedDedup"
 
     """
-    python $params.mips_trim_dedup -d $params.design_file -r1 $r1_args -r2 $r2_args -l $params.uuid_length -ur $params.uuid_read > output.log 2> output.err
+    python $params.mips.trim_dedup.path -d $params.mips.trim_dedup.design_file  -l $params.mips.trim_dedup.uuid_length -ur $params.mips.trim_dedup.uuid_read -r1 $r1_args -r2 $r2_args > output.log 2> output.err
     """
 }
