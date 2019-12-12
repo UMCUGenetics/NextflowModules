@@ -1,4 +1,4 @@
-params.tool.command.optional = ''
+params.tool.command.optional
 
 process Command {
     tag {"Tool Command ${sample_id} - ${rg_id}"}
