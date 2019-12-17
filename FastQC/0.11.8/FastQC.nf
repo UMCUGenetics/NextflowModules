@@ -7,13 +7,13 @@ process FastQC {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, file(r1_fastq), file(r2_fastq)
+    tuple sample_id, rg_id, file(fastq: "*")
 
     output:
     file "*_fastqc.{zip,html}"
 
     script:
     """
-    fastqc ${params.fastqc.optional} -t ${task.cpus} $r1_fastq $r2_fastq
+    fastqc ${params.fastqc.optional} -t ${task.cpus} $fastq
     """
 }
