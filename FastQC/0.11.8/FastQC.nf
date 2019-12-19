@@ -1,7 +1,10 @@
+params.fastqc.optional
 
 process FastQC {
     tag {"FastQC ${sample_id} - ${rg_id}"}
     label 'FASTQC_0_11_8'
+    container = 'quay.io/biocontainers/fastqc:0.11.8--1'
+    shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
     tuple sample_id, rg_id, file(fastq: "*")
@@ -11,7 +14,6 @@ process FastQC {
 
     script:
     """
-    fastqc ${params.fastqc.toolOptions} -t ${task.cpus} $fastq
+    fastqc ${params.fastqc.optional} -t ${task.cpus} $fastq
     """
-
 }
