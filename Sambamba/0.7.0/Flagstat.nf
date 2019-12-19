@@ -9,7 +9,7 @@ process Flagstat {
     tuple sample_id, rg_id, file(bam_file)
 
     output:
-    tuple sample_id, rg_id, file("${bam_file.baseName}.flagstat")
+    file("${bam_file.baseName}.flagstat")
 
     script:
     """

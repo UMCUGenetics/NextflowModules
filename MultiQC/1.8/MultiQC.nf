@@ -15,6 +15,6 @@ process MultiQC {
 
     script:
     """
-    multiqc ${params.fastqc.optional} .
+    multiqc ${params.multiqc.optional} .
     """
 }
