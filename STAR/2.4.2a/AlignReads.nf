@@ -1,5 +1,3 @@
-nextflow.preview.dsl=2
-
 process alignReads {
     tag {"STAR alignReads ${sample_id} - ${rg_id}"}
     label 'STAR_2_4_2a'
