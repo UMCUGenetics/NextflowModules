@@ -7,13 +7,13 @@ process htseqcount {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(bam_file)
+    tuple sample_id, file(sam_file)
 
     output:
     tuple sample_id, file("${sample_id}_read_counts_raw.txt") 
 
     shell:
     """
-    sambamba view ${bam_file} | python -m HTSeq.scripts.count -m $params.htseq_mode -r pos -s $params.htseq_strandness -i $params.htseq_feature - $params.genome_gtf > ${sample_id}_read_counts_raw.txt;
+    htseq-count -m $params.htseq_mode -r pos -s $params.htseq_strandness -i $params.htseq_feature -f $params.htseqsam_format ${sam_file} $params.genome_gtf > ${sample_id}_read_counts_raw.txt;
     """
 }
