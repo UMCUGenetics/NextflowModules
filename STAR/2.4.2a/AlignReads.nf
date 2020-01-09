@@ -11,7 +11,10 @@ process alignReads {
     file(star_index)
 
     output:
-    tuple sample_id, rg_id, file("${rg_id}.Aligned.sortedByCoord.out.bam" ),file("${rg_id}.Log.final.out"), file("${rg_id}.Log.out"), file("${rg_id}.SJ.out.tab")
+    tuple sample_id, rg_id, file("${rg_id}.Aligned.sortedByCoord.out.bam" )
+    file("${rg_id}.Log.final.out")
+    file("${rg_id}.Log.out")
+    file("${rg_id}.SJ.out.tab")
     
     script:
     def barcode = rg_id.split('_')[1]
