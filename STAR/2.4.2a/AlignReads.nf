@@ -24,9 +24,9 @@ process alignReads {
         --runThreadN ${task.cpus} \
         --outFileNamePrefix $rg_id. \
         --genomeDir $star_index \
-        --outSAMtype BAM SortedByCoordinate \
+        --outSAMtype $params.star_sam_type \
         --readFilesCommand zcat \
-        --twopassMode Basic \
+        --twopassMode $params.star_mode \
         --outSAMattrRGline ID:"${rg_id}" PL:"ILLUMINA" PU:"${barcode}" SM:"${sample_id}" LB:"${sample_id}"
     """
 }
