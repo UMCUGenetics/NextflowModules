@@ -8,7 +8,7 @@ process alignReads {
 
     input:
     tuple sample_id, rg_id, file(fastqs: "*") 
-    file(index)
+    file(star_index)
 
     output:
     tuple sample_id, rg_id, file("${rg_id}.Aligned.sortedByCoord.out.bam" ),file("${rg_id}.Log.final.out"), file("${rg_id}.Log.out"), file("${rg_id}.SJ.out.tab")
@@ -20,7 +20,7 @@ process alignReads {
     STAR --runMode alignReads --readFilesIn $fastqs \
         --runThreadN ${task.cpus} \
         --outFileNamePrefix $rg_id. \
-        --genomeDir $index \
+        --genomeDir $star_index \
         --outSAMtype BAM SortedByCoordinate \
         --readFilesCommand zcat \
         --twopassMode Basic \
