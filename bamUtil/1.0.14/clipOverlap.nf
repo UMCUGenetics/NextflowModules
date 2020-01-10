@@ -2,7 +2,7 @@ process clipOverlap {
     tag {"bamUtil clipOverlap ${sample_id} - ${rg_id}"}
     label 'bamUtil_1_0_14'
     label 'bamUtil_1_0_14_clipOverlap'
-    container = ''
+    container = 'quay.io/biocontainers/bamutil:1.0.14--h635df5c_3'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
