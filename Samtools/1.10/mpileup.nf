@@ -13,6 +13,6 @@ process Mpileup {
 
     script:
     """
-    samtools mpileup ${params.samtools.mpileup.toolOptions} -f $params.samtools.mpileup.genome $bam_file > ${bam_file.baseName}.mpileup
+    samtools mpileup $params.samtools.mpileup.optional -f $params.samtools.mpileup.genome $bam_file > ${bam_file.baseName}.mpileup
     """
 }
