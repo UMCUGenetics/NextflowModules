@@ -2,28 +2,32 @@ process alignReads {
     tag {"STAR alignReads ${sample_id} - ${rg_id}"}
     label 'STAR_2_4_2a'
     label 'STAR_2_4_2a_alignReads'
-    container = '/hpc/cog_bioinf/ubec/tools/rnaseq_containers/star_2_4_2a-squashfs-pack.gz.squashfs'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.star_mem}" : ""
+    container = '/hpc/cog_bioinf/ubec/tools/rnaseq_containers/star-2.4.2a-squashfs-pack.gz.squashfs'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, file(fastqs: "*") 
-    file(star_index)
+    tuple sample_id, rg_id, file(fastqs) 
+    file(genomeDir)
 
     output:
-    tuple sample_id, rg_id, file("${rg_id}.Aligned.sortedByCoord.out.bam" ), file("${rg_id}.Log.final.out"), file("${rg_id}.Log.out"), file("${rg_id}.SJ.out.tab")
+    tuple sample_id, rg_id, file("*.bam" ), file("${rg_id}.Log.final.out"), file("${rg_id}.Log.out"), file("${rg_id}.SJ.out.tab")
     
     script:
-    def barcode = rg_id.split('_')[1]
-
+    def barcode = rg_id.split('_')[1]	
+    
     """
-    STAR --runMode alignReads --readFilesIn $fastqs \
-        --runThreadN ${task.cpus} \
-        --outFileNamePrefix $rg_id. \
-        --genomeDir $star_index \
-        --outSAMtype $params.star_sam_type \
-        --readFilesCommand zcat \
-        --twopassMode $params.star_mode \
-        --outSAMattrRGline ID:"${rg_id}" PL:"ILLUMINA" PU:"${barcode}" SM:"${sample_id}" LB:"${sample_id}"
+    STAR --runMode alignReads --genomeDir $genomeDir \
+    --readFilesIn $fastqs \
+    --readFilesCommand zcat \
+    --runThreadN ${task.cpus} \
+    --outFilterType BySJout \
+    --alignSJoverhangMin 8 \
+    --alignSJDBoverhangMin 1 \
+    --outFilterMismatchNmax 999 \
+    --outSAMtype BAM SortedByCoordinate \
+    --outFileNamePrefix ${rg_id}. \
+    --twopassMode Basic \
+    --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"    
     """
 }
