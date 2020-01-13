@@ -7,7 +7,7 @@ process htseqcount {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(sam_file)
+    tuple sample_id, file(sam_file), file(sam_index)
 
     output:
     tuple sample_id, file("${sample_id}_read_counts_raw.txt") 
