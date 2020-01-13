@@ -21,11 +21,8 @@ process alignReads {
     --readFilesIn $fastqs \
     --readFilesCommand zcat \
     --runThreadN ${task.cpus} \
-    --outFilterType BySJout \
-    --alignSJoverhangMin $params.star_SJoverhangMin \
-    --alignSJDBoverhangMin $params.star_SJDBoverhangMin \
-    --outFilterMismatchNmax $params.star_outFilterMismatchNmax \
     --outSAMtype BAM SortedByCoordinate \
+    --outReadsUnmapped Fastx \
     --outFileNamePrefix ${rg_id}. \
     --twopassMode $params.star_twopassMode \
     --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"    
