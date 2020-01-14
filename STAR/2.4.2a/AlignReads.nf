@@ -11,8 +11,9 @@ process alignReads {
     file(genomeDir)
 
     output:
-    tuple sample_id, rg_id, file("*.bam" ), file("${rg_id}.Log.final.out"), file("${rg_id}.Log.out"), file("${rg_id}.SJ.out.tab")
-    
+    tuple sample_id, rg_id, file("*.bam" ), file("*Unmapped*"), file("*Log.final.out"), file("*Log.out"), file("*SJ.out.tab")
+     
+   
     script:
     def barcode = rg_id.split('_')[1]	
     def reads_r1 = r1_fastqs.collect{ "$it" }.join(",") 
@@ -25,7 +26,7 @@ process alignReads {
     --runThreadN ${task.cpus} \
     --outSAMtype BAM SortedByCoordinate \
     --outReadsUnmapped Fastx \
-    --outFileNamePrefix ${rg_id}. \
+    --outFileNamePrefix ${sample_id}. \
     --twopassMode $params.star_twopassMode \
     --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"
     """
