@@ -25,7 +25,7 @@ process alignReads {
          arg_2 = String.join(",", r2_fastqs.collect{ "$it" }.join(","));
     }
 
-    def read_args = mode != 'SE' ? "--readFilesIn $arg_1 $arg_2" : '--readFilesIn $arg_1'   
+    def read_args = mode != 'SE' ? "--readFilesIn $arg_1 $arg_2" :"--readFilesIn $arg_1"   
     
     """
     STAR --runMode alignReads --genomeDir $genomeDir $read_args \
