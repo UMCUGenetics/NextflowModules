@@ -7,7 +7,7 @@ process alignReads {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, file(fastqs) 
+    tuple sample_id, rg_id, file(r1_fastqs), file(r2_fastqs)
     file(genomeDir)
 
     output:
@@ -15,16 +15,19 @@ process alignReads {
     
     script:
     def barcode = rg_id.split('_')[1]	
-    
+    def reads_r1 = r1_fastqs.collect{ "$it" }.join(",") 
+    def reads_r2 = r2_fastqs.collect{ "$it" }.join(",")
+
     """
     STAR --runMode alignReads --genomeDir $genomeDir \
-    --readFilesIn $fastqs \
+    --readFilesIn $reads_r1 $reads_r2 \
     --readFilesCommand zcat \
     --runThreadN ${task.cpus} \
     --outSAMtype BAM SortedByCoordinate \
     --outReadsUnmapped Fastx \
     --outFileNamePrefix ${rg_id}. \
     --twopassMode $params.star_twopassMode \
-    --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"    
+    --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"
     """
+      
 }
