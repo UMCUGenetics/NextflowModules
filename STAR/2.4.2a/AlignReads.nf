@@ -17,32 +17,27 @@ process alignReads {
    
     script:
     def barcode = rg_id.split('_')[1]	
-    def reads_r1 = r1_fastqs.collect{ "$it" }.join(",")
-    def reads_r2 = r2_fastqs.collect{ "$it" }.join(",")
+    String arg_1 = String.join(",", r1_fastqs.collect{ "$it" }.join(","));
+    String arg_2 = ""
+     
     def mode = "${params.endness}"
-    if ( mode.toUpperCase() == "SE") {
-       """
-       STAR --runMode alignReads --genomeDir $genomeDir --readFilesIn $reads_r1 \
-       --readFilesCommand zcat \
-       --runThreadN ${task.cpus} \
-       --outSAMtype BAM SortedByCoordinate \
-       --outReadsUnmapped Fastx \
-       --outFileNamePrefix ${sample_id}. \
-       --twopassMode $params.star_twopassMode \
-       --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"
-       """
-    } else {
-       """
-       STAR --runMode alignReads --genomeDir $genomeDir --readFilesIn $reads_r1 $reads_r2 \
-       --readFilesCommand zcat \
-       --runThreadN ${task.cpus} \
-       --outSAMtype BAM SortedByCoordinate \
-       --outReadsUnmapped Fastx \
-       --outFileNamePrefix ${sample_id}. \
-       --twopassMode $params.star_twopassMode \
-       --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"
-       """
-      }  
+    if ( mode.toUpperCase() == "PE" ){
+         arg_2 = String.join(",", r2_fastqs.collect{ "$it" }.join(","));
+    }
+
+    def read_args = mode != 'SE' ? "--readFilesIn $arg_1 $arg_2" : '--readFilesIn $arg_1'   
+    
+    """
+    STAR --runMode alignReads --genomeDir $genomeDir $read_args \
+    --readFilesCommand zcat \
+    --runThreadN ${task.cpus} \
+    --outSAMtype BAM SortedByCoordinate \
+    --outReadsUnmapped Fastx \
+    --outFileNamePrefix ${sample_id}. \
+    --twopassMode $params.star_twopassMode \
+    --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"
+    """
+     
 }
 
 
