@@ -10,7 +10,7 @@ process Mpileup_bcf {
     tuple sample_id, file(bam_file), file(bai_file)
 
     output:
-    tuple sample_id, file(mpileup_file)
+    tuple sample_id, file("${bam_file.baseName}.bcf")
 
     script:
     """

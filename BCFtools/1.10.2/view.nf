@@ -10,10 +10,10 @@ process View_bcf_vcf {
     tuple sample_id, file(bcf_file)
 
     output:
-    tuple sample_id, file(vcf_file)
+    tuple sample_id, file("${bcf_file.baseName}.vcf")
 
     script:
     """
-    bcftools view $params.bcftools.view.optional $bcf_file > $vcf_file
+    bcftools view $params.bcftools.view.optional $bcf_file > file("${bcf_file.baseName}.vcf")
     """
 }
