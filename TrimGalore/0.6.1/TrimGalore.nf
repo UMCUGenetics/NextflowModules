@@ -12,7 +12,7 @@ process TrimGalore {
 
     script:
     def mode = "${params.endness}"
-    def paired = mode != 'SE' ? "--paired" :""   	
+    def paired = !params.singleEnd ? "--paired" :""   	
     """
     trim_galore $fastqs $paired --fastqc --gzip $paired
     """

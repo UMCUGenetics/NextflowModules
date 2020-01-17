@@ -20,12 +20,11 @@ process alignReads {
     String arg_1 = String.join(",", r1_fastqs.collect{ "$it" }.join(","));
     String arg_2 = ""
      
-    def mode = "${params.endness}"
-    if ( mode.toUpperCase() == "PE" ){
+    if ( !params.singleEnd ){
          arg_2 = String.join(",", r2_fastqs.collect{ "$it" }.join(","));
     }
 
-    def read_args = mode != 'SE' ? "--readFilesIn $arg_1 $arg_2" :"--readFilesIn $arg_1"   
+    def read_args = !params.singleEnd ? "--readFilesIn $arg_1 $arg_2" :"--readFilesIn $arg_1"   
     
     """
     STAR --runMode alignReads --genomeDir $genomeDir $read_args \
