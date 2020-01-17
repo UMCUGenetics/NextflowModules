@@ -11,7 +11,6 @@ process TrimGalore {
     tuple sample_id, rg_id, file("*fq.gz"), file("*trimming_report.txt"), file( "*_fastqc.{zip,html}") 
 
     script:
-    def mode = "${params.endness}"
     def paired = !params.singleEnd ? "--paired" :""   	
     """
     trim_galore $fastqs $paired --fastqc --gzip $paired
