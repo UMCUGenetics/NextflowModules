@@ -1,6 +1,7 @@
  process preseq {
       tag {"Preseq ${sample_id} "}
       label 'Preseq_4_0_0'
+      clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.preseq_mem}" : ""
       container = '/hpc/cog_bioinf/ubec/tools/rnaseq_containers/preseq_4.0.0-squashfs-pack.gz.squashfs'
       shell = ['/bin/bash', '-euo', 'pipefail']
 
