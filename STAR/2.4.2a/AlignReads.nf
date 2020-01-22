@@ -3,7 +3,6 @@ process alignReads {
     label 'STAR_2_4_2a'
     label 'STAR_2_4_2a_alignReads'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.star_mem}" : ""
-    container = '/hpc/cog_bioinf/ubec/tools/rnaseq_containers/star-2.4.2a-squashfs-pack.gz.squashfs'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:

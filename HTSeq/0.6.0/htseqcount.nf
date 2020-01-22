@@ -2,7 +2,6 @@ process htseqcount {
     tag {"htseq-count ${sample_id}"}
     label 'HTSeq_0_6_0'
     label 'htseq_count_0_6_0'
-    container = "/hpc/cog_bioinf/ubec/tools/rnaseq_containers/htseq_0.6.0-squashfs-pack.gz.squashfs" 
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.htseq_mem}" : ""
     shell = ['/bin/bash', '-euo', 'pipefail']
 

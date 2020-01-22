@@ -3,7 +3,6 @@ process RSeQC {
     tag {"RSeQC ${sample_id}"}
     label 'RSeQC_2_6_1'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.rseqc_mem}" : ""
-    container = '/hpc/cog_bioinf/ubec/tools/rnaseq_containers/rseqc_2.6.1_R_3.6.1-squashfs-pack.gz.squashfs'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
