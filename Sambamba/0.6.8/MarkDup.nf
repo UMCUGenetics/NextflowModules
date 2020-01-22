@@ -6,14 +6,14 @@ process MarkDup {
   shell = ['/bin/bash', '-euo', 'pipefail']
 
   input:
-    tuple sample_id, file(bam_input), file(bai_input)
+    tuple sample_id, file(bams), file(bais)
 
   output:
-    tuple sample_id, file("${bam_input.baseName}_dedup.bam")
+    tuple sample_id, file("${bams.baseName}_dedup.bam")
 
   script:
   """
-  sambamba markdup --tmpdir=\$PWD/tmp -t ${task.cpus} ${bam_input} ${bam_input.baseName}_dedup.bam
+  sambamba markdup ${params.sambamba.markdup.optional} --tmpdir=\$PWD/tmp -t ${task.cpus} ${bams} ${bams.baseName}_dedup.bam
   """
 }
 

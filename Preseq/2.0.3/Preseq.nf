@@ -6,14 +6,14 @@
       shell = ['/bin/bash', '-euo', 'pipefail']
 
       input:
-      tuple sample_id, file(bam_input), file(bai_input)
+      tuple sample_id, file(bams), file(bais)
 
       output:
-      tuple sample_id, file("${bam_input.baseName}.ccurve.txt") 
+      tuple sample_id, file("${bams.baseName}.ccurve.txt") 
 
       script:
       """
-      preseq lc_extrap -v -B $bam_input -o ${bam_input.baseName}.ccurve.txt
+      preseq lc_extrap -v -B $bams -o ${bams.baseName}.ccurve.txt
       """
   }
 
