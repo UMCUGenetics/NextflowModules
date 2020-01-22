@@ -13,7 +13,7 @@ process MarkDup {
 
   script:
   """
-  sambamba markdup ${params.markdup.toolOptions} --tmpdir=\$PWD/tmp -t ${task.cpus} ${bam_input} ${bam_input.baseName}_dedup.bam
+  sambamba markdup --tmpdir=\$PWD/tmp -t ${task.cpus} ${bam_input} ${bam_input.baseName}_dedup.bam
   """
 }
 
