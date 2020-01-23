@@ -15,7 +15,7 @@ process alignReads {
      
    
     script:
-    def barcode = rg_id.split('_')[0]	
+    def barcode = rg_id.split('_')[1]	
     String arg_1 = String.join(",", r1_fastqs.collect{ "$it" }.join(","));
     String arg_2 = ""
      
