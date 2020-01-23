@@ -11,6 +11,7 @@
       tuple sample_id, file("${bams.baseName}.ccurve.txt") 
 
       script:
+      //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
       """
       preseq lc_extrap -v -B $bams -o ${bams.baseName}.ccurve.txt
       """
