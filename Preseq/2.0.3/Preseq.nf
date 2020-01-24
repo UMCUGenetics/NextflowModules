@@ -1,6 +1,7 @@
  process Preseq {
       tag {"Preseq ${sample_id} "}
       label 'Preseq_2_0_3'
+      label 'Preseq_2_0_3_lc_extrap'
       clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.preseq_mem}" : ""
       shell = ['/bin/bash', '-euo', 'pipefail']
 
