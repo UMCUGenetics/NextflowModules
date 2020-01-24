@@ -1,4 +1,4 @@
-process Index {
+process index {
   tag {"SAMBAMBA_index ${sample_id}"}
   label 'SAMBAMBA_0_6_8'
   label 'SAMBAMBA_0_6_8_index'
