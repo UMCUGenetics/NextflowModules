@@ -7,15 +7,15 @@
       shell = ['/bin/bash', '-euo', 'pipefail']
 
       input:
-      tuple sample_id, file(bams), file(bais)
+      tuple sample_id, file(bam), file(bai)
 
       output:
-      tuple sample_id, file("${bams.baseName}.ccurve.txt") 
+      tuple sample_id, file("${bam.baseName}.ccurve.txt") 
 
       script:
       //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
       """
-      preseq lc_extrap -v -B $bams -o ${bams.baseName}.ccurve.txt
+      preseq lc_extrap -v -B $bam -o ${bam.baseName}.ccurve.txt
       """
   }
 
