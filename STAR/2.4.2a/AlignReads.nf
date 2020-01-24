@@ -1,8 +1,9 @@
-process alignReads {
+process AlignReads {
     tag {"STAR_alignReads ${sample_id} - ${rg_id}"}
     label 'STAR_2_4_2a'
     label 'STAR_2_4_2a_alignReads'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.star_mem}" : ""
+    container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/STAR/star-2.4.2a-squashfs-pack.gz.squashfs"
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:

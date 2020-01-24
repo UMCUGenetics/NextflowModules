@@ -3,6 +3,7 @@ process Index {
   label 'SAMBAMBA_0_6_8'
   label 'SAMBAMBA_0_6_8_index'
   clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.index_mem}" : ""
+  container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/Sambamba/sambamba_0.6.8-squashfs-pack.gz.squashfs"
   shell = ['/bin/bash', '-euo', 'pipefail']
 
   input:
