@@ -14,6 +14,6 @@ process View {
 
     script:
     """
-    samtools mpileup $params.samtools.view.optional -f $params.samtools.mpileup.genome $bam_file > ${bam_file.baseName}.sam
+    samtools mpileup $params.samtools.view.optional $bam_file $params.samtools.view.region > ${bam_file.baseName}.sam
     """
 }
