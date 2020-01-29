@@ -1,8 +1,8 @@
-process Mpileup {
+process MPileup {
     // samtools mpileup can produce multiple output types, this process creates pileup files.
-    tag {"Samtools Mpileup ${sample_id}"}
+    tag {"Samtools MPileup ${sample_id}"}
     label 'Samtools_1_10'
-    label 'Samtools_1_10_Mpileup'
+    label 'Samtools_1_10_MPileup'
     container = 'quay.io/biocontainers/samtools:1.10--h9402c20_2'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -18,11 +18,11 @@ process Mpileup {
     """
 }
 
-process Mpileup_bcf {
+process MPileup_bcf {
     // samtools mpileup can produce multiple output types, this process creates bcf files.
-    tag {"Samtools Mpileup_BCF ${sample_id}"}
+    tag {"Samtools MPileup_bcf ${sample_id}"}
     label 'Samtools_1_10'
-    label 'Samtools_1_10_Mpileup_bcf'
+    label 'Samtools_1_10_MPileup_bcf'
     container = 'quay.io/biocontainers/samtools:1.10--h9402c20_2'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
