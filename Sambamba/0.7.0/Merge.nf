@@ -9,11 +9,11 @@ process Merge {
     tuple sample_id, file(bam_files)
 
     output:
-    tuple sample_id, file("${sample_id}_merge.bam"), file("${sample_id}_merge.bam.bai")
+    tuple sample_id, file("${sample_id}.bam"), file("${sample_id}.bam.bai")
 
     script:
     """
-    sambamba merge -t ${task.cpus} ${sample_id}_merge.bam $bam_files
-    sambamba index -t ${task.cpus} ${sample_id}_merge.bam
+    sambamba merge -t ${task.cpus} ${sample_id}.bam $bam_files
+    sambamba index -t ${task.cpus} ${sample_id}.bam
     """
 }
