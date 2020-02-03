@@ -16,15 +16,13 @@ process AlignReads {
      
    
     script:
-    def barcode = rg_id.split('_')[1]	
-    String arg_1 = String.join(",", r1_fastqs.collect{ "$it" }.join(","));
-    String arg_2 = ""
-     
+    def barcode = rg_id.split('_')[1]
+    def r1_args = r1_fastqs.collect{ "$it" }.join(",")
+    def r2_args
     if ( !params.singleEnd ){
-         arg_2 = String.join(",", r2_fastqs.collect{ "$it" }.join(","));
+         r2_args = r2_fastqs.collect{ "$it" }.join(",") 
     }
-
-    def read_args = !params.singleEnd ? "--readFilesIn $arg_1 $arg_2" :"--readFilesIn $arg_1"   
+    def read_args = !params.singleEnd ? "--readFilesIn $r1_args $r2_args" :"--readFilesIn $r1_args"   
     
     """
     STAR --runMode alignReads --genomeDir $genomeDir $read_args \
@@ -38,7 +36,3 @@ process AlignReads {
     """
      
 }
-
-
-
-
