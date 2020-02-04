@@ -1,10 +1,10 @@
 process Count {
     tag {"htseq-count ${sample_id}"}
-    label 'HTSeq_0_9_0'
-    label 'HTSeq_0_9_0_count'
+    label 'HTSeq_0_6_1'
+    label 'HTSeq_0_6_1_count'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.htseq_mem}" : ""
-    //container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/htseq_0.9.0-squashfs-pack.gz.squashfs'
-    shell = ['/bin/bash', '-o', 'pipefail']
+    container = 'quay.io/biocontainers/htseq_0.6.1--py27h470a237_2'
+    shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
     tuple sample_id, file(bam_file), file(bai)
@@ -25,8 +25,6 @@ process Count {
     if (params.htseq_mode == 'exon') { count_val = 'exon_id' }
      
     """
-    module load python/2.7.10  
-    module load sambamcram/sambamba/0.6.5 
     htseq-count -m union -r pos -s $s_val -i $count_val -f bam $bam_file $genome_gtf  > ${sample_id}_${count_val}_raw_counts.txt
     """
 }
