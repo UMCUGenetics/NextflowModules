@@ -16,10 +16,10 @@ process HaplotypeCaller {
     """
     gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     HaplotypeCaller \
+    ${params.haplotypecaller.toolOptions} \
     -I $bam \
     --output ${sample_id}.${int_tag}.g.vcf \
     -R $params.genome_fasta \
-    ${params.splitintervals.toolOptions} \
     -L $interval_file
     """
 }

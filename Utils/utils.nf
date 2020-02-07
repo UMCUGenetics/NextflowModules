@@ -35,11 +35,25 @@ def extractFastqFromDir(dir){
   .filter { !(it =~ /.*Undetermined.*/) }
   .map { r1_path ->
     sample_id = r1_path.getSimpleName().split('_')[0]
+    chunk_id = r1_path.getSimpleName().split('_')[-1]
     files = [r1_path]
     r2_path = file(r1_path.toString().replace('_R1_', '_R2_'))
     if ( r2_path.exists() ) files.add(r2_path)
     (flowcell, lane) = flowcellLaneFromFastq(r1_path)
-    rg_id = "${sample_id}_${flowcell}_${lane}"
+    rg_id = "${sample_id}_${flowcell}_${lane}_${chunk_id}"
     [sample_id, rg_id, files ]
+  }
+}
+
+def extractBamFromDir(dir){
+  Channel
+  .fromPath("${dir}/**.bam", type:'file')
+  .ifEmpty { error "No .bam files found in ${dir}!" }
+  .map { bam_path ->
+    def sample_id = bam_path.getSimpleName().split('_')[0]
+    def bai_path = file(bam_path.toString().replace('bam','bai'))
+    def bai_path2 = file(bam_path.toString().replace('bam','bam.bai'))
+    if (! bai_path.exists() && ! bai_path2.exists()) error "No .bai file found for ${bam_path}!"
+    [sample_id, bam_path, bai_path]
   }
 }
