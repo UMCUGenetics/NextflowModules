@@ -13,6 +13,6 @@ process BWASW {
 
     script:
     """
-    bwa bwasw -t ${task.cpus} $params.bwa.bwasw.optional $params.bwa.bwasw.genome $fastq > ${rg_id}.sam
+    bwa bwasw -t ${task.cpus} $params.optional $params.genome $fastq > ${rg_id}.sam
     """
 }
