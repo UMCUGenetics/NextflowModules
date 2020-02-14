@@ -14,6 +14,6 @@ process View {
 
     script:
     """
-    samtools view ${params.samtools.view.optional} $bam_file ${params.samtools.view.region} > ${bam_file.baseName}.sam
+    samtools view $params.samtools.view.optional $bam_file $params.samtools.view.region > ${bam_file.baseName}.sam
     """
 }
