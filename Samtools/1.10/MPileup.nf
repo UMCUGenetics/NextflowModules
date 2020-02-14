@@ -14,7 +14,7 @@ process MPileup {
 
     script:
     """
-    samtools mpileup $params.samtools.mpileup.optional -f $params.samtools.mpileup.genome $bam_file > ${bam_file.baseName}.pileup
+    samtools mpileup ${params.samtools.mpileup.optional} -f ${params.samtools.mpileup.genome} $bam_file > ${bam_file.baseName}.pileup
     """
 }
 
@@ -34,6 +34,6 @@ process MPileup_bcf {
 
     script:
     """
-    samtools mpileup $params.samtools.mpileup_bcf.optional -u -f $params.samtools.mpileup_bcf.genome $bam_file > ${bam_file.baseName}.bcf
+    samtools mpileup ${params.samtools.mpileup_bcf.optional} -u -f ${params.samtools.mpileup_bcf.genome} $bam_file > ${bam_file.baseName}.bcf
     """
 }

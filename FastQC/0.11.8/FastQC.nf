@@ -1,5 +1,3 @@
-params.fastqc.optional
-
 process FastQC {
     tag {"FastQC ${sample_id} - ${rg_id}"}
     label 'FASTQC_0_11_8'

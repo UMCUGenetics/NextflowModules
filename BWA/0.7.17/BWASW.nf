@@ -1,6 +1,3 @@
-params.bwa.bwasw.genome
-params.bwa.bwasw.optional
-
 process BWASW {
     tag {"BWA BWASW ${sample_id} - ${rg_id}"}
     label 'BWA_0_7_17'
@@ -16,6 +13,6 @@ process BWASW {
 
     script:
     """
-    bwa bwasw -t ${task.cpus} $params.bwa.bwasw.optional $params.bwa.bwasw.genome $fastq > ${rg_id}.sam
+    bwa bwasw -t ${task.cpus} ${params.bwa.bwasw.optional} ${params.bwa.bwasw.genome} $fastq > ${rg_id}.sam
     """
 }
