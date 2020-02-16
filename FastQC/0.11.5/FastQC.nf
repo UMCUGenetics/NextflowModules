@@ -4,10 +4,7 @@ process FastQC {
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.fastqc_mem}" : ""
     container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/FastQC/fastqc-0.11.5.squashfs'
     shell = ['/bin/bash', '-euo', 'pipefail']
-    
-    when: 
-    !params.skipFastQC
-	
+    	
     input:
     tuple sample_id, rg_id, file(fastq: "*")
 
