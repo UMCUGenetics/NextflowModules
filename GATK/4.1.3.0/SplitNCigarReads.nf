@@ -1,10 +1,10 @@
 
-process SplitNcigar {
+process SplitNCigarReads {
     tag {"GATK_splitncigar ${sample_id}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_splitncigar_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.splitncigar.mem}" : ""
-
+    label 'GATK_splitncigarreads_4_1_3_0'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.splitncigarreads_mem}" : ""
+    container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/GATK/gatk4.1.3.0.squashfs"
     input:
       tuple sample_id, file(bam), file(bai)
       file(genome_fasta)
@@ -12,7 +12,7 @@ process SplitNcigar {
       file(genome_dict)
 
     output:
-      tuple sample_id, file("${sample_id}.split.bam"), file("${sample_id}.split.bam.bai"),  
+      tuple sample_id, file("${sample_id}.split.bam"), file("${sample_id}.split.bai")  
 
     script:
     """
