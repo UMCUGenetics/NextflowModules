@@ -26,6 +26,7 @@ process AlignReads {
     
     """
     STAR --runMode alignReads --genomeDir $genomeDir $read_args \
+    ${params.alignreads.toolOptions} \ 
     --readFilesCommand zcat \
     --runThreadN ${task.cpus} \
     --outSAMtype BAM SortedByCoordinate \
@@ -33,6 +34,7 @@ process AlignReads {
     --outFileNamePrefix ${sample_id}. \
     --twopassMode $params.star_twopassMode \
     --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"
+    
     """
      
 }
