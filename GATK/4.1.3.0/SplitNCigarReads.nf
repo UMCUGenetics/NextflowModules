@@ -21,6 +21,7 @@ process SplitNCigarReads {
     -R $params.genome_fasta \
     -I $bam \
     --refactor-cigar-string \
+    ${params.splitncigarreads.toolOptions} \
     -O ${sample_id}.split.bam
     """
 }
