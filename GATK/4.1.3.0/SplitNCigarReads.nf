@@ -1,6 +1,6 @@
 
 process SplitNCigarReads {
-    tag {"GATK_splitncigar ${sample_id}"}
+    tag {"GATK_splitncigarreads ${sample_id}"}
     label 'GATK_4_1_3_0'
     label 'GATK_splitncigarreads_4_1_3_0'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.splitncigarreads_mem}" : ""
