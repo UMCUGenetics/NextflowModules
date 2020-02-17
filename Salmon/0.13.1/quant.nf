@@ -9,8 +9,7 @@ process Quant {
     input:
     tuple sample_id, file(bam), file(bai)
     file(transcriptome_fasta)
-    file(transcriptome_index)
-
+   
     output:
     tuple sample_id, file("${sample_id}_salmon/") 
 
