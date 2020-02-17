@@ -27,6 +27,8 @@ process Quant {
 		 -l ${rnastrandness} \
                  -threads ${task.cpus} \ 
 		 -a ${bam} \ 
-		 -o ${sample_id}_salmon
+		 -o ${sample_id}_salmon \
+                 ${params.salmonquant.toolOptions} 
     """
 }
+
