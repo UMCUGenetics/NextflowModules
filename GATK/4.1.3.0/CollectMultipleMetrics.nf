@@ -9,14 +9,14 @@ process CollectMultipleMetrics {
     tuple sample_id, file(bam)
 
   output:
-    file ("multiple_metrics*")
+    file ("${sample_id}.multiple_metrics*")
 
   script:
   """
   gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
   CollectMultipleMetrics \
   -I $bam \
-  -O multiple_metrics\
+  -O ${sample_id}.multiple_metrics\
   -R $params.genome_fasta \
   ${params.collectmultiplemetrics.toolOptions}
   """

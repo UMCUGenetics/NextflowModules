@@ -3,7 +3,7 @@ process MarkDup {
   tag {"SAMBAMBA_markdup ${sample_id}"}
   label 'SAMBAMBA_markdup_0_6_8'
 
-  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.markdup_mem}" : ""
+  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.markdup.mem}" : ""
 
   input:
     tuple sample_id, rg_ids, file(bams), file(bais)

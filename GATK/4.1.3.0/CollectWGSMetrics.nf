@@ -9,14 +9,14 @@ process CollectWGSMetrics {
     tuple sample_id, file(bam)
 
   output:
-    file ("wgs_metrics.txt")
+    file ("${sample_id}.wgs_metrics.txt")
 
   script:
   """
   gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
   CollectWgsMetrics \
   -I $bam \
-  -O wgs_metrics.txt \
+  -O ${sample_id}.wgs_metrics.txt \
   -R $params.genome_fasta \
   """
 }
