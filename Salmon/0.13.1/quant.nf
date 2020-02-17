@@ -15,6 +15,7 @@ process Quant {
     tuple sample_id, file("${sample_id}_salmon/") 
 
     shell:
+    //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
     def rnastrandness = params.singleEnd ? 'U' : 'IU'
     if (strandness == "yes") {
        rnastrandness = params.singleEnd ? 'SF' : 'ISF'
@@ -25,7 +26,7 @@ process Quant {
     salmon quant -t ${transcriptome_fasta) \ 
 		 -l ${rnastrandness} \
                  -threads ${task.cpus} \ 
-		 -a ${bam} 
+		 -a ${bam} \ 
 		 -o ${sample_id}_salmon
     """
 }
