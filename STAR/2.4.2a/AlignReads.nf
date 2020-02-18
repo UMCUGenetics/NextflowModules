@@ -25,13 +25,13 @@ process AlignReads {
     def read_args = !params.singleEnd ? "--readFilesIn $r1_args $r2_args" :"--readFilesIn $r1_args"   
 
     """
-    STAR --runMode alignReads --genomeDir $genomeDir $read_args \\ 
-    --readFilesCommand zcat \\
-    --runThreadN ${task.cpus} \\
-    --outSAMtype BAM SortedByCoordinate \\
-    --outReadsUnmapped Fastx \\
-    --outFileNamePrefix ${sample_id}. \\
-    --twopassMode $params.star_twopassMode \\
+    STAR --runMode alignReads --genomeDir $genomeDir $read_args \
+    --readFilesCommand zcat \
+    --runThreadN ${task.cpus} \
+    --outSAMtype BAM SortedByCoordinate \
+    --outReadsUnmapped Fastx \
+    --outFileNamePrefix ${sample_id}. \
+    --twopassMode $params.star_twopassMode \
     --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"
     """
 }
