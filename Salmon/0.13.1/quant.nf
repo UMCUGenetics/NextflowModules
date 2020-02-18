@@ -9,6 +9,7 @@ process Quant {
     input:
     tuple sample_id, file(fastqs)
     file(salmon_index)
+    file(genome_gtf)
    
     output:
     tuple sample_id, file("${sample_id}_salmon/") 
@@ -26,7 +27,7 @@ process Quant {
     """
     salmon quant --validateMappings \\
                    --seqBias --useVBOpt --gcBias \\
-                   --geneMap ${gtf} \\
+                   --geneMap ${genome_gtf} \\
                    --threads ${task.cpus} \\
                    --libType=${rnastrandness} \\
                    --index ${salmon_index} \\
