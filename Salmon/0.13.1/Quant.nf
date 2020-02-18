@@ -1,5 +1,5 @@
 process Quant {
-    tag {"Quant ${sample_id}"}
+    tag {"quant ${sample_id}"}
     label 'Salmon_0_13_1'
     label 'Salmon_0_13_1_quant'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.salmon_mem}" : ""
