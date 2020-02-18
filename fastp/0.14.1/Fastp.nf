@@ -15,11 +15,11 @@ process Fastp {
     //adapted from https://github.com/nf-core/eager/blob/master/LICENSE, Copyright (c) Alexander Peltzer, Stephen Clayton, James A. Fellows Yates, Maxime Borry
     if (params.singleEnd) {
     """
-    fastp --in1 ${reads[0]} --out1 "${reads[0].baseName}.trim.R1.fastq.gz" -j ${sample_id}_fastp.json $params.fastp.toolOptions
+    fastp --in1 ${reads[0]} --out1 "${reads[0].simpleName}.trim.fastq.gz" -j ${sample_id}_fastp.json $params.fastp.toolOptions
     """
     } else {
     """
-    fastp --in1 ${reads[0]} --in2 ${reads[1]} --out1 "${reads[0].baseName}.trim.R1.fastq.gz" --out2 "${reads[1].baseName}.trim.R2.fastq.gz -j ${sample_id}_fastp.json $params.fastp.toolOptions
+    fastp --in1 ${reads[0]} --in2 ${reads[1]} --out1 "${reads[0].simpleName}.trim.fastq.gz" --out2 "${reads[1].simpleName}.trim.fastq.gz" -j ${sample_id}_fastp.json $params.fastp.toolOptions
     """
    }
 }
