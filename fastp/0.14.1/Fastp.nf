@@ -12,9 +12,10 @@ process Fastp {
     tuple sample_id, rg_id, file("${sample_id}_fastp.json"), file("*.fastq.gz")
 
     script:
+    //adapted from https://github.com/nf-core/eager/blob/master/LICENSE, Copyright (c) Alexander Peltzer, Stephen Clayton, James A. Fellows Yates, Maxime Borry
     if (params.singleEnd) {
     """
-    fastp --in1 ${reads[0]} --out1 ${sample_id}_${rg_id}.trim_R1.fastq.gz -j ${sample_id}_fastp.json $params.fastp.toolOptions
+    fastp --in1 ${reads[0]} --out1 "${reads[0].baseName}.trim.R1.fastq.gz" -j ${sample_id}_fastp.json $params.fastp.toolOptions
     """
     } else {
     """
