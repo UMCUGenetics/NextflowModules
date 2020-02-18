@@ -1,5 +1,5 @@
 process Quant {
-    tag {"Salmon quant ${sample_id}"}
+    tag {"Quant ${sample_id}"}
     label 'Salmon_0_13_1'
     label 'Salmon_0_13_1_quant'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.salmon_mem}" : ""
@@ -7,8 +7,8 @@ process Quant {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(bam), file(bai)
-    file(transcriptome_fasta)
+    tuple sample_id, file(fastqs)
+    file(salmon_index)
    
     output:
     tuple sample_id, file("${sample_id}_salmon/") 
@@ -21,13 +21,17 @@ process Quant {
     } else if (strandness == "reverse") {
        rnastrandness = params.singleEnd ? 'SR' : 'ISR'
     }
+    def endedness = params.singleEnd ? "-r ${fastqs[0]}" : "-1 ${fastqs[0]} -2 ${fastqs[1]}"
+    unmapped = params.saveUnaligned ? "--writeUnmappedNames" : ''
     """
-    salmon quant -t ${transcriptome_fasta) \ 
-		 -l ${rnastrandness} \
-                 -threads ${task.cpus} \ 
-		 -a ${bam} \ 
-		 -o ${sample_id}_salmon \
-                 ${params.salmonquant.toolOptions} 
+    salmon quant --validateMappings \\
+                   --seqBias --useVBOpt --gcBias \\
+                   --geneMap ${gtf} \\
+                   --threads ${task.cpus} \\
+                   --libType=${rnastrandness} \\
+                   --index ${salmon_index} \\
+                   $endedness $unmapped \\
+                   -o ${sample_id}
     """
 }
 
