@@ -1,7 +1,7 @@
  process Lc_extrap {
-      tag {"Preseq ${sample_id} "}
+      tag {"Preseq Lc_extrap ${sample_id} "}
       label 'Preseq_2_0_3'
-      label 'Preseq_2_0_3_lc_extrap'
+      label 'Preseq_2_0_3_Lc_extrap'
       clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.preseq_mem}" : ""
       container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/Preseq/Preseq_2.0.3_Samtools_1.9-squashfs-pack.gz.squashfs"
       shell = ['/bin/bash', '-euo', 'pipefail']
