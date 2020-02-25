@@ -2,8 +2,8 @@
 process MarkDup {
   tag {"SAMBAMBA_markdup ${sample_id}"}
   label 'SAMBAMBA_markdup_0_6_8'
-
-  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.markdup.mem}" : ""
+  container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/Sambamba/sambamba_0.6.8-squashfs-pack.gz.squashfs'
+  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.markdup_mem}" : ""
 
   input:
     tuple sample_id, rg_ids, file(bams), file(bais)
