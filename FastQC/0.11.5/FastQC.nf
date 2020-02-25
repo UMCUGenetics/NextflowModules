@@ -13,6 +13,6 @@ process FastQC {
 
     script:
     """
-    fastqc -t ${task.cpus} $fastq
+    fastqc ${params.fastqc.optional} -t ${task.cpus} $fastq
     """
 }
