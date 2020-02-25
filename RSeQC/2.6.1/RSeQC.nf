@@ -24,6 +24,5 @@ process RSeQC {
     junction_saturation.py -i $bam -o ${bam.baseName}.rseqc -r $genome_bed12 2> ${bam.baseName}.junction_annotation_log.txt
     read_duplication.py -i $bam -o ${bam.baseName}.read_duplication
     $inner_distance_arg
-    $read_distribution_arg
     """
 }
