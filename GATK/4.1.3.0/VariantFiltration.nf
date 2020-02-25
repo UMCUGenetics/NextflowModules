@@ -4,7 +4,8 @@ process VariantFiltration {
     label 'GATK_4_1_3_0'
     label 'GATK_variantfiltration_4_1_3_0'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.variantfiltration.mem}" : ""
-
+    container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
+    
     input:
       tuple run_id, interval, type, file(vcf), file(vcfidx)
 

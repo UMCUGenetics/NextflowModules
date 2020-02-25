@@ -3,6 +3,7 @@ process HaplotypeCaller {
     label 'GATK_4_1_3_0'
     label 'GATK_haplotypecaller_4_1_3_0'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.haplotypecaller.mem}" : ""
+    container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
 
     input:
       tuple sample_id, file(bam), file(bai), file(interval_file)

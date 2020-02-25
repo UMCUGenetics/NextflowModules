@@ -4,7 +4,8 @@ process SplitNCigarReads {
     label 'GATK_4_1_3_0'
     label 'GATK_4_1_3_0_SplitNCigarReads'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.splitncigarreads_mem}" : ""
-    container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/GATK/gatk4.1.3.0.squashfs"
+    container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
+    
     input:
       tuple sample_id, file(bam), file(bai)
       file(genome_fasta)
@@ -12,7 +13,7 @@ process SplitNCigarReads {
       file(genome_dict)
 
     output:
-      tuple sample_id, file("${sample_id}.split.bam"), file("${sample_id}.split.bai")  
+      tuple sample_id, file("${sample_id}.split.bam"), file("${sample_id}.split.bai")
 
     script:
     """

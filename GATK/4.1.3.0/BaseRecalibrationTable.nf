@@ -3,9 +3,9 @@ process BaseRecalibrationTable {
     tag {"GATK_baserecalibrator ${sample_id}.${int_tag}"}
     label 'GATK_4_1_3_0'
     label 'GATK_baserecalibrator_4_1_3_0'
-
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.baserecalibrator.mem}" : ""
-
+    container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
+    
     input:
       tuple sample_id, file(bam), file(bai), file(interval_file)
 

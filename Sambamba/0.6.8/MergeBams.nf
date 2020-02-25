@@ -3,7 +3,8 @@ process MergeBams {
   label 'SAMBAMBA_mergebams_0_6_8'
 
   clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mergebams.mem}" : ""
-
+  container = 'library://sawibo/default/bioinf-tools:sambamba-0.6.8'
+  
   input:
     tuple sample_id, file(bams), file(bais)
 
