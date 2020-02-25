@@ -1,8 +1,8 @@
 
 process SplitNCigarReads {
-    tag {"GATK_splitncigarreads ${sample_id}"}
+    tag {"GATK SplitNCigarReads ${sample_id}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_splitncigarreads_4_1_3_0'
+    label 'GATK_4_1_3_0_SplitNCigarReads'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.splitncigarreads_mem}" : ""
     container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/GATK/gatk4.1.3.0.squashfs"
     input:

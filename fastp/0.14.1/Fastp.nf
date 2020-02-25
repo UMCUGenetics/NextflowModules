@@ -1,6 +1,6 @@
 process Fastp {
-    tag {"fastp ${sample_id} - ${rg_id}"}
-    label 'fastp_0_14_1'
+    tag {"Fastp ${sample_id} - ${rg_id}"}
+    label 'Fastp_0_14_1'
     container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/fastp/fastp_0.14.1-squashfs-pack.gz.squashfs'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.fastp_mem}" : ""
     shell = ['/bin/bash', '-euo', 'pipefail']
