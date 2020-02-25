@@ -1,5 +1,5 @@
 process Count {
-    tag {"htseq-count ${sample_id}"}
+    tag {"HTSeq Count ${sample_id}"}
     label 'HTSeq_0_6_0'
     label 'HTSeq_0_6_0_Count'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.htseq_mem}" : ""
