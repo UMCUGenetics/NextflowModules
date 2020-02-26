@@ -9,13 +9,13 @@ process MEM {
     tuple sample_id, rg_id, file(fastq: "*")
 
     output:
-    tuple sample_id, rg_id, file("${rg_id}.sam")
+    tuple sample_id, rg_id, file("${fastq[0].simpleName}.sam")
 
     script:
     def barcode = rg_id.split('_')[1]
     def readgroup = "\"@RG\\tID:${rg_id}\\tSM:${sample_id}\\tPL:ILLUMINA\\tLB:${sample_id}\\tPU:${barcode}\""
 
     """
-    bwa mem -t ${task.cpus} -R $readgroup $params.optional $params.genome $fastq  > ${rg_id}.sam
+    bwa mem -t ${task.cpus} -R $readgroup $params.optional $params.genome $fastq  > ${fastq[0].simpleName}.sam
     """
 }

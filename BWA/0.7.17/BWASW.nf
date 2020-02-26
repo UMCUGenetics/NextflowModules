@@ -9,10 +9,10 @@ process BWASW {
     tuple sample_id, rg_id, file(fastq: "*")
 
     output:
-    tuple sample_id, rg_id, file("${rg_id}.sam")
+    tuple sample_id, rg_id, file("${fastq[0].simpleName}.sam")
 
     script:
     """
-    bwa bwasw -t ${task.cpus} $params.optional $params.genome $fastq > ${rg_id}.sam
+    bwa bwasw -t ${task.cpus} $params.optional $params.genome $fastq > ${fastq[0].simpleName}.sam
     """
 }
