@@ -3,7 +3,7 @@ process Index {
   label 'SAMBAMBA_0_6_8'
   label 'SAMBAMBA_0_6_8_Index'
   clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.index_mem}" : ""
-  container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/Sambamba/sambamba_0.6.8-squashfs-pack.gz.squashfs'
+  container = 'library://sawibo/default/bioinf-tools:sambamba-0.6.8'
   shell = ['/bin/bash', '-euo', 'pipefail']
 
   input:
@@ -17,6 +17,3 @@ process Index {
   sambamba index -t ${task.cpus} $bam ${bam}.bai
   """
 }
-
-
-

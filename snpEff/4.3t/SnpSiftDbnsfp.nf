@@ -4,6 +4,7 @@ process SnpSiftDbnsfp {
     label 'SNPEFF_4_3t'
     label 'SNPEFF_snpsiftsbnsfp_4_3t'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.snpsiftsbnsfp.mem}" : ""
+    container = 'library://sawibo/default/bioinf-tools:snpeff-4.3t'
 
     input:
       tuple run_id, file(vcf), file(vcfidx)

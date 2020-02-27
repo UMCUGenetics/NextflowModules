@@ -2,6 +2,8 @@ process SplitIntervals {
     tag {"GATK_splitintervals"}
     label 'GATK_4_1_3_0'
     label 'GATK_splitintervals_4_1_3_0'
+    container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
+    
     input:
       val mode
       file(scatter_interval_list)

@@ -3,6 +3,7 @@ process GenotypeGVCFs {
     label 'GATK_4_1_3_0'
     label 'GATK_genotypegvcfs_4_1_3_0'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.genotypegvcfs.mem}" : ""
+    container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
 
     input:
       tuple run_id, interval, file(gvcf), file(gvcfidx), file(interval_file)
