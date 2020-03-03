@@ -7,7 +7,7 @@ process SplitNCigarReads {
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     
     input:
-      tuple sample_id, file(bam), file(bai)
+      tuple sample_id, file(bam), file(bai), file(interval_file)
       file(genome_fasta)
       file(genome_index)
       file(genome_dict)
@@ -21,6 +21,7 @@ process SplitNCigarReads {
     SplitNCigarReads \
     -R $params.genome_fasta \
     -I $bam \
+    -L $interval_file \
     --refactor-cigar-string \
     -O ${sample_id}.split.bam
     """
