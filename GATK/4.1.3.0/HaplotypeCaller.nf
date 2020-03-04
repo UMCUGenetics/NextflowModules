@@ -21,6 +21,6 @@ process HaplotypeCaller {
     -I $bam \
     --output ${sample_id}.${int_tag}.g.vcf \
     -R $params.genome_fasta \
-    -L $interval_file
+    -L $interval_file 
     """
 }
