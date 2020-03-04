@@ -1,5 +1,3 @@
-params.fastqc.optional
-
 process FastQC {
     tag {"FastQC ${sample_id} - ${rg_id}"}
     label 'FASTQC_0_11_8'
@@ -14,6 +12,6 @@ process FastQC {
 
     script:
     """
-    fastqc ${params.fastqc.optional} -t ${task.cpus} $fastq
+    fastqc $params.optional -t ${task.cpus} $fastq
     """
 }
