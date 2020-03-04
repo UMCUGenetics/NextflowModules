@@ -1,5 +1,5 @@
 process AlignReads {
-    tag {"STAR AlignReads ${sample_id} - ${rg_id}"}
+    tag {"STAR AlignReads ${sample_id} "}
     label 'STAR_2_4_2a'
     label 'STAR_2_4_2a_AlignReads'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.star_mem}" : ""
@@ -16,7 +16,6 @@ process AlignReads {
      
    
     script:
-    def barcode = rg_id.split('_')[1]
     def r1_args = r1_fastqs.collect{ "$it" }.join(",")
     def r2_args
     if ( !params.singleEnd ){
@@ -31,7 +30,6 @@ process AlignReads {
     --outSAMtype BAM SortedByCoordinate \
     --outReadsUnmapped Fastx \
     --outFileNamePrefix ${sample_id}. \
-    --twopassMode $params.star_twopassMode \
-    --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:illumina PU:${barcode}" SM:${sample_id}"
+    --twopassMode $params.star_twopassMode 
     """
 }
