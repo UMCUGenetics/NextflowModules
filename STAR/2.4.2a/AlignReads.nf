@@ -3,7 +3,8 @@ process AlignReads {
     label 'STAR_2_4_2a'
     label 'STAR_2_4_2a_AlignReads'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.star_mem}" : ""
-    container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/STAR/star-2.4.2a-squashfs-pack.gz.squashfs'
+    //container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/STAR/star-2.4.2a-squashfs-pack.gz.squashfs'
+    container = 'quay.io/biocontainers/star:2.6.0c--2'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
@@ -16,6 +17,7 @@ process AlignReads {
      
    
     script:
+    def barcode = rg_id.split('_')[1]
     def r1_args = r1_fastqs.collect{ "$it" }.join(",")
     def r2_args
     if ( !params.singleEnd ){
@@ -30,6 +32,7 @@ process AlignReads {
     --outSAMtype BAM SortedByCoordinate \
     --outReadsUnmapped Fastx \
     --outFileNamePrefix ${sample_id}. \
-    --twopassMode $params.star_twopassMode 
+    --twopassMode $params.star_twopassMode \
+    --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}
     """
 }
