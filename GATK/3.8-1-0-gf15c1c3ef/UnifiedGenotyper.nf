@@ -1,7 +1,3 @@
-params.gatk.path
-params.gatk.genome
-params.gatk.unified_genotyper.optional
-
 process UnifiedGenotyper {
     tag {"GATK UnifiedGenotyper ${sample_id} - ${rg_id}"}
     label 'GATK_3_8_1_0_gf15c1c3ef'
@@ -18,6 +14,6 @@ process UnifiedGenotyper {
     script:
 
     """
-    java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk.path -T UnifiedGenotyper --reference_sequence $params.gatk.genome --input_file $input_bam --out ${sample_id}.vcf $params.gatk.unified_genotyper.optional
+    java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T UnifiedGenotyper --reference_sequence $params.genome --input_file $input_bam --out ${sample_id}.vcf $params.optional
     """
 }

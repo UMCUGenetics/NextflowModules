@@ -1,8 +1,3 @@
-params.mips.trim_dedup.path
-params.mips.trim_dedup.design_file
-params.mips.trim_dedup.uuid_length
-params.mips.trim_dedup.uuid_read
-
 process MipsTrimDedup {
     tag {"MIPS TrimDedup ${sample_id} - ${rg_id}"}
     label 'MIPS_1_0_1'
@@ -23,6 +18,6 @@ process MipsTrimDedup {
     rg_id = "${sample_id}_MergedTrimmedDedup"
 
     """
-    python $params.mips.trim_dedup.path -d $params.mips.trim_dedup.design_file  -l $params.mips.trim_dedup.uuid_length -ur $params.mips.trim_dedup.uuid_read -r1 $r1_args -r2 $r2_args
+    python $params.trim_dedup_path -d $params.design_file  -l $params.uuid_length -ur $params.uuid_read -r1 $r1_args -r2 $r2_args
     """
 }
