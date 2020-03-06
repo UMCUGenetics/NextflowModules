@@ -1,5 +1,3 @@
-params.multiqc.optional
-
 process MultiQC {
     tag {"MultiQC"}
     label 'MultiQC_1_8'
@@ -15,6 +13,6 @@ process MultiQC {
 
     script:
     """
-    multiqc ${params.multiqc.optional} .
+    multiqc ${params.optional} .
     """
 }
