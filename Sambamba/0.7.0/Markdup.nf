@@ -17,7 +17,7 @@ process Markdup {
     """
 }
 
-process Markdup_Merge {
+process MarkdupMerge {
     tag {"Sambamba MarkdupMerge ${sample_id} - ${rg_id}"}
     label 'Sambamba_0_7_0'
     label 'Sambamba_0_7_0_MarkdupMerge'
