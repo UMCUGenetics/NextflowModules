@@ -6,7 +6,7 @@ process UnifiedGenotyper {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple val(sample_id), val(rg_id), file(bam_file), file(bai_file)
+    tuple val(sample_id), file(bam_file), file(bai_file)
 
     output:
     tuple val(sample_id), file("${sample_id}.vcf")
