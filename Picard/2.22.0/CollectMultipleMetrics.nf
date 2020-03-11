@@ -14,6 +14,6 @@ process CollectMultipleMetrics {
     script:
 
     """
-    picard -Xmx${task.memory.toGiga()-4}G CollectMultipleMetrics R=$params.genome INPUT=$bam_file OUTPUT=${sample_id} EXT=.txt $params.optional
+    picard -Xmx${task.memory.toGiga()-4}G CollectMultipleMetrics TMP_DIR=\$TMPDIR R=$params.genome INPUT=$bam_file OUTPUT=${sample_id} EXT=.txt $params.optional
     """
 }
