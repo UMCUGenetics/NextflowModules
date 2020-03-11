@@ -13,6 +13,6 @@ process ViewSort {
 
     script:
     """
-    sambamba view -t ${task.cpus} -S -f bam $sam_file | sambamba sort -t ${task.cpus} -o ${sam_file.baseName}.sort.bam /dev/stdin
+    sambamba view -t ${task.cpus} -S -f bam $sam_file | sambamba sort -t ${task.cpus} -m ${task.memory.toGiga()}G -o ${sam_file.baseName}.sort.bam /dev/stdin
     """
 }
