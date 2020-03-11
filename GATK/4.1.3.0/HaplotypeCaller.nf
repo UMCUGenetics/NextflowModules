@@ -9,17 +9,17 @@ process HaplotypeCaller {
       tuple sample_id, file(bam), file(bai), file(interval_file)
 
     output:
-      tuple sample_id, int_tag ,file("${sample_id}.${int_tag}.${file_ext}"), file("${sample_id}.${int_tag}.${file_ext}.idx"), file(interval_file)
+      tuple sample_id, int_tag ,file("${sample_id}.${int_tag}${ext}"), file("${sample_id}.${int_tag}${ext}.idx"), file(interval_file)
 
     script:
     int_tag = interval_file.toRealPath().toString().split("/")[-2]
-    def file_ext = !params.haplotypecaller.toolOptions.contains("GVCF") ? ".vcf" :"g.vcf"   
+    ext = params.haplotypecaller.toolOptions =~ /GVCF/ ? '.g.vcf' : '.vcf'   
     """
     gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     HaplotypeCaller \
     ${params.haplotypecaller.toolOptions} \
     -I $bam \
-    --output ${sample_id}.${int_tag}.${file_ext} \
+    --output ${sample_id}.${int_tag}${ext} \
     -R $params.genome_fasta \
     -L $interval_file 
     """
