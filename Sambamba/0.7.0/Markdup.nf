@@ -1,5 +1,5 @@
 process Markdup {
-    tag {"Sambamba Markdup ${sample_id} - ${rg_id}"}
+    tag {"Sambamba Markdup ${sample_id}"}
     label 'Sambamba_0_7_0'
     label 'Sambamba_0_7_0_Markdup'
     container = 'quay.io/biocontainers/sambamba:0.7.0--h89e63da_1'

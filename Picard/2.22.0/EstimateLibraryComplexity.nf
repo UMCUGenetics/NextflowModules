@@ -1,5 +1,5 @@
 process EstimateLibraryComplexity {
-    tag {"PICARD EstimateLibraryComplexity ${sample_id} - ${rg_id}"}
+    tag {"PICARD EstimateLibraryComplexity ${sample_id}"}
     label 'PICARD_2_22_0'
     label 'PICARD_2_22_0_EstimateLibraryComplexity'
     container = 'quay.io/biocontainers/picard:2.22.0--0'

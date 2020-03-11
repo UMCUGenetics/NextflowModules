@@ -1,5 +1,5 @@
 process CollectMultipleMetrics {
-    tag {"PICARD CollectMultipleMetrics ${sample_id} - ${rg_id}"}
+    tag {"PICARD CollectMultipleMetrics ${sample_id}"}
     label 'PICARD_2_22_0'
     label 'PICARD_2_22_0_CollectMultipleMetrics'
     container = 'quay.io/biocontainers/picard:2.22.0--0'
