@@ -1,5 +1,4 @@
 process View {
-    // samtools mpileup can produce multiple output types, this process creates pileup files.
     tag {"Samtools View ${sample_id}"}
     label 'Samtools_1_10'
     label 'Samtools_1_10_View'
