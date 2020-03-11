@@ -1,5 +1,6 @@
 process mergeFastqLanes {
-    tag {"mergeFastqLanes ${sample_id}"}
+    tag {"mergeFastqLanes ${sample_id} - ${rg_id}"}
+    label 'mergeFastqLanes'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
