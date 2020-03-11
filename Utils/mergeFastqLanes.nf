@@ -14,7 +14,7 @@ process mergeFastqLanes {
     if (params.singleEnd) {
         r1 = r1_fastqs.collect{ "$it" }.join(" ")
         """
-        cat ${r1} > ${sample_id}.R1.fastq.gz
+        cat ${r1} > ${sample_id}_${rg_id}_R1.fastq.gz
         """
     } else {
       r1 = r1_fastqs.collect{ "$it" }.join(" ")
