@@ -6,26 +6,20 @@ process IndelRealigner {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple val(sample_id), file(bam_file), file(bai_file), val(chr)
+    tuple val(sample_id), file(bam_file), file(bai_file), val(chr), file(target_intervals)
 
     output:
-    tuple val(sample_id), file("${bam_file.baseName}.realigned.${chr}.bam"), file("${bam_file.baseName}.realigned.${chr}.bam.bai")
+    tuple val(sample_id), file("${bam_file.baseName}.realigned.${chr}.bam"), file("${bam_file.baseName}.realigned.${chr}.bai")
 
     script:
 
     """
-    java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T RealignerTargetCreator \
-    --reference_sequence $params.genome \
-    --input_file $bam_file \
-    --intervals $chr \
-    --out ${bam_file.baseName}.target_intervals.${chr}.list \
-    $params.optional
-
     java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T IndelRealigner \
     --reference_sequence $params.genome \
     --input_file $bam_file \
     --intervals $chr \
     --targetIntervals ${bam_file.baseName}.target_intervals.${chr}.list \
-    --out ${bam_file.baseName}.realigned.${chr}.bam
+    --out ${bam_file.baseName}.realigned.${chr}.bam \
+    $params.optional
     """
 }
