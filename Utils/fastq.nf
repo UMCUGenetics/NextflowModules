@@ -46,3 +46,24 @@ def extractFastqFromDir(dir) {
         [sample_id, rg_id, fastq_files]
     }
 }
+
+def extractAllFastqFromDir(dir) {
+    // Original code from: https://github.com/SciLifeLab/Sarek - MIT License - Copyright (c) 2016 SciLifeLab
+
+    Channel
+    .fromPath("${dir}/**_R1_*.fastq.gz", type:'file')
+    .ifEmpty { error "No R1 fastq.gz files found in ${dir}!" }
+    .map { r1_path ->
+        fastq_files = [r1_path]
+        sample_id = r1_path.getSimpleName().split('_')[0]
+        r2_path = file(r1_path.toString().replace('_R1_', '_R2_'))
+        i1_path = file(r1_path.toString().replace('_R1_', '_I1_'))
+        i2_path = file(r1_path.toString().replace('_R1_', '_I2_'))
+        if (r2_path.exists()) fastq_files.add(r2_path)
+        if (i1_path.exists()) fastq_files.add(i1_path)
+        if (i2_path.exists()) fastq_files.add(i2_path)
+        (flowcell, lane) = flowcellLaneFromFastq(r1_path)
+        rg_id = "${sample_id}_${flowcell}_${lane}"
+        [sample_id, rg_id, fastq_files]
+    }
+}
