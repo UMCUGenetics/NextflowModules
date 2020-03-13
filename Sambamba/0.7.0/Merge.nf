@@ -14,6 +14,5 @@ process Merge {
     script:
     """
     sambamba merge -t ${task.cpus} ${sample_id}.bam $bam_files
-    sambamba index -t ${task.cpus} ${sample_id}.bam
     """
 }
