@@ -1,5 +1,5 @@
 process HaplotypeCaller {
-    tag {"GATK HaplotypeCaller ${sample_id} - ${rg_id}"}
+    tag {"GATK HaplotypeCaller ${analysis_id} - ${interval_file.baseName}"}
     label 'GATK_3_8_1_0_gf15c1c3ef'
     label 'GATK_3_8_1_0_gf15c1c3ef_HaplotypeCaller'
     container = 'quay.io/biocontainers/gatk:3.8--py27_1'
