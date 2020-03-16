@@ -9,11 +9,11 @@ process HaplotypeCaller {
     tuple val(analysis_id), file(bam_files), file(bai_files), file(interval_file)
 
     output:
-    tuple val(analysis_id), file("${analysis_id}.vcf"), file("${analysis_id}.vcf.idx")
+    tuple val(analysis_id), file("${analysis_id}.${interval_file.baseName}.vcf"), file("${analysis_id}.${interval_file.baseName}.vcf.idx")
 
     script:
     def input_files = bam_files.collect{"$it"}.join("--input_file ")
     """
-    java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T HaplotypeCaller --reference_sequence $params.genome --input_file $input_files intervals ${interval_file} --out ${analysis_id}.vcf $params.optional
+    java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T HaplotypeCaller --reference_sequence $params.genome --input_file $input_files intervals ${interval_file} --out ${analysis_id}.${interval_file.baseName}.vcf $params.optional
     """
 }
