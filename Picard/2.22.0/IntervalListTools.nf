@@ -6,7 +6,7 @@ process IntervalListTools {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple file(interval_list)
+    file(interval_list)
 
     output:
     file("temp_*/scattered.interval_list")
