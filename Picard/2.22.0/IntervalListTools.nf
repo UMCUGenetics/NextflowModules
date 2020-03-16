@@ -1,5 +1,5 @@
 process IntervalListTools {
-    tag {"PICARD IntervalListTools ${sample_id}"}
+    tag {"PICARD IntervalListTools"}
     label 'PICARD_2_22_0'
     label 'PICARD_2_22_0_IntervalListTools'
     container = 'quay.io/biocontainers/picard:2.22.0--0'
@@ -9,7 +9,7 @@ process IntervalListTools {
     file(interval_list)
 
     output:
-    file("temp_*/scattered.interval_list")
+    file("temp_*/*.interval_list")
 
     script:
 
@@ -21,5 +21,7 @@ process IntervalListTools {
     SCATTER_COUNT=$params.scatter_count \
     UNIQUE=true \
     OUTPUT=.
+
+    for folder in *; do mv \$folder/scattered.interval_list \$folder/\$folder\.interval_list; done
     """
 }
