@@ -13,6 +13,6 @@ process Flagstat {
 
     script:
     """
-    samtools flagstat -t ${task.cpus} $bam_file > ${bam_file.baseName}.flagstat
+    samtools flagstat $bam_file > ${bam_file.baseName}.flagstat
     """
 }
