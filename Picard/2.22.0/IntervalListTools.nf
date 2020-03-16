@@ -22,6 +22,6 @@ process IntervalListTools {
     UNIQUE=true \
     OUTPUT=.
 
-    for folder in *; do mv \$folder/scattered.interval_list \$folder/\$folder\.interval_list; done
+    for folder in temp*; do mv \$folder/scattered.interval_list \$folder/\$folder\\.interval_list; done
     """
 }
