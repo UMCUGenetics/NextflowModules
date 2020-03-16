@@ -14,5 +14,6 @@ process ViewUnmapped {
     script:
     """
     sambamba view -t ${task.cpus} -f bam -F unmapped $bam_file > ${bam_file.baseName}.unmapped.bam
+    sambamba index -t ${task.cpus} ${bam_file.baseName}.unmapped.bam
     """
 }
