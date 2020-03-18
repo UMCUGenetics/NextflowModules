@@ -4,16 +4,18 @@ process MergeBams {
 
   clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mergebams.mem}" : ""
   container = 'library://sawibo/default/bioinf-tools:sambamba-0.6.8'
-  
+
   input:
     tuple sample_id, file(bams), file(bais)
 
   output:
-    tuple sample_id, file("${sample_id}_merge.bam"), file("${sample_id}_merge.bai")
+    tuple sample_id, file("${sample_id}_${ext}"), file("${sample_id}_${ext}.bai")
 
   script:
+  ext = bams[0].toRealPath().toString().split("_")[-1]
+
   """
-  sambamba merge -t ${task.cpus} ${sample_id}_merge.bam ${bams}
-  sambamba index -t ${task.cpus} ${sample_id}_merge.bam ${sample_id}_merge.bai
+  sambamba merge -t ${task.cpus} ${sample_id}_${ext} ${bams}
+  sambamba index -t ${task.cpus} ${sample_id}_${ext} ${sample_id}_${ext}.bai
   """
 }
