@@ -1,7 +1,5 @@
-params.tool.command.optional
-
 process Command {
-    tag {"Tool Command ${sample_id} - ${rg_id}"}
+    tag {"Tool Command ${sample_id}"}
     label 'Tool_version'
     label 'Tool_verion_Command'
     container = 'container_url'
@@ -16,7 +14,7 @@ process Command {
 
     script:
     """
-    tool command $params.tool.command.optional
+    tool command $params.optional
     """
 
 }
