@@ -14,7 +14,7 @@ process Command {
 
     script:
     """
-    tool command $params.optional
+    tool command ${params.optional}
     """
 
 }
