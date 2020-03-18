@@ -13,7 +13,7 @@ process Markdup {
 
     script:
     """
-    sambamba markdup -t ${task.cpus} $bam_file ${bam_file.baseName}.markdup.bam
+    sambamba markdup -t ${task.cpus} ${bam_file} ${bam_file.baseName}.markdup.bam
     """
 }
 
@@ -32,6 +32,6 @@ process MarkdupMerge {
 
     script:
     """
-    sambamba markdup -t ${task.cpus} $bam_files ${sample_id}.markdup.bam
+    sambamba markdup -t ${task.cpus} ${bam_files} ${sample_id}.markdup.bam
     """
 }

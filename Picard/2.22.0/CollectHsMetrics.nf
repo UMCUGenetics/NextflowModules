@@ -14,6 +14,6 @@ process CollectHsMetrics {
     script:
 
     """
-    picard -Xmx${task.memory.toGiga()-4}G CollectHsMetrics TMP_DIR=\$TMPDIR R=$params.genome INPUT=$bam_file OUTPUT=${sample_id}.HsMetrics.txt BAIT_INTERVALS=$params.bait TARGET_INTERVALS=$params.target $params.optional
+    picard -Xmx${task.memory.toGiga()-4}G CollectHsMetrics TMP_DIR=\$TMPDIR R=${params.genome} INPUT=${bam_file} OUTPUT=${sample_id}.HsMetrics.txt BAIT_INTERVALS=${params.bait} TARGET_INTERVALS=${params.target} ${params.optional}
     """
 }

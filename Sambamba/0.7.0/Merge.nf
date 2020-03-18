@@ -13,6 +13,6 @@ process Merge {
 
     script:
     """
-    sambamba merge -t ${task.cpus} ${sample_id}.bam $bam_files
+    sambamba merge -t ${task.cpus} ${sample_id}.bam ${bam_files}
     """
 }

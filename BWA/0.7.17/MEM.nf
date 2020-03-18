@@ -16,6 +16,6 @@ process MEM {
     def readgroup = "\"@RG\\tID:${rg_id}\\tSM:${sample_id}\\tPL:ILLUMINA\\tLB:${sample_id}\\tPU:${barcode}\""
 
     """
-    bwa mem -t ${task.cpus} -R $readgroup $params.optional $params.genome $fastq  > ${fastq[0].simpleName}.sam
+    bwa mem -t ${task.cpus} -R ${readgroup} ${params.optional} ${params.genome} ${fastq}  > ${fastq[0].simpleName}.sam
     """
 }

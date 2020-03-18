@@ -13,6 +13,6 @@ process View {
 
     script:
     """
-    samtools view $params.optional $bam_file $params.region > ${bam_file.baseName}.sam
+    samtools view ${params.optional} ${bam_file} ${params.region} > ${bam_file.baseName}.sam
     """
 }

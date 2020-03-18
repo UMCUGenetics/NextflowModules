@@ -14,6 +14,6 @@ process View_bcf_vcf {
 
     script:
     """
-    bcftools view $params.optional $bcf_file > ${bcf_file.baseName}.vcf
+    bcftools view ${params.optional} ${bcf_file} > ${bcf_file.baseName}.vcf
     """
 }

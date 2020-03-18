@@ -13,6 +13,6 @@ process ClipOverlap {
 
     script:
     """
-    bam clipOverlap --in $bam_file --out ${bam_file.baseName}.clipped.bam
+    bam clipOverlap --in ${bam_file} --out ${bam_file.baseName}.clipped.bam
     """
 }
