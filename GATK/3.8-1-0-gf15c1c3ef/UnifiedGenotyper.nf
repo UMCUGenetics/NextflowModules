@@ -1,5 +1,5 @@
 process UnifiedGenotyper {
-    tag {"GATK UnifiedGenotyper ${sample_id} - ${rg_id}"}
+    tag {"GATK UnifiedGenotyper ${sample_id}"}
     label 'GATK_3_8_1_0_gf15c1c3ef'
     label 'GATK_3_8_1_0_gf15c1c3ef_UnifiedGenotyper'
     container = 'quay.io/biocontainers/gatk:3.8--py27_1'
