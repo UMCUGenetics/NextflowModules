@@ -17,9 +17,9 @@ process Quant {
     shell:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
     def rnastrandness = params.singleEnd ? 'U' : 'IU'
-    if (params.strandness == "yes") {
+    if (params.stranded && !params.unstranded) {
        rnastrandness = params.singleEnd ? 'SF' : 'ISF'
-    } else if (params.strandness == "reverse") {
+    } else if (params.revstranded && !params.unstranded) {
        rnastrandness = params.singleEnd ? 'SR' : 'ISR'
     }
     def endedness = params.singleEnd ? "-r ${fastqs[0]}" : "-1 ${fastqs[0]} -2 ${fastqs[1]}"

@@ -11,20 +11,18 @@ process Count {
     file(genome_gtf)   
   
     output:
-    tuple sample_id, file("${sample_id}_*_raw_counts.txt") 
+    tuple sample_id, file("${sample_id}_readCounts_raw.txt") 
 
     shell:
-
-    def s_val = ''
+    def s_val = 'no'
     if (params.stranded && !params.unstranded) {
        sval = params.singleEnd ? 'yes' : 'reverse'
-    } else if (params.revstranded && !params.unstranded) {
-         sval = params.singleEnd ? 'reverse' : 'yes'  
-    } else {
-         sval = 'no'    
     }
-
+    if (params.revstranded && !params.unstranded) {
+       sval = params.singleEnd ? 'reverse' : 'yes'  
+    } 
+         
     """
-    htseq-count ${params.count.toolOptions} -s $s_val -f bam $bam_file $genome_gtf  > ${sample_id}_raw_counts.txt
+    htseq-count ${params.count.toolOptions} -s $s_val -f bam $bam_file $genome_gtf  > ${sample_id}_readCounts_raw.txt
     """
 }
