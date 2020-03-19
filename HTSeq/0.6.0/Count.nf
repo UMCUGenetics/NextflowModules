@@ -14,17 +14,17 @@ process Count {
     tuple sample_id, file("${sample_id}_*_raw_counts.txt") 
 
     shell:
-    def s_val = 'no'
-    if (!params.singleEnd) {
-       if (params.fwStranded && !params.unstranded) { s_val = 'yes' }
-       if (params.revStranded && !params.unstranded) { s_val = 'reverse' }
+
+    def s_val = ''
+    if (params.stranded && !params.unstranded) {
+       sval = params.singleEnd ? 'yes' : 'reverse'
+    } else if (params.revstranded && !params.unstranded) {
+         sval = params.singleEnd ? 'reverse' : 'yes'  
+    } else {
+         sval = 'no'    
     }
-    def count_val = ''
-    if (params.htseq_mode == 'gene') { count_val = 'gene_id' }
-    if (params.htseq_mode == 'transcript') { count_val = 'transcript_id' }
-    if (params.htseq_mode == 'exon') { count_val = 'exon_id' }
-     
+
     """
-    htseq-count -m union -r pos -s $s_val -i $count_val -f bam $bam_file $genome_gtf  > ${sample_id}_${params.htseq_mode}_raw_counts.txt
+    htseq-count ${params.count.toolOptions} -s $s_val -f bam $bam_file $genome_gtf  > ${sample_id}_raw_counts.txt
     """
 }
