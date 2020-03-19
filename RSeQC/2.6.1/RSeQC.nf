@@ -2,7 +2,7 @@
 process RSeQC {
     tag {"RSeQC ${sample_id}"}
     label 'RSeQC_2_6_1'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.rseqc_mem}" : ""
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.rseqc.mem}" : ""
     container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/RSeQC/rseqc_2.6.1_R_3.6.1-squashfs-pack.gz.squashfs"
     shell = ['/bin/bash', '-euo', 'pipefail']
 

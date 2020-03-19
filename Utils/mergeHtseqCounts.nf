@@ -1,5 +1,5 @@
 process mergeHtseqCounts {
-    tag { "mergehtseqcounts" }
+    tag "mergehtseqcounts ${run_id}" 
     label 'mergehtseqcounts'
     shell = ['/bin/bash', '-euo', 'pipefail']
 

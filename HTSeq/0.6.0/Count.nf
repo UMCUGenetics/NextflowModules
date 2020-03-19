@@ -2,7 +2,7 @@ process Count {
     tag {"HTSeq Count ${sample_id}"}
     label 'HTSeq_0_6_0'
     label 'HTSeq_0_6_0_Count'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.htseq_mem}" : ""
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.count.mem}" : ""
     container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/HTSeq/htseq_0.6.0-squashfs-pack.gz.squashfs'
     shell = ['/bin/bash', '-euo', 'pipefail']
 

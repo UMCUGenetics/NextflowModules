@@ -1,5 +1,5 @@
 process edgerRpkm {
-    tag { "edgerrpkm" }
+    tag "edgerrpkm ${run_id}"
     label 'edgerrpkm'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
