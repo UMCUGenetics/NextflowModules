@@ -14,10 +14,10 @@ process Count {
     tuple sample_id, file("${sample_id}_*_raw_counts.txt") 
 
     shell:
-    def s_val = params.strandness
+    def s_val = 'no'
     if (!params.singleEnd) {
-       if (params.strandness == 'reverse') { s_val = 'yes' }
-       if (params.strandness == 'yes') { s_val = 'reverse' }
+       if (params.fwStranded && !params.unstranded) { s_val = 'yes' }
+       if (params.revStranded && !params.unstranded) { s_val = 'reverse' }
     }
     def count_val = ''
     if (params.htseq_mode == 'gene') { count_val = 'gene_id' }
@@ -25,6 +25,6 @@ process Count {
     if (params.htseq_mode == 'exon') { count_val = 'exon_id' }
      
     """
-    htseq-count -m union -r pos -s $s_val -i $count_val -f bam $bam_file $genome_gtf  > ${sample_id}_${count_val}_raw_counts.txt
+    htseq-count -m union -r pos -s $s_val -i $count_val -f bam $bam_file $genome_gtf  > ${sample_id}_${params.htseq_mode}_raw_counts.txt
     """
 }

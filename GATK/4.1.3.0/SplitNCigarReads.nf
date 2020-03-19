@@ -8,10 +8,7 @@ process SplitNCigarReads {
     
     input:
       tuple sample_id, file(bam), file(bai)
-      file(genome_fasta)
-      file(genome_index)
-      file(genome_dict)
-
+   
     output:
       tuple sample_id, file("${sample_id}.split.bam"), file("${sample_id}.split.bai")
 
