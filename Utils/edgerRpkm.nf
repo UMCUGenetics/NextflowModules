@@ -1,6 +1,6 @@
-process edger_rpkm {
-    tag { "edger_rpkm" }
-    label 'edger_rpkm'
+process edgerRpkm {
+    tag { "edgerrpkm" }
+    label 'edgerrpkm'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
@@ -9,7 +9,7 @@ process edger_rpkm {
     val feature_lengths
 
     output:
-    file("${run_id}_RPKM.txt")
+    file("${run_id}_readCounts_RPKM.txt")
 
     script:
     """

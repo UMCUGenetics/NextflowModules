@@ -1,6 +1,6 @@
-process merge_counts {
-    tag { "merge_counts" }
-    label 'merge_counts'
+process mergeHtseqCounts {
+    tag { "mergehtseqcounts" }
+    label 'mergehtseqcounts'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
@@ -8,7 +8,7 @@ process merge_counts {
     file(count_tables)
 
     output:
-    file("${run_id}_counts_merged.txt")
+    file("${run_id}_readCounts_raw.txt")
 
     script:
     """
