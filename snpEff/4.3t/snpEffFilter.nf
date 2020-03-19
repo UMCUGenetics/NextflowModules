@@ -1,11 +1,11 @@
 
 process snpEffFilter {
-    tag {"SNPEFF_snpefffilter ${run_id}"}
+    tag {"SNPEFF_Snpefffilter ${run_id}"}
     label 'SNPEFF_4_3t'
-    label 'SNPEFF_snpefffilter_4_3t'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.snpefffilter.mem}" : ""
+    label 'SNPEFF_4_3t_Snpefffilter'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:snpeff-4.3t'
-    
+
     input:
       tuple run_id, file(vcf), file(vcfidx)
 
@@ -18,7 +18,7 @@ process snpEffFilter {
     set -o pipefail
 
     java -Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR -jar /bin/snpEff.jar \
-    -c snpEff.config ${params.snpefffilter.toolOptions} \
+    -c snpEff.config ${params.optional} \
     -v $vcf \
     > ${vcf.baseName}.filtered_variants.vcf
 

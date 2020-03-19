@@ -1,8 +1,8 @@
 process HaplotypeCaller {
-    tag {"GATK_haplotypecaller ${sample_id}.${int_tag}"}
+    tag {"GATK_Haplotypecaller ${sample_id}.${int_tag}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_haplotypecaller_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.haplotypecaller.mem}" : ""
+    label 'GATK_4_1_3_0_Haplotypecaller'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
 
     input:
@@ -17,10 +17,10 @@ process HaplotypeCaller {
     """
     gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     HaplotypeCaller \
-    ${params.haplotypecaller.toolOptions} \
+    ${params.optional} \
     -I $bam \
     --output ${sample_id}.${int_tag}.g.vcf \
-    -R $params.genome_fasta \
+    -R ${params.genome_fasta} \
     -L $interval_file
     """
 }

@@ -1,8 +1,8 @@
 process GenotypeGVCFs {
-    tag {"GATK_genotypegvcfs ${run_id}.${interval}"}
+    tag {"GATK_Genotypegvcfs ${run_id}.${interval}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_genotypegvcfs_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.genotypegvcfs.mem}" : ""
+    label 'GATK_4_1_3_0_Genotypegvcfs'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
 
     input:
@@ -19,8 +19,8 @@ process GenotypeGVCFs {
     GenotypeGVCFs \
     -V $gvcf \
     -O ${run_id}.${interval}.vcf \
-    -R $params.genome_fasta \
-    -D $params.genome_dbsnp \
+    -R ${params.genome_fasta} \
+    -D ${params.genome_dbsnp} \
     -L $interval_file
     """
 }

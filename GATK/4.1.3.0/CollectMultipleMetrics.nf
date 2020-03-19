@@ -1,11 +1,11 @@
 
 process CollectMultipleMetrics {
-  tag {"GATK_collectmultiplemetrics ${sample_id}"}
+  tag {"GATK_Collectmultiplemetrics ${sample_id}"}
   label 'GATK_4_1_3_0'
-  label 'GATK_collectmultiplemetrics_4_1_3_0'
-  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.collectmultiplemetrics.mem}" : ""
+  label 'GATK_4_1_3_0_Collectmultiplemetrics'
+  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
   container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
-  
+
   input:
     tuple sample_id, file(bam)
 
@@ -18,7 +18,7 @@ process CollectMultipleMetrics {
   CollectMultipleMetrics \
   -I $bam \
   -O ${sample_id}.multiple_metrics\
-  -R $params.genome_fasta \
-  ${params.collectmultiplemetrics.toolOptions}
+  -R ${params.genome_fasta} \
+  ${params.optional}
   """
 }
