@@ -30,7 +30,7 @@ process AlignReads {
     --outSAMtype BAM SortedByCoordinate \
     --outReadsUnmapped Fastx \
     --outFileNamePrefix ${sample_id}. \
-    --twopassMode $params.star_twopassMode \
+    --twopassMode Basic \
     --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}
     """
 }
