@@ -12,7 +12,7 @@ process mergeHtseqCounts {
 
     script:
     """
-    merge_counts.R \$PWD $run_id 
+    mergeHtseqCounts.R \$PWD $run_id 
     """
 
 }

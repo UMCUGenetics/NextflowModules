@@ -13,7 +13,7 @@ process edgerRpkm {
 
     script:
     """
-    edger_rpkm.R ${run_id} ${counts} ${feature_lengths}  
+    edgerRpkm.R ${run_id} ${counts} ${feature_lengths}  
     """
 
 }
