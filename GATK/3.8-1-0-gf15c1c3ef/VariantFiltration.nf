@@ -1,7 +1,7 @@
-process VariantFiltration {
-    tag {"GATK VariantFiltration ${analysis_id}"}
+process VariantFiltrationSnpIndel {
+    tag {"GATK VariantFiltrationSnpIndel ${analysis_id}"}
     label 'GATK_3_8_1_0_gf15c1c3ef'
-    label 'GATK_3_8_1_0_gf15c1c3ef_VariantFiltration'
+    label 'GATK_3_8_1_0_gf15c1c3ef_VariantFiltrationSnpIndel'
     container = 'quay.io/biocontainers/gatk:3.8--py27_1'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
