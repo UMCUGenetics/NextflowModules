@@ -1,9 +1,9 @@
 
 process CollectWGSMetrics {
-  tag {"GATK_collectwgsmetrics ${sample_id}"}
+  tag {"GATK_Collectwgsmetrics ${sample_id}"}
   label 'GATK_4_1_3_0'
-  label 'GATK_collectwgsmetrics_4_1_3_0'
-  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.collectwgsmetrics.mem}" : ""
+  label 'GATK_4_1_3_0_Collectwgsmetrics'
+  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
   container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
 
   input:
@@ -18,8 +18,8 @@ process CollectWGSMetrics {
   CollectWgsMetrics \
   -I $bam \
   -O ${sample_id}.wgs_metrics.txt \
-  -R $params.genome_fasta \
-
+  -R ${params.genome_fasta} \
+  ${params.optional}
   sed -i 's/picard\\.analysis\\.WgsMetrics/picard\\.analysis\\.CollectWgsMetrics\\\$WgsMetrics/' ${sample_id}.wgs_metrics.txt
   """
 }

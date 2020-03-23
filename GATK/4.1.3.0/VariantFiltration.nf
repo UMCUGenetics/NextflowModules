@@ -1,11 +1,11 @@
 
 process VariantFiltration {
-    tag {"GATK_variantfiltration ${run_id}.${interval}.${type}"}
+    tag {"GATK_Variantfiltration ${run_id}.${interval}.${type}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_variantfiltration_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.variantfiltration.mem}" : ""
+    label 'GATK_4_1_3_0_Variantfiltration'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
-    
+
     input:
       tuple run_id, interval, type, file(vcf), file(vcfidx)
 
@@ -23,7 +23,7 @@ process VariantFiltration {
     """
     gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     VariantFiltration \
-    ${params.variantfiltration.toolOptions} \
+    ${params.optional} \
     -R $params.genome_fasta \
     -V $vcf \
     -O ${run_id}.${interval}.${type}.filtered_variants.vcf \

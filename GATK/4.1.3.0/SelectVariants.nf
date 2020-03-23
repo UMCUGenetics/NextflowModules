@@ -1,10 +1,10 @@
 process SelectVariants {
-    tag {"GATK_selectvariants ${run_id}.${interval}.${type}"}
+    tag {"GATK_Selectvariants ${run_id}.${interval}.${type}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_selectvariants_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.selectvariants.mem}" : ""
+    label 'GATK_4_1_3_0_Selectvariants'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
-    
+
     input:
       tuple run_id, interval, file(vcf),file(vcfidx),type
 
@@ -16,7 +16,7 @@ process SelectVariants {
     """
     gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     SelectVariants \
-    -R $params.genome_fasta \
+    -R ${params.genome_fasta} \
     -V $vcf \
     -O ${run_id}.${interval}.${type}.tmp.vcf \
     $select_type

@@ -1,8 +1,9 @@
 
 process MarkDup {
-  tag {"SAMBAMBA_markdup ${sample_id}"}
-  label 'SAMBAMBA_markdup_0_6_8'
-  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.markdup.mem}" : ""
+  tag {"SAMBAMBA_Markdup ${sample_id}"}
+  label 'SAMBAMBA_0_6_8'
+  label 'SAMBAMBA_0_6_8_Markdup'
+  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
   container = 'library://sawibo/default/bioinf-tools:sambamba-0.6.8'
 
   input:
@@ -13,7 +14,7 @@ process MarkDup {
 
   script:
   """
-  sambamba markdup ${params.markdup.toolOptions} --tmpdir=\$PWD/tmp -t ${task.cpus} ${bams} ${sample_id}_dedup.bam
+  sambamba markdup ${params.optional} --tmpdir=\$PWD/tmp -t ${task.cpus} ${bams} ${sample_id}_dedup.bam
   sambamba index -t ${task.cpus} ${sample_id}_dedup.bam ${sample_id}_dedup.bai
   """
 }

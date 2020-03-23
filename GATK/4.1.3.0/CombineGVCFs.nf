@@ -1,8 +1,8 @@
 process CombineGVCFs {
-    tag {"GATK_combinegvcfs ${run_id}.${interval}"}
+    tag {"GATK_Combinegvcfs ${run_id}.${interval}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_combinegvcfs_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.combinegvcfs.mem}" : ""
+    label 'GATK_4_1_3_0_Combinegvcfs'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
 
     input:
@@ -17,7 +17,7 @@ process CombineGVCFs {
 
     gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     CombineGVCFs \
-    -R $params.genome_fasta \
+    -R ${params.genome_fasta} \
     -V $vcfs \
     -O ${run_id}.${interval}.g.vcf \
     -L $interval_file

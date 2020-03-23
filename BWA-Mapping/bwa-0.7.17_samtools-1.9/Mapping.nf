@@ -1,11 +1,12 @@
 
 
 process BWAMapping {
-    tag {"BWA_mem ${sample_id} - ${rg_id}"}
-    label 'BWA_mem_0_7_17'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.bwa.mem}" : ""
+    tag {"BWA_Mem ${sample_id} - ${rg_id}"}
+    label 'BWA_0_7_17'
+    label 'BWA_0_7_17_Mem'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:bwa-0.7.17_samtools-1.9'
-    
+
     input:
     tuple sample_id, rg_id, file(fastq: "*")
 
@@ -19,7 +20,7 @@ process BWAMapping {
 
     """
     set -o pipefail
-    bwa mem ${params.bwa.toolOptions} -t ${task.cpus} -R $bwa_readgroup $params.genome_fasta $fastq | \
+    bwa mem $params.optional -t ${task.cpus} -R $bwa_readgroup $params.genome_fasta $fastq | \
     samtools sort > ${rg_id}_sorted.bam
     samtools index ${rg_id}_sorted.bam ${rg_id}_sorted.bai
     """

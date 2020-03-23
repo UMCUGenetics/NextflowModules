@@ -1,11 +1,11 @@
 process MergeVCFs {
-    tag {"GATK_mergevcfs ${id}"}
+    tag {"GATK_Mergevcfs ${id}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_mergevcfs_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mergevcf.mem}" : ""
+    label 'GATK_4_1_3_0_Mergevcfs'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
-    
+
     input:
       tuple id, file(vcf_chunks), file(vcfidxs)
 

@@ -1,11 +1,11 @@
 
 process SnpSiftAnnotate {
-    tag {"SNPEFF_snpsiftannotate ${run_id}"}
+    tag {"SNPEFF_Snpsiftannotate ${run_id}"}
     label 'SNPEFF_4_3t'
-    label 'SNPEFF_snpsiftannotate_4_3t'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.snpsiftannotate.mem}" : ""
+    label 'SNPEFF_4_3t_Snpsiftannotate'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:snpeff-4.3t'
-    
+
     input:
       tuple run_id, file(vcf), file(vcfidx)
 
@@ -20,7 +20,7 @@ process SnpSiftAnnotate {
     set -o pipefail
 
     java -Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR -jar /bin/SnpSift.jar annotate \
-    ${params.snpsiftannotate.toolOptions} ${params.genome_snpsift_annotate_db} \
+    ${params.optional} ${params.genome_snpsift_annotate_db} \
     $vcf > ${vcf.baseName}_${db_name}.vcf
 
     java -Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR -jar /bin/igvtools.jar index ${vcf.baseName}_${db_name}.vcf
