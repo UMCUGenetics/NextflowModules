@@ -1,9 +1,9 @@
 
 process RSeQC {
     tag {"RSeQC ${sample_id}"}
-    label 'RSeQC_2_6_1'
+    label 'RSeQC_3_0_1'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
-    container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/RSeQC/rseqc_2.6.1_R_3.6.1-squashfs-pack.gz.squashfs"
+    container = "quay.io/biocontainers/rseqc:3.0.1--py37h516909a_1"
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:

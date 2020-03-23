@@ -1,9 +1,9 @@
 process Quant {
     tag {"Salmon Quant ${sample_id}"}
-    label 'Salmon_0_13_1'
-    label 'Salmon_0_13_1_Quant'
+    label 'Salmon_0_15_0'
+    label 'Salmon_0_15_0_Quant'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
-    container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/Salmon/0.13.1/salmon-0.13.1-squashfs-pack.gz.squashfs"
+    container = 'quay.io/biocontainers/salmon:0.15.0--hf69c8f4_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:

@@ -3,7 +3,7 @@
       label 'Preseq_2_0_3'
       label 'Preseq_2_0_3_Lc_extrap'
       clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
-      container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/Preseq/Preseq_2.0.3_Samtools_1.9-squashfs-pack.gz.squashfs"
+      container = "quay.io/biocontainers/preseq:2.0.3--hf53bd2b_3"
       shell = ['/bin/bash', '-euo', 'pipefail']
 
       input:
