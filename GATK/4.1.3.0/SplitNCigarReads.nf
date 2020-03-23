@@ -14,7 +14,7 @@ process SplitNCigarReads {
 
     script:
     """
-    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$PWD" \
     SplitNCigarReads \
     -R $params.genome_fasta \
     -I $bam \
