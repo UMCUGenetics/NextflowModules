@@ -1,7 +1,7 @@
 process TrimGalore {
     tag {"TrimGalore ${sample_id} - ${rg_id}"}
     label 'TrimGalore_0_6_1'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.trimgalore.mem}" : ""
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = "/hpc/local/CentOS7/cog_bioinf/nextflow_containers/TrimGalore/trim-galore_0.6.1-squashfs-pack.gz.squashfs"
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -14,6 +14,6 @@ process TrimGalore {
     script:
     def paired = !params.singleEnd ? "--paired" :""   	
     """
-    trim_galore $fastqs $paired --fastqc --gzip 
+    trim_galore ${fastqs} ${paired} ${params.optional} 
     """
 }

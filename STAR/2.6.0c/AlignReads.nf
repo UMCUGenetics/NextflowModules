@@ -3,13 +3,12 @@ process AlignReads {
     label 'STAR_2_6_0c'
     label 'STAR_2_6_0c_AlignReads'
     container = 'quay.io/biocontainers/star:2.6.0c--2'
-    //container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/STAR/star-2.4.2a-squashfs-pack.gz.squashfs'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.star.mem}" : ""
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
     tuple sample_id, rg_id, file(r1_fastqs), file(r2_fastqs)
-    file(genomeDir)
+    file(star_genome_index)
     
 
     output:
@@ -23,10 +22,10 @@ process AlignReads {
     if ( !params.singleEnd ){
          r2_args = r2_fastqs.collect{ "$it" }.join(",") 
     }
-    def read_args = !params.singleEnd ? "--readFilesIn $r1_args $r2_args" :"--readFilesIn $r1_args"   
+    def read_args = !params.singleEnd ? "--readFilesIn ${r1_args} ${r2_args}" :"--readFilesIn ${r1_args}"   
 
     """
-    STAR --runMode alignReads --genomeDir $genomeDir $read_args \
+    STAR --runMode alignReads --genomeDir ${star_genome_index} ${read_args} \
     --readFilesCommand zcat \
     --runThreadN ${task.cpus} \
     --outSAMtype BAM SortedByCoordinate \
