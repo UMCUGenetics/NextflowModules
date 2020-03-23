@@ -16,12 +16,12 @@ process RSeQC {
     script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
     """
-    inner_distance.py -i $bam -o ${bam.baseName}.rseqc -r $genome_bed12
-    read_distribution.py -i $bam -r $genome_bed12 > ${bam.baseName}.read_distribution.txt
-    infer_experiment.py -i $bam -r $genome_bed12 > ${bam.baseName}.infer_experiment.txt
-    junction_annotation.py -i $bam -o ${bam.baseName}.rseqc -r $genome_bed12
-    bam_stat.py -i $bam 2> ${bam.baseName}.bam_stat.txt
-    junction_saturation.py -i $bam -o ${bam.baseName}.rseqc -r $genome_bed12 2> ${bam.baseName}.junction_annotation_log.txt
-    read_duplication.py -i $bam -o ${bam.baseName}.read_duplication
+    inner_distance.py -i ${bam} -o ${bam.baseName}.rseqc -r ${genome_bed12}
+    read_distribution.py -i ${bam} -r ${genome_bed12} > ${bam.baseName}.read_distribution.txt
+    infer_experiment.py -i ${bam} -r ${genome_bed12} > ${bam.baseName}.infer_experiment.txt
+    junction_annotation.py -i ${bam} -o ${bam.baseName}.rseqc -r ${genome_bed12}
+    bam_stat.py -i ${bam} 2> ${bam.baseName}.bam_stat.txt
+    junction_saturation.py -i ${bam} -o ${bam.baseName}.rseqc -r ${genome_bed12} 2> ${bam.baseName}.junction_annotation_log.txt
+    read_duplication.py -i ${bam} -o ${bam.baseName}.read_duplication
     """
 }
