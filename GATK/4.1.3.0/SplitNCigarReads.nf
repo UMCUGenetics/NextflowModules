@@ -3,7 +3,7 @@ process SplitNCigarReads {
     tag {"GATK SplitNCigarReads ${sample_id}"}
     label 'GATK_4_1_3_0'
     label 'GATK_4_1_3_0_SplitNCigarReads'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.splitncigarreads.mem}" : ""
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     
     input:
@@ -16,8 +16,8 @@ process SplitNCigarReads {
     """
     gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$PWD" \
     SplitNCigarReads \
-    -R $params.genome_fasta \
-    -I $bam \
+    -R ${params.genome_fasta} \
+    -I ${bam} \
     --refactor-cigar-string \
     -O ${sample_id}.split.bam
     """
