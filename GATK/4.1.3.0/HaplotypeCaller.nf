@@ -9,18 +9,18 @@ process HaplotypeCaller {
       tuple sample_id, file(bam), file(bai), file(interval_file)
 
     output:
-      tuple sample_id, int_tag ,file("${sample_id}.${int_tag}.g.vcf"), file("${sample_id}.${int_tag}.g.vcf.idx"), file(interval_file)
+      tuple sample_id, int_tag ,file("${sample_id}.${int_tag}${ext}"), file("${sample_id}.${int_tag}${ext}.idx"), file(interval_file)
 
     script:
     int_tag = interval_file.toRealPath().toString().split("/")[-2]
-
+    ext = params.optional =~ /GVCF/ ? '.g.vcf' : '.vcf'   
     """
     gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
     HaplotypeCaller \
     ${params.optional} \
     -I $bam \
-    --output ${sample_id}.${int_tag}.g.vcf \
-    -R ${params.genome_fasta} \
-    -L $interval_file
+    --output ${sample_id}.${int_tag}${ext} \
+    -R $params.genome_fasta \
+    -L $interval_file 
     """
 }
