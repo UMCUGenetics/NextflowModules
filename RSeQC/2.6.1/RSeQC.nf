@@ -15,8 +15,6 @@ process RSeQC {
 
     script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
-    //def inner_distance_arg = !params.singleEnd ? "inner_distance.py -i $bam -o ${bam.baseName}.rseqc -r $genome_bed12" :''
-    //def read_distribution_arg = !params.singleEnd ? "read_distribution.py -i $bam -r $genome_bed12 > ${bam.baseName}.read_distribution.txt" :''
     """
     inner_distance.py -i $bam -o ${bam.baseName}.rseqc -r $genome_bed12
     read_distribution.py -i $bam -r $genome_bed12 > ${bam.baseName}.read_distribution.txt
