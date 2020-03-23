@@ -1,11 +1,11 @@
 
 process GatherBaseRecalibrationTables {
-    tag {"GATK_gatherbaserecalibrator ${sample_id}"}
+    tag {"GATK_Gatherbaserecalibrator ${sample_id}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_gatherbaserecalibrator_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.gatherbaserecalibrator.mem}" : ""
+    label 'GATK_4_1_3_0_Gatherbaserecalibrator'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
-    
+
     input:
       tuple sample_id, file(bqsr_tables)
 

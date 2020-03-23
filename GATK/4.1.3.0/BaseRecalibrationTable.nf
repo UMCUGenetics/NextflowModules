@@ -1,11 +1,11 @@
 
 process BaseRecalibrationTable {
-    tag {"GATK_baserecalibrator ${sample_id}.${int_tag}"}
+    tag {"GATK_Baserecalibrator ${sample_id}.${int_tag}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_baserecalibrator_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.baserecalibrator.mem}" : ""
+    label 'GATK_4_1_3_0_Baserecalibrator'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
-    
+
     input:
       tuple sample_id, file(bam), file(bai), file(interval_file)
 
@@ -21,7 +21,7 @@ process BaseRecalibrationTable {
     BaseRecalibrator \
     --input $bam \
     --output ${sample_id}.${int_tag}.recal.table \
-    -R $params.genome_fasta \
+    -R ${params.genome_fasta} \
     $known \
     -L $interval_file
     """
