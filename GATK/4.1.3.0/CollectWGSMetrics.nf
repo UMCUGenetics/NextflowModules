@@ -3,7 +3,7 @@ process CollectWGSMetrics {
   tag {"GATK_Collectwgsmetrics ${sample_id}"}
   label 'GATK_4_1_3_0'
   label 'GATK_4_1_3_0_Collectwgsmetrics'
-  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.collectwgsmetric.mem}" : ""
+  clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
   container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
 
   input:
