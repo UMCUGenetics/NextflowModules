@@ -3,7 +3,6 @@ process AlignReads {
     label 'STAR_2_6_0c'
     label 'STAR_2_6_0c_AlignReads'
     container = 'quay.io/biocontainers/star:2.6.0c--2'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
