@@ -8,7 +8,6 @@ process MultiQC {
     input:
 
     file(qc_files: "*")
-    out_dir
 
     output:
     file "multiqc_report.html"
@@ -18,6 +17,6 @@ process MultiQC {
     script:
     """
 
-    multiqc ${params.optional} $out_dir
+    multiqc ${params.optional} .
     """
 }
