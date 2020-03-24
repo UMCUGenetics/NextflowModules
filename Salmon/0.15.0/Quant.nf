@@ -3,7 +3,7 @@ process Quant {
     label 'Salmon_0_15_0'
     label 'Salmon_0_15_0_Quant'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
-    container = 'quay.io/biocontainers/salmon:0.15.0--hf69c8f4_0'
+    container = 'quay.io/biocontainers/salmon:0.13.1--h86b0361_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
