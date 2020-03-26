@@ -9,7 +9,7 @@ process MultiQC {
 
     output:
     file "${analysis_id}_multiqc_report.html"
-    file "${analysis_id}_multiqc_data"
+    file "${analysis_id}_multiqc_report_data"
 
     script:
     """
