@@ -5,14 +5,14 @@ process MultiQC {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    file(qc_files: "*")
+    tuple val(analysis_id), file(qc_files: "*")
 
     output:
-    file "multiqc_report.html"
-    file "multiqc_data"
+    file "${analysis_id}_multiqc_report.html"
+    file "${analysis_id}_multiqc_data"
 
     script:
     """
-    multiqc ${params.optional} .
+    multiqc ${params.optional} --title ${analysis_id} .
     """
 }
