@@ -9,7 +9,7 @@ process EstimateLibraryComplexity {
     tuple val(sample_id), file(bam_file), file(bai_file)
 
     output:
-    tuple val(sample_id), file("${sample_id}.LibraryComplexity.txt")
+    file("${sample_id}.LibraryComplexity.txt")
 
     script:
 
