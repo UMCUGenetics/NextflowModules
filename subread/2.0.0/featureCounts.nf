@@ -13,6 +13,7 @@ process featureCounts {
     tuple sample_id, file("${bam_file.baseName}_gene.featureCounts.txt"), file("${bam_file.baseName}_gene.featureCounts.txt.summary")
 
     shell:
+    //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
     def featureCounts_direction = 0
     if (params.stranded && !params.unstranded) {
           featureCounts_direction = 1
