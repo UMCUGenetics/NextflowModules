@@ -1,4 +1,3 @@
-
 process MarkDup {
   tag {"SAMBAMBA_Markdup ${sample_id}"}
   label 'SAMBAMBA_0_6_8'
