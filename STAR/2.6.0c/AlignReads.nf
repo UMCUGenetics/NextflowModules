@@ -2,8 +2,7 @@ process AlignReads {
     tag {"STAR AlignReads ${sample_id} "}
     label 'STAR_2_6_0c'
     label 'STAR_2_6_0c_AlignReads'
-    //container = 'quay.io/biocontainers/star:2.6.0c--2'
-    container = '/hpc/local/CentOS7/cog_bioinf/nextflow_containers/STAR/star-2.4.2a-squashfs-pack.gz.squashfs'
+    container = 'quay.io/biocontainers/star:2.6.0c--2'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
@@ -12,7 +11,7 @@ process AlignReads {
     
 
     output:
-    tuple sample_id, file("*.bam" ), file("*Unmapped*"), file("*Log.final.out"), file("*Log.out"), file("*SJ.out.tab")
+    tuple sample_id, file("${sample_id}_Aligned.sortedByCoord.out.bam" ), file("*Unmapped*"), file("*Log.final.out"), file("*Log.out"), file("*SJ.out.tab")
      
    
     script:
@@ -22,11 +21,8 @@ process AlignReads {
     if ( !params.singleEnd ){
          r2_args = r2_fastqs.collect{ "$it" }.join(",") 
     }
-    def read_args = params.singleEnd ? "--readFilesIn ${r1_args}" :"--readFilesIn ${r1_args} ${r2_args}"    
+    def read_args = params.singleEnd ? "--readFilesIn ${r1_args}" :"--readFilesIn ${r2_args} ${r1_args}"    
     """
-    STAR --genomeDir ${star_genome_index} ${params.optional} ${read_args}  \
-    --runThreadN ${task.cpus} \
-    --outFileNamePrefix ${sample_id}. \
-    --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id} 
+    STAR --genomeDir ${star_genome_index} --runThreadN ${task.cpus} --outFileNamePrefix ${sample_id}_ ${params.optional} ${read_args} --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id} 
     """
 }
