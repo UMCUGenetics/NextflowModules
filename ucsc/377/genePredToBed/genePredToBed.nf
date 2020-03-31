@@ -9,7 +9,7 @@ process genePredToBed {
     file(genome_genepred)
 
     output:
-    file("${genome_genepred.baseName}.genePred")
+    file("${genome_genepred.baseName}.sorted.bed12")
 
 
     script:
