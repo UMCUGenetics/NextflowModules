@@ -1,5 +1,5 @@
 process gtfToGenePred {
-    tag {"ucsc gtfToGenePred ${sample_id}"}
+    tag {"ucsc gtfToGenePred ${genome_gtf.baseName}"}
     label 'ucsc_377'
     label 'ucsc_377_gtfToGenePred'
     container = 'quay.io/biocontainers/ucsc-gtftogenepred:377--h35c10e6_2'

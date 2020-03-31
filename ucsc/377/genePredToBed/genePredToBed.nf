@@ -1,5 +1,5 @@
 process genePredToBed {
-    tag {"ucsc genePredToBed ${sample_id}"}
+    tag {"ucsc genePredToBed ${genome_genepred.baseName}"}
     label 'ucsc_377'
     label 'ucsc_377_genePredToBed'
     container = 'quay.io/biocontainers/ucsc-genepredtobed:377--h35c10e6_2'
