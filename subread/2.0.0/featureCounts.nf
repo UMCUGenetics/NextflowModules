@@ -24,7 +24,7 @@ process featureCounts {
     }     
     def bam_list = bam_file.collect{ "$it" }.join(" ")
     """
-    featureCounts -T ${task.cpus} -a ${genome_gtf} -t ${params.fc_count_type} -g ${params.fc_group_features} -o ${run_id}_gene.featureCounts.txt ${extraAttributes} ${params.optional} -p -s ${featureCounts_direction} ${bam_list}
+    featureCounts -T ${task.cpus} -a ${genome_gtf} -t ${params.fc_count_type} -g ${params.fc_group_features} -o ${run_id}_gene.featureCounts.txt ${extraAttributes} ${params.optional} -s ${featureCounts_direction} ${bam_list}
     tail -n +2 ${run_id}_gene.featureCounts.txt | cut -f 1,7- | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' >  "${run_id}_gene.counts.featureCounts.txt"
     """
 }
