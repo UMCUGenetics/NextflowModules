@@ -1,25 +1,25 @@
 process genomeGenerate {
-    tag {"STAR genomeGenerate ${ref_name} "}
+    tag {"STAR genomeGenerate ${genome_fasta.baseName} "}
     label 'STAR_2_6_0c'
     label 'STAR_2_6_0c_genomeGenerate'
     container = 'quay.io/biocontainers/star:2.6.0c--2'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple ref_name, file(genome_gtf), file(genome_fasta)
+    file(genome_fasta), file(genome_gtf)
    
    
     output:
-    file("${ref_name}/")
+    file("${genome_fasta.baseName}/")
      
    
     script:
     """
-    mkdir ${ref_name}
+    mkdir -p ${genome_fasta.baseName}
     STAR --runMode genomeGenerate \
     --runThreadN ${task.cpus} \
     --sjdbGTFfile ${genome_gtf} \
-    --genomeDir ${ref_name} \
+    --genomeDir ${genome_fasta.baseName} \
     --genomeFastaFiles ${genome_fasta} 
     """
 }
