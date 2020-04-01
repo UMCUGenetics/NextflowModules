@@ -43,7 +43,7 @@ def extractFastqPairFromDir(dir) {
         if (r2_path.exists()) fastq_files.add(r2_path)
         def (flowcell, lane) = flowcellLaneFromFastq(r1_path)
         def rg_id = "${sample_id}_${flowcell}_${lane}"
-        [sample_id, fastq_files]
+        [sample_id, rg_id, fastq_files]
     }
 }
 
