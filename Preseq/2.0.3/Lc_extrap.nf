@@ -2,7 +2,6 @@
       tag {"Preseq Lc_extrap ${sample_id} "}
       label 'Preseq_2_0_3'
       label 'Preseq_2_0_3_Lc_extrap'
-      clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
       container = "quay.io/biocontainers/preseq:2.0.3--hf53bd2b_3"
       shell = ['/bin/bash', '-euo', 'pipefail']
 

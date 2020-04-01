@@ -1,7 +1,6 @@
 process TrimGalore {
     tag {"TrimGalore ${sample_id} - ${rg_id}"}
     label 'TrimGalore_0_6_5'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'quay.io/biocontainers/trim-galore:0.6.5--0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
