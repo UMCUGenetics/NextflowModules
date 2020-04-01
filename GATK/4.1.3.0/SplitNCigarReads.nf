@@ -3,7 +3,6 @@ process SplitNCigarReads {
     tag {"GATK SplitNCigarReads ${sample_id}"}
     label 'GATK_4_1_3_0'
     label 'GATK_4_1_3_0_SplitNCigarReads'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     
     input:
