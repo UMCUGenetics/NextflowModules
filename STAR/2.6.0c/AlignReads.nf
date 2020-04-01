@@ -25,9 +25,9 @@ process AlignReads {
     """
     STAR --genomeDir ${star_genome_index} \
          ${read_args} \
-         ${params.optional} \
          --runThreadN ${task.cpus} \
-         --outFileNamePrefix ${sample_id}_ \ 
-         --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id} 
+         --outFileNamePrefix ${sample_id} \
+         --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id} \
+         ${params.optional}
     """
 }
