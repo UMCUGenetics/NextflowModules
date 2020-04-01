@@ -31,9 +31,9 @@ def flowcellLaneFromFastq(path) {
 
 def extractFastqPairFromDir(dir) {
     // Original code from: https://github.com/SciLifeLab/Sarek - MIT License - Copyright (c) 2016 SciLifeLab
-
+    dir = dir.tokenize().collect{"$it/**_R1_*.fastq.gz"}
     Channel
-    .fromPath("${dir}/**_R1_*.fastq.gz", type:'file')
+    .fromPath(dir, type:'file')
     .ifEmpty { error "No R1 fastq.gz files found in ${dir}!" }
     .filter { !(it =~ /.*Undetermined.*/) }
     .map { r1_path ->
@@ -43,15 +43,15 @@ def extractFastqPairFromDir(dir) {
         if (r2_path.exists()) fastq_files.add(r2_path)
         def (flowcell, lane) = flowcellLaneFromFastq(r1_path)
         def rg_id = "${sample_id}_${flowcell}_${lane}"
-        [sample_id, rg_id, fastq_files]
+        [sample_id, fastq_files]
     }
 }
 
 def extractFastqFromDir(dir) {
     // Original code from: https://github.com/SciLifeLab/Sarek - MIT License - Copyright (c) 2016 SciLifeLab
-
+    dir = dir.tokenize().collect{"$it/*.fastq.gz"}
     Channel
-    .fromPath("${dir}/*.fastq.gz", type:'file')
+    .fromPath(dir, type:'file')
     .ifEmpty { error "No fastq.gz files found in ${dir}!" }
     .filter { !(it =~ /.*Undetermined.*/) }
     .map { fastq_path ->
@@ -66,9 +66,9 @@ def extractFastqFromDir(dir) {
 
 def extractAllFastqFromDir(dir) {
     // Original code from: https://github.com/SciLifeLab/Sarek - MIT License - Copyright (c) 2016 SciLifeLab
-
+    dir = dir.tokenize().collect{"$it/**_R1_*.fastq.gz"}
     Channel
-    .fromPath("${dir}/**_R1_*.fastq.gz", type:'file')
+    .fromPath(dir, type:'file')
     .ifEmpty { error "No R1 fastq.gz files found in ${dir}!" }
     .map { r1_path ->
         fastq_files = [r1_path]
