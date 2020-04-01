@@ -15,10 +15,15 @@ def flowcellLaneFromFastq(path) {
     assert line.startsWith('@')
     line = line.substring(1)
     def fields = line.split(' ')[0].split(':')
+    String machine
+    int run_nr
     String fcid
     int lane
+
     if (fields.size() == 7) {
         // CASAVA 1.8+ format
+        machine = fields[0]
+        run_nr = fields[1].toInteger()
         fcid = fields[2]
         lane = fields[3].toInteger()
     }
@@ -26,7 +31,7 @@ def flowcellLaneFromFastq(path) {
         fcid = fields[0]
         lane = fields[1].toInteger()
     }
-    [fcid, lane]
+    [fcid, lane, machine, run_nr]
 }
 
 def extractFastqFromDir(dir) {
@@ -62,8 +67,8 @@ def extractAllFastqFromDir(dir) {
         if (r2_path.exists()) fastq_files.add(r2_path)
         if (i1_path.exists()) fastq_files.add(i1_path)
         if (i2_path.exists()) fastq_files.add(i2_path)
-        (flowcell, lane) = flowcellLaneFromFastq(r1_path)
+        (flowcell, lane, machine, run_nr) = flowcellLaneFromFastq(r1_path)
         rg_id = "${sample_id}_${flowcell}_${lane}"
-        [sample_id, rg_id, fastq_files]
+        [sample_id, rg_id, machine, run_nr ,fastq_files]
     }
 }

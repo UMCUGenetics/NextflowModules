@@ -1,14 +1,14 @@
 process SortBam {
-    tag {"FGBIO_sortbam ${sample_id}"}
+    tag {"FGBIO Sortbam ${sample_id}"}
     label 'FGBIO_1_1_0'
-    label 'FGBIO_1_1_0_sortbam'
+    label 'FGBIO_1_1_0_Sortbam'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.sortbam.mem}" : ""
 
     input:
-      tuple sample_id, file(bam)
+      tuple sample_id, flowcell, machine, run_nr,file(bam)
 
     output:
-      tuple sample_id, file("${sample_id}.u.grouped.sorted.bam")
+      tuple sample_id, flowcell, machine, run_nr,file("${sample_id}.u.grouped.sorted.bam")
 
     script:
 

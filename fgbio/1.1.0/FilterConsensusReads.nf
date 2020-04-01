@@ -1,15 +1,15 @@
 process FilterConsensusReads {
-    tag {"FGBIO_filterconsensusreads ${sample_id}"}
+    tag {"FGBIO Filterconsensusreads ${sample_id}"}
     label 'FGBIO_1_1_0'
-    label 'FGBIO_1_1_0_filterconsensusreads'
+    label 'FGBIO_1_1_0_Filterconsensusreads'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.filterconsensusreads.mem}" : ""
 
 
     input:
-      tuple sample_id, file(bam)
+      tuple sample_id, flowcell, machine, run_nr, file(bam)
 
     output:
-      tuple sample_id, file("${sample_id}.u.consensus.filtered.bam")
+      tuple sample_id, flowcell, machine, run_nr, file("${sample_id}.u.consensus.filtered.bam")
 
     script:
 

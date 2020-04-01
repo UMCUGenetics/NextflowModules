@@ -1,15 +1,15 @@
 process MakeUmiBam {
-    tag {"python makeumibam ${sample_id} "}
+    tag {"python Makeumibam ${sample_id} "}
     label 'python_2_7_10'
-    label 'python_2_7_10_makeumibam'
+    label 'python_2_7_10_Makeumibam'
     // container = 'container_url'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(fastq: "*")
+    tuple sample_id, flowcell, machine, run_nr, file(fastq: "*")
 
     output:
-    tuple sample_id, file("${sample_id}.u.grouped.bam")
+    tuple sample_id, flowcell, machine, run_nr, file("${sample_id}.u.grouped.bam")
 
 
     script:
@@ -22,16 +22,20 @@ process MakeUmiBam {
     import re
 
     fastqs = "${fastq}".split()
+    flowcell = "${flowcell}"
+    id = "${sample_id}_"+flowcell
+    sample_name = "${sample_id}"
     out_bam = "${sample_id}.u.grouped.bam"
+
 
     header = {
         'HD': {'VN': '1.6', 'SO':'unsorted', 'GO':'query'},
         'RG': [{
-            'ID':'${sample_id}',
-            'SM':'${sample_id}',
-            'LB':'${sample_id}',
-            'PL':'illumina'
-
+            'ID':id,
+            'SM':sample_name,
+            'LB':sample_name,
+            'PL':'ILLUMINA',
+            'PU':flowcell
         }]
     }
     umis = {}
