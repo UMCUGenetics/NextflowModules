@@ -12,7 +12,7 @@ process Index {
     output:
     file("${transcripts_fasta.baseName}/")
 
-    shell:
+    script:
     """
     salmon index -t ${transcripts_fasta} -i ${transcripts_fasta.baseName}       
     """
