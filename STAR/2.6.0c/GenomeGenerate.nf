@@ -1,7 +1,7 @@
-process genomeGenerate {
-    tag {"STAR genomeGenerate ${genome_fasta.baseName} "}
+process GenomeGenerate {
+    tag {"STAR GenomeGenerate ${genome_fasta.baseName} "}
     label 'STAR_2_6_0c'
-    label 'STAR_2_6_0c_genomeGenerate'
+    label 'STAR_2_6_0c_GenomeGenerate'
     container = 'quay.io/biocontainers/star:2.6.0c--2'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
