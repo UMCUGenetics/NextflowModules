@@ -6,7 +6,8 @@ process GenomeGenerate {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    file(genome_fasta), file(genome_gtf)
+    file(genome_fasta)
+    file(genome_gtf)
    
    
     output:
