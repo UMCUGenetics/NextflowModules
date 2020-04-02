@@ -14,7 +14,7 @@ process Index {
 
     script:
     """
-    salmon index -threads ${task.cpus} -t ${transcripts_fasta} ${params.optional} -i ${transcripts_fasta.baseName}       
+    salmon index --threads ${task.cpus} -t ${transcripts_fasta} ${params.optional} -i ${transcripts_fasta.baseName}       
     """
 }
 
