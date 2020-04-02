@@ -24,10 +24,11 @@ process AlignReads {
     def read_args = params.singleEnd ? "--readFilesIn ${r1_args}" :"--readFilesIn ${r2_args} ${r1_args}"    
     """
     STAR --genomeDir ${star_genome_index} \
+         ${params.optional} \
          ${read_args} \
+         --outFileNamePrefix ${sample_id}_ \
          --runThreadN ${task.cpus} \
-         --outFileNamePrefix ${sample_id} \
-         --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id} \
-         ${params.optional}
+         --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id} 
+        
     """
 }

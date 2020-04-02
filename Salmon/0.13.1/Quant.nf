@@ -13,7 +13,7 @@ process Quant {
     output:
     tuple sample_id, file("${sample_id}/")
 
-    script
+    script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
     def rnastrandness = params.singleEnd ? 'U' : 'IU'
     if (params.stranded && !params.unstranded) {
