@@ -13,7 +13,7 @@ process FeatureCounts {
     output:
     tuple file("${run_id}_gene.featureCounts.txt"), file("${run_id}_gene.counts.featureCounts.txt"), file("${run_id}_gene.featureCounts.txt.summary")
 
-    shell:
+    script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
     def extraAttributes = params.extraAttributes ? "--extraAttributes ${params.extraAttributes}" : ''
     def featureCounts_direction = 0
