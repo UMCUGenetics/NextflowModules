@@ -28,9 +28,6 @@ See `utils/template.nf` for a process template which uses the following guidelin
 - Use CamelCase for tool, command and process names
 - Use lowercase with words separated by underscores for params, inputs, outputs and scripts.
 - All input and output identifiers should reflect their conceptual identity. Use informative names like unaligned_sequences, reference_genome, phylogeny, or aligned_sequences instead of foo_input, foo_file, result, input, output, and so forth.
-- Use the following patterns for optional input (parameters) and output :
-    - Input: https://github.com/nextflow-io/patterns/blob/master/docs/optional-input.adoc
-    - Output: https://github.com/nextflow-io/patterns/blob/master/docs/optional-output.adoc
 - Define two labels for each process, containing toolname, version and command separated by an underscore.
     - BWA_0.7.17
     - BWA_0.7.17_MEM
@@ -40,7 +37,9 @@ See `utils/template.nf` for a process template which uses the following guidelin
 - Add 'set -euo pipefail' to each process.
     - `shell = ['/bin/bash', '-euo', 'pipefail']`
 - Do not define any runtime settings like cpus, memory and time.
--
+- Set process parameters on include:
+   - `include process from 'path/to/process.nf' params(optional: '')`
+
 
 ## GUIX
 1. Creating squashfs immage

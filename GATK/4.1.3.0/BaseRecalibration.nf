@@ -1,10 +1,10 @@
 
 
 process BaseRecalibration {
-    tag {"GATK_applybqsr ${sample_id}.${int_tag}"}
+    tag {"GATK_Applybqsr ${sample_id}.${int_tag}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_applybqsr_4_1_3_0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.applybqsr.mem}" : ""
+    label 'GATK_4_1_3_0_Applybqsr'
+    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
 
     input:
@@ -20,7 +20,7 @@ process BaseRecalibration {
     ApplyBQSR \
     --input $bam \
     --output ${sample_id}.${int_tag}_recalibrated.bam \
-    -R $params.genome_fasta \
+    -R ${params.genome_fasta} \
     --create-output-bam-index true \
     --bqsr-recal-file ${recal_table} \
     -L $interval_file

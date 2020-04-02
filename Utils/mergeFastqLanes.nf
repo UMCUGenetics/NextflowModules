@@ -7,7 +7,7 @@ process mergeFastqLanes {
     tuple sample_id, rg_id, file(r1_fastqs), file(r2_fastqs)
 
     output:
-    tuple sample_id, rg_id, file("${sample_id}_${rg_id}_*.fastq.gz")
+    tuple sample_id, file("${sample_id}_${rg_id}_*.fastq.gz")
 
 
     script:

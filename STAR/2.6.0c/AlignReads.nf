@@ -7,7 +7,7 @@ process AlignReads {
 
     input:
     tuple sample_id, rg_id, file(r1_fastqs), file(r2_fastqs)
-    file(genomeDir)
+    file(star_genome_index)
     
 
     output:
@@ -21,16 +21,16 @@ process AlignReads {
     if ( !params.singleEnd ){
          r2_args = r2_fastqs.collect{ "$it" }.join(",") 
     }
-    def read_args = !params.singleEnd ? "--readFilesIn $r1_args $r2_args" :"--readFilesIn $r1_args"   
+    def read_args = !params.singleEnd ? "--readFilesIn ${r1_args} ${r2_args}" :"--readFilesIn ${r1_args}"   
 
     """
-    STAR --runMode alignReads --genomeDir $genomeDir $read_args \
+    STAR --runMode alignReads --genomeDir ${star_genome_index} ${read_args} \
     --readFilesCommand zcat \
     --runThreadN ${task.cpus} \
     --outSAMtype BAM SortedByCoordinate \
     --outReadsUnmapped Fastx \
     --outFileNamePrefix ${sample_id}. \
-    --twopassMode $params.star_twopassMode \
+    --twopassMode Basic \
     --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}
     """
 }
