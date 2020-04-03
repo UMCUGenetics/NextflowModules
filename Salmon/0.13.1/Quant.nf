@@ -22,7 +22,7 @@ process Quant {
        rnastrandness = params.singleEnd ? 'SR' : 'ISR'
     }
     def endedness = params.singleEnd ? "-r ${fastqs[0]}" : "-1 ${fastqs[0]} -2 ${fastqs[1]}"
-    unmapped = params.saveUnaligned ? "--writeUnmappedNames" : ''
+    def unmapped = params.saveUnaligned ? "--writeUnmappedNames" : ''
     """
     salmon quant --validateMappings \
                    --seqBias --useVBOpt --gcBias \

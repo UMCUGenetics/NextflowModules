@@ -19,12 +19,12 @@ process GenomeGenerate {
     def avail_mem = task.memory ? "--limitGenomeGenerateRAM ${task.memory.toBytes() - 100000000}" : ''
     """
     mkdir ${genome_fasta.baseName}
-    STAR \\
-        --runMode genomeGenerate \\
-        --runThreadN ${task.cpus} \\
-        --sjdbGTFfile ${genome_gtf} \\
-        --genomeDir ${genome_fasta.baseName}/ \\
-        --genomeFastaFiles ${genome_fasta} \\
+    STAR \
+        --runMode genomeGenerate \
+        --runThreadN ${task.cpus} \
+        --sjdbGTFfile ${genome_gtf} \
+        --genomeDir ${genome_fasta.baseName}/ \
+        --genomeFastaFiles ${genome_fasta} \
         $avail_mem
     """
 }
