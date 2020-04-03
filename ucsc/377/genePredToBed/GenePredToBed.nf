@@ -14,7 +14,7 @@ process GenePredToBed {
 
     script:
     """
-    genePredToBed ${genome_genepred} > ${genome_genepred.baseName}.bed12
+    genePredToBed ${genome_genepred} ${genome_genepred.baseName}.bed12
     sort -k1,1 -k2,2n ${genome_genepred.baseName}.bed12 > ${genome_genepred.baseName}.sorted.bed12
     """
 
