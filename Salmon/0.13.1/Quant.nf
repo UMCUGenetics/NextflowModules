@@ -29,7 +29,7 @@ process Quant {
                    --threads ${task.cpus} \
                    --libType=${rnastrandness} \
                    --index ${salmon_index} \
-                   $endedness $unmapped \
+                   ${endedness} ${unmapped} \
                   -o ${sample_id}              
     """
 }
