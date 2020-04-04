@@ -21,19 +21,8 @@ process SamToFastq {
     SamToFastq  \
     ${params.samtofastq.toolOptions} \
     --INPUT $bam \
-    --FASTQ ${sample_id}_${flowcell}_R1.fastq.gz \
-    --SECOND_END_FASTQ ${sample_id}_${flowcell}_R2.fastq.gz \
+    --FASTQ ${sample_id}_${flowcell}_R1_001.fastq.gz \
+    --SECOND_END_FASTQ ${sample_id}_${flowcell}_R2_001.fastq.gz \
     --INCLUDE_NON_PF_READS true \
     """
 }
-//--OUTPUT_PER_RG true \
-// --FASTQ ${sample_id}_R1.fastq.gz \
-// --SECOND_END_FASTQ ${sample_id}_R2.fastq.gz \
-// --COMPRESS_OUTPUTS_PER_RG true \
-// java -Xmx5G -Djava.io.tmpdir=/hpc/cog_bioinf/cuppen/personal_data/sander/tmp/ -jar /hpc/local/CentOS7/cog_bioinf/picard-tools-2.5.0/picard.jar \
-// SamToFastq I=/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/output/umi-test/S3-100ng-6cyc-S3.u.consensus.bam \
-// FASTQ=/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/output/umi-test/S3-100ng-6cyc-S3_R1.fastq.gz SECOND_END_FASTQ=/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/output/umi-test/S3-100ng-6cyc-S3_R2.fastq.gz INCLUDE_NON_PF_READS=false
-
-// ID:0gray_H3HM3AFX2_1    LB:0gray        PL:ILLUMINA     PU:H3HM3AFX2    SM:0gray
-
-//NS500414:682:H3HM3AFX2:3:21412:5864:10124

@@ -3,7 +3,8 @@ process SortBam {
     label 'FGBIO_1_1_0'
     label 'FGBIO_1_1_0_Sortbam'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.sortbam.mem}" : ""
-
+    // container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/idt-umi-dependencies.squashfs'
+    container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     input:
       tuple sample_id, flowcell, machine, run_nr,file(bam)
 
@@ -13,7 +14,7 @@ process SortBam {
     script:
 
     """
-    java -Xmx${task.memory.toGiga()-4}g -jar ${params.fgbio_path} --tmp-dir \$PWD SortBam \
+    java -Xmx${task.memory.toGiga()-4}g -jar /bin/fgbio-1.1.0.jar --tmp-dir \$PWD SortBam \
     --input $bam \
     --output ${sample_id}.u.grouped.sorted.bam \
     ${params.sortbam.toolOptions}

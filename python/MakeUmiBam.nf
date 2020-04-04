@@ -2,7 +2,8 @@ process MakeUmiBam {
     tag {"python Makeumibam ${sample_id} "}
     label 'python_2_7_10'
     label 'python_2_7_10_Makeumibam'
-    // container = 'container_url'
+    // container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/idt-umi-dependencies.squashfs'
+    container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
@@ -15,10 +16,11 @@ process MakeUmiBam {
     script:
 
     """
-    #!/hpc/local/CentOS7/common/lang/python/2.7.10/bin/python
 
-    import pysam
+    #!/gnu/store/vbvjlhhx6y64fvbxh2604sqw9shn02wq-python2-2.7.16R/bin/python
+
     import sys
+    import pysam
     import re
 
     fastqs = "${fastq}".split()
