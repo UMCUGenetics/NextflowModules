@@ -1,4 +1,4 @@
-process  {
+process CreateSequenceDictionary  {
     tag {"PICARD CreateSequenceDictionary"}
     label 'PICARD_2_22_0'
     label 'PICARD_2_22_0_CreateSequenceDictionary'
@@ -15,7 +15,6 @@ process  {
     """
     picard -Xmx${task.memory.toGiga()-4}G CreateSequenceDictionary \
     REFERENCE=${genome_fasta} \
-    OUTPUT=${genome_fasta.baseName}.dict \
-    ${params.optional}
+    OUTPUT=${genome_fasta.baseName}.dict  
     """
 }
