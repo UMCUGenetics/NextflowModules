@@ -1,8 +1,8 @@
 
 process SamToFastq {
-    tag {"GATK_Samtofastq ${sample_id}.${int_tag}"}
+    tag {"GATK_SamToFastq ${sample_id}.${int_tag}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_4_1_3_0_Samtofastq'
+    label 'GATK_4_1_3_0_SamToFastq'
 
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.samtofastq.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
