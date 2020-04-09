@@ -1,9 +1,8 @@
 process DemuxFastqs {
-    tag {"FGBIO Demuxfastqs "}
+    tag {"FGBIO DemuxFastqs "}
     label 'FGBIO_1_1_0'
-    label 'FGBIO_1_1_0_Demuxfastqs'
+    label 'FGBIO_1_1_0_DemuxFastqs'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.demuxfastqs.mem}" : ""
-    // container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/idt-umi-dependencies.squashfs'
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     input:
       tuple sample_sheet, flowcell, file(fastq: "*"), read_structures
