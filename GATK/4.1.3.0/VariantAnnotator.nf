@@ -1,8 +1,8 @@
 
 process VariantAnnotator {
-    tag {"GATK_Variantannotator ${run_id}"}
+    tag {"GATK_VariantAnnotator ${run_id}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_4_1_3_0_Variantannotator'
+    label 'GATK_4_1_3_0_VariantAnnotator'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
 
