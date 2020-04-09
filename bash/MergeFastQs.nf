@@ -1,9 +1,8 @@
 
 process MergeFastQs {
-    tag {"bash Mergefastqs ${sample_id} - ${read_nr}"}
+    tag {"bash MergeFastqs ${sample_id} - ${read_nr}"}
     label 'bash_4_2_46'
-    label 'bash_4_2_46_Mergefastqs'
-    // container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/idt-umi-dependencies.squashfs'
+    label 'bash_4_2_46_MergeFastqs'
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
