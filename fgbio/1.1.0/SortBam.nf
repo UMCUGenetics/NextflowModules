@@ -1,9 +1,8 @@
 process SortBam {
-    tag {"FGBIO Sortbam ${sample_id}"}
+    tag {"FGBIO SortBam ${sample_id}"}
     label 'FGBIO_1_1_0'
-    label 'FGBIO_1_1_0_Sortbam'
+    label 'FGBIO_1_1_0_SortBam'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.sortbam.mem}" : ""
-    // container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/idt-umi-dependencies.squashfs'
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     input:
       tuple sample_id, flowcell, machine, run_nr,file(bam)
