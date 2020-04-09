@@ -14,7 +14,7 @@ process SortBam {
 
     """
     java -Xmx${task.memory.toGiga()-4}g -jar /bin/fgbio-1.1.0.jar --tmp-dir \$PWD SortBam \
-    --input $bam \
+    --input ${bam} \
     --output ${sample_id}.u.grouped.sorted.bam \
     ${params.sortbam.toolOptions}
     """
