@@ -1,9 +1,8 @@
 process FilterConsensusReads {
-    tag {"FGBIO Filterconsensusreads ${sample_id}"}
+    tag {"FGBIO FilterConsensusReads ${sample_id}"}
     label 'FGBIO_1_1_0'
-    label 'FGBIO_1_1_0_Filterconsensusreads'
+    label 'FGBIO_1_1_0_FilterConsensusReads'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.filterconsensusreads.mem}" : ""
-    // container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/idt-umi-dependencies.squashfs'
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     input:
       tuple sample_id, flowcell, machine, run_nr, file(bam)
