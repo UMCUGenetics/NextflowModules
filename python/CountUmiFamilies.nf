@@ -1,8 +1,7 @@
 process CountUmiFamilies {
     tag {"python CountUmiFamilies ${sample_id} "}
     label 'python_2_7_10'
-    label 'python_2_7_10_Countumifamilies'
-    // container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/idt-umi-dependencies.squashfs'
+    label 'python_2_7_10_CountUmiFamilies'
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -12,7 +11,6 @@ process CountUmiFamilies {
     output:
     file("${sample_id}_${flowcell}.family_counts")
 
-// #!/hpc/local/CentOS7/common/lang/python/2.7.10/bin/python
     script:
 
 """
