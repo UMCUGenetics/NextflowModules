@@ -1,8 +1,7 @@
 process MakeUmiBam {
-    tag {"python Makeumibam ${sample_id} "}
+    tag {"python MakeUmiBam ${sample_id} "}
     label 'python_2_7_10'
-    label 'python_2_7_10_Makeumibam'
-    // container = '/hpc/cog_bioinf/cuppen/personal_data/sander/scripts/Nextflow/Singularity-images/idt-umi-dependencies.squashfs'
+    label 'python_2_7_10_MakeUmiBam'
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
