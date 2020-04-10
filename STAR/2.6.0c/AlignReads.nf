@@ -11,7 +11,7 @@ process AlignReads {
     
 
     output:
-    tuple sample_id, file("${sample_id}_Aligned.sortedByCoord.out.bam" ), file("*Unmapped*"), file("*Log.final.out"), file("*Log.out"), file("*SJ.out.tab")
+    tuple sample_id, file("${sample_id}_Aligned.sortedByCoord.out.bam" ), file("*Unmapped*") optional true, file("*Log.final.out"), file("*Log.out"), file("*SJ.out.tab")
      
    
     script:
