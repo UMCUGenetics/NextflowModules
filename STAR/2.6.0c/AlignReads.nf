@@ -11,7 +11,7 @@ process AlignReads {
     
 
     output:
-    tuple sample_id, file("${sample_id}_Aligned.sortedByCoord.out.bam" ), file("*Unmapped*") optional true, file("*Log.final.out"), file("*Log.out"), file("*SJ.out.tab")
+    tuple sample_id, file("${sample_id}_Aligned.sortedByCoord.out.bam" ), file("*Unmapped*"), file("*Log.final.out"), file("*Log.out"), file("*SJ.out.tab")
      
    
     script:
@@ -21,14 +21,12 @@ process AlignReads {
     if ( !params.singleEnd ){
          r2_args = r2_fastqs.collect{ "$it" }.join(",") 
     }
-    def read_args = params.singleEnd ? "--readFilesIn ${r1_args}" :"--readFilesIn ${r2_args} ${r1_args}"    
-    def rg_line = !params.starFusion ? "ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}" :"ID:GRPundef"
     """
     STAR --genomeDir ${star_genome_index} \
          ${params.optional} \
          ${read_args} \
          --outFileNamePrefix ${sample_id}_ \
          --runThreadN ${task.cpus} \
-         --outSAMattrRGline ${rg_line}  
+         --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}
     """
 }
