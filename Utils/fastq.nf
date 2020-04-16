@@ -34,13 +34,17 @@ def extractFastqPairFromDir(dir) {
     dir = dir.tokenize().collect{"$it/**_R1_*.fastq.gz"}
     Channel
     .fromPath(dir, type:'file')
-    .ifEmpty { error "No R1 fastq.gz files found in ${dir}!" }
+    .ifEmpty { error "No R1 fastq.gz files found in ${dir}." }
     .filter { !(it =~ /.*Undetermined.*/) }
     .map { r1_path ->
         def fastq_files = [r1_path]
         def sample_id = r1_path.getSimpleName().split('_')[0]
         def r2_path = file(r1_path.toString().replace('_R1_', '_R2_'))
-        if (r2_path.exists()) fastq_files.add(r2_path)
+        if (r2_path.exists()) {
+            fastq_files.add(r2_path)
+        } else {
+            exit 1, "R2 fastq.gz file not found: ${r2_path}."
+        }
         def (flowcell, lane) = flowcellLaneFromFastq(r1_path)
         def rg_id = "${sample_id}_${flowcell}_${lane}"
         [sample_id, rg_id, fastq_files]
@@ -52,7 +56,7 @@ def extractFastqFromDir(dir) {
     dir = dir.tokenize().collect{"$it/*.fastq.gz"}
     Channel
     .fromPath(dir, type:'file')
-    .ifEmpty { error "No fastq.gz files found in ${dir}!" }
+    .ifEmpty { error "No fastq.gz files found in ${dir}." }
     .filter { !(it =~ /.*Undetermined.*/) }
     .map { fastq_path ->
         def sample_id = fastq_path.getSimpleName().split('_')[0]
@@ -69,7 +73,7 @@ def extractAllFastqFromDir(dir) {
     dir = dir.tokenize().collect{"$it/**_R1_*.fastq.gz"}
     Channel
     .fromPath(dir, type:'file')
-    .ifEmpty { error "No R1 fastq.gz files found in ${dir}!" }
+    .ifEmpty { error "No R1 fastq.gz files found in ${dir}." }
     .map { r1_path ->
         fastq_files = [r1_path]
         sample_id = r1_path.getSimpleName().split('_')[0]
