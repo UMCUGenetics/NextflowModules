@@ -22,7 +22,7 @@ process StarFusion {
     """
     STAR \
         --genomeDir ${star_index} \
-        --readFilesIn ${read_args} \
+        --readFilesIn ${fastqs} \
         --twopassMode Basic \
         --outReadsUnmapped None \
         --chimSegmentMin 12 \
