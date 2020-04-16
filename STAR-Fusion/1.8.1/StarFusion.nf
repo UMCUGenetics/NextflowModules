@@ -11,10 +11,11 @@ process StarFusion {
     
 
     output:
-    tuple sample_id, file("*fusion_predictions.tsv"), file("*.{tsv,txt}")
+    tuple sample_id, file("${sample_id}_star-fusion.tsv"), file("*.{tsv,txt}")
 
 
     script:
+    //Adapted code from: https://github.com/nf-core/rnafusion - MIT License - Copyright (c) Martin Proks
     def avail_mem = task.memory ? "--limitGenomeGenerateRAM ${task.memory.toBytes() - 100000000}" : ''
     def read_args = params.singleEnd ? "--left_fq ${fastqs[0]}" : "--left_fq ${fastqs[0]} --right_fq ${fastqs[1]}"
     
@@ -52,6 +53,9 @@ process StarFusion {
         --CPU ${task.cpus} \
         --examine_coding_effect \
         --output_dir .
+    mv star-fusion.fusion_predictions.tsv ${sample}_star-fusion.tsv
+    mv star-fusion.fusion_predictions.abridged.tsv ${sample}_abridged.tsv
+    mv star-fusion.fusion_predictions.abridged.coding_effect.tsv ${sample}_abridged.coding_effect.tsv
     """
 
 }
