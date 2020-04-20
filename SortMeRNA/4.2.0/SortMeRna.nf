@@ -14,11 +14,10 @@ process SortMeRna {
     file("*_rRNA_report.txt")
     
     script:
-    def Refs =  db_fasta.collect{ "$it" }.join("-ref") 
-
+    def Refs =  db_fasta.collect{ "$it" }.join(" -ref ")    
     if (params.singleEnd) {
         """
-        sortmerna ${Refs} \
+        sortmerna -ref ${Refs} \
             -reads ${reads} \
             --num_alignments 1 \
             --threads ${task.cpus} \
@@ -31,7 +30,7 @@ process SortMeRna {
         """
     } else {
         """
-        sortmerna --ref ${Refs} \
+        sortmerna -ref ${Refs} \
             -reads ${reads[0]} -reads ${reads[1]} \
             --num_alignments 1 \
             --threads ${task.cpus} \
