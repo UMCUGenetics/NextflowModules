@@ -1,37 +1,42 @@
 process MakeUmiBam {
-    tag {"python makeumibam ${sample_id} "}
+    tag {"python MakeUmiBam ${sample_id} "}
     label 'python_2_7_10'
-    label 'python_2_7_10_makeumibam'
-    // container = 'container_url'
+    label 'python_2_7_10_MakeUmiBam'
+    container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(fastq: "*")
+    tuple sample_id, flowcell, machine, run_nr, file(fastq: "*")
 
     output:
-    tuple sample_id, file("${sample_id}.u.grouped.bam")
+    tuple sample_id, flowcell, machine, run_nr, file("${sample_id}.u.grouped.bam")
 
 
     script:
 
     """
-    #!/hpc/local/CentOS7/common/lang/python/2.7.10/bin/python
 
-    import pysam
+    #!/gnu/store/vbvjlhhx6y64fvbxh2604sqw9shn02wq-python2-2.7.16R/bin/python
+
     import sys
+    import pysam
     import re
 
     fastqs = "${fastq}".split()
+    flowcell = "${flowcell}"
+    id = "${sample_id}_"+flowcell
+    sample_name = "${sample_id}"
     out_bam = "${sample_id}.u.grouped.bam"
+
 
     header = {
         'HD': {'VN': '1.6', 'SO':'unsorted', 'GO':'query'},
         'RG': [{
-            'ID':'${sample_id}',
-            'SM':'${sample_id}',
-            'LB':'${sample_id}',
-            'PL':'illumina'
-
+            'ID':id,
+            'SM':sample_name,
+            'LB':sample_name,
+            'PL':'ILLUMINA',
+            'PU':flowcell
         }]
     }
     umis = {}
