@@ -6,13 +6,13 @@ process SortMeRNA {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-    tuple sample_id, file(reads)
+    tuple sample_id, rg_id, file(reads)
     val(db_name)
     file(db_fasta) 
     file(db) 
     
     output:
-    tuple sample_id, file("*.fq.gz"), emit: sortmerna_fastqs 
+    tuple sample_id, rg_id, file("*.fq.gz"), emit: sortmerna_fastqs 
     file("*_rRNA_report.txt"), emit: sortmerna_report
     
     script:

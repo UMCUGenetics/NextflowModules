@@ -8,7 +8,8 @@ process Fastp {
     tuple sample_id, rg_id, file(fastqs)
 
     output:
-    tuple sample_id, rg_id, file("${sample_id}_fastp.json"), file("*.fastq.gz")
+    tuple sample_id, rg_id, file("*.fastq.gz")
+    file("${sample_id}_fastp.json")
 
     script:
     //adapted from https://github.com/nf-core/eager/blob/master/LICENSE, Copyright (c) Alexander Peltzer, Stephen Clayton, James A. Fellows Yates, Maxime Borry
