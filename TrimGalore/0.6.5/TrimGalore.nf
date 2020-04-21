@@ -14,13 +14,13 @@ process TrimGalore {
     if (params.singleEnd) {
         """
         trim_galore ${fastqs} --gzip ${params.optional}
-        mv ${fastqs[0].simpleName}_val_1.fq.gz ${fastqs[0].simpleName}_trimmed_R1.fastq.gz 
+        mv ${fastqs[0].simpleName}_val_1.fq.gz ${fastqs[0].simpleName}_trimmed.fastq.gz 
         """
     } else {
         """
         trim_galore ${fastqs} --paired --gzip ${params.optional}
-        mv ${fastqs[0].simpleName}_val_1.fq.gz ${fastqs[0].simpleName}_trimmed_R1.fastq.gz 
-        mv ${fastqs[1].simpleName}_val_2.fq.gz ${fastqs[1].simpleName}_trimmed_R2.fastq.gz 
+        mv ${fastqs[0].simpleName}_val_1.fq.gz ${fastqs[0].simpleName}_trimmed.fastq.gz 
+        mv ${fastqs[1].simpleName}_val_2.fq.gz ${fastqs[1].simpleName}_trimmed.fastq.gz 
         """
     }
 }
