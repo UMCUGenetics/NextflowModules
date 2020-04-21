@@ -13,6 +13,6 @@ process TrimGalore {
     script:
     def paired = !params.singleEnd ? "--paired" :""   	
     """
-    trim_galore ${fastqs} ${paired} ${params.optional} 
+    trim_galore ${fastqs} ${paired} --gzip --basename ${fastqs[0].simpleName} ${params.optional} 
     """
 }

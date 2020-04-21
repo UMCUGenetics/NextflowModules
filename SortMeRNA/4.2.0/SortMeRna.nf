@@ -25,7 +25,7 @@ process SortMeRna {
             --aligned rRNA-reads \
             --other non-rRNA-reads 
             
-        gzip -f < non-rRNA-reads.fq > ${sample_id}.fastq.gz
+        gzip -f < non-rRNA-reads.fq > ${reads[0].simpleName}_non_rRNA.fastq.gz
         mv rRNA-reads.log ${sample_id}_rRNA_report.txt
         """
     } else {
@@ -40,8 +40,8 @@ process SortMeRna {
             --other non-rRNA-reads \
             -out2 
         
-        gzip < non-rRNA-reads_fwd.fq > ${sample_id}-fwd.fastq.gz
-        gzip < non-rRNA-reads_rev.fq > ${sample_id}-rev.fastq.gz
+        gzip < non-rRNA-reads_fwd.fq >  ${reads[0].simpleName}_non_rRNA.fastq.gz
+        gzip < non-rRNA-reads_rev.fq >  ${reads[1].simpleName}_non_rRNA.fastq.gz
         mv rRNA-reads.log ${sample_id}_rRNA_report.txt
         """
     }
