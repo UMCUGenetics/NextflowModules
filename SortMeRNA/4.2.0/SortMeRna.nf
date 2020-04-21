@@ -1,5 +1,5 @@
 process SortMeRna {
-    tag {"SortMeRNA sortmerna ${db_fasta.baseName}"}
+    tag {"SortMeRNA sortmerna ${sample_id}"}
     label 'SortMeRNA_4_2_0'
     container = 'quay.io/biocontainers/sortmerna:4.2.0--0'
     shell = ['/bin/bash', '-euo', 'pipefail']
@@ -10,11 +10,10 @@ process SortMeRna {
    
     
     output:
-    tuple sample_id, rg_id, file("*.fastq.gz") 
-    file("*_rRNA_report.txt")
+    tuple sample_id, rg_id, file("*.fastq.gz"), file("*_rRNA_report.txt")
     
     script:
-    def Refs =  db_fasta.collect{ "$it" }.join(" -ref ")    
+    def Refs =  db_fasta.collect{ "$it" }.join(" -ref ")  
     if (params.singleEnd) {
         """
         sortmerna -ref ${Refs} \
@@ -25,7 +24,8 @@ process SortMeRna {
             -workdir \${PWD} \
             --aligned rRNA-reads \
             --other non-rRNA-reads 
-        gzip -f < non-rRNA-reads.fastq > ${sample_id}.fastq.gz
+            
+        gzip -f < non-rRNA-reads.fq > ${sample_id}.fastq.gz
         mv rRNA-reads.log ${sample_id}_rRNA_report.txt
         """
     } else {
@@ -38,9 +38,10 @@ process SortMeRna {
             --fastx -paired_in \
             --aligned rRNA-reads \
             --other non-rRNA-reads \
-            -out2
-        gzip < non-rRNA-reads_fwd.fastq > ${sample_id}-fwd.fastq.gz
-        gzip < non-rRNA-reads_rev.fastq> ${sample_id}-rev.fastq.gz
+            -out2 
+        
+        gzip < non-rRNA-reads_fwd.fq > ${sample_id}-fwd.fastq.gz
+        gzip < non-rRNA-reads_rev.fq > ${sample_id}-rev.fastq.gz
         mv rRNA-reads.log ${sample_id}_rRNA_report.txt
         """
     }
