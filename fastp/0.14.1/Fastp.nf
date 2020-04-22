@@ -2,7 +2,6 @@ process Fastp {
     tag {"Fastp ${sample_id} - ${rg_id}"}
     label 'Fastp_0_14_1'
     container = 'quay.io/biocontainers/fastp:0.14.1--0'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:

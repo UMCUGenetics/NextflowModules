@@ -1,16 +1,16 @@
 
 process MergeFastQs {
-    tag {"bash mergefastqs ${sample_id} - ${read_nr}"}
+    tag {"bash MergeFastqs ${sample_id} - ${read_nr}"}
     label 'bash_4_2_46'
-    label 'bash_4_2_46_mergefastqs'
-    // container = 'container_url'
+    label 'bash_4_2_46_MergeFastqs'
+    container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
     tuple sample_id, flowcell, file(fastq: "*")
 
     output:
-    tuple sample_id, read_nr ,file("${sample_id}_${flowcell}_${read_nr}.fastq.gz")
+    tuple sample_id, flowcell, read_nr ,file("${sample_id}_${flowcell}_${read_nr}.fastq.gz")
 
 
     script:

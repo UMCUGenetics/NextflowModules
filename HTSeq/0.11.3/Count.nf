@@ -2,7 +2,6 @@ process Count {
     tag {"HTSeq Count ${sample_id}"}
     label 'HTSeq_0_11_3'
     label 'HTSeq_0_11_3_Count'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'quay.io/biocontainers/htseq:0.11.3--py37hb3f55d8_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -16,13 +15,11 @@ process Count {
     shell:
     def s_val = 'no'
     if (params.stranded && !params.unstranded) {
-       sval = params.singleEnd ? 'yes' : 'reverse'
-    }
-    if (params.revstranded && !params.unstranded) {
-       sval = params.singleEnd ? 'reverse' : 'yes'  
+       s_val = params.singleEnd ? 'yes' : 'reverse'
+    } else if (params.revstranded && !params.unstranded) {
+        s_val = params.singleEnd ? 'reverse' : 'yes'  
     } 
-         
     """
-    htseq-count ${params.optional} -s ${s_val} -f bam ${bam_file} ${genome_gtf}  > ${sample_id}_readCounts_raw.txt
+    htseq-count ${params.optional} -s ${s_val} -i ${params.hts_count_type} -f bam ${bam_file} ${genome_gtf}  > ${sample_id}_readCounts_raw.txt
     """
 }
