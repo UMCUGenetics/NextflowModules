@@ -14,7 +14,7 @@ process TrimGalore {
     if (params.singleEnd) {
         """
         trim_galore ${fastqs} --gzip ${params.optional}
-        mv ${fastqs[0].simpleName}_val_1.fq.gz ${fastqs[0].simpleName}_trimmed.fastq.gz 
+        mv ${fastqs[0].simpleName}_trimmed.fq.gz ${fastqs[0].simpleName}_trimmed.fastq.gz 
         """
     } else {
         """
