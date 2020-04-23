@@ -13,8 +13,9 @@ process Index {
     file("${transcripts_fasta.baseName}/")
 
     script:
+    def gencode = params.gencode  ? "--gencode" : ""
     """
-    salmon index --threads ${task.cpus} -t ${transcripts_fasta} ${params.optional} -i ${transcripts_fasta.baseName}       
+    salmon index --threads ${task.cpus} -t ${transcripts_fasta} ${gencode} -i ${transcripts_fasta.baseName}       
     """
 }
 

@@ -11,13 +11,13 @@ process FeatureCounts {
     file(genome_gtf)   
   
     output:
-    tuple file("${run_id}_${params.fc_count_type}_featureCounts.txt"), file("${run_id}_${params.fc_count_type}_featureCounts_matrix.txt"), file("${run_id}_${params.fc_count_type}_featureCounts.txt.summary"), file("${run_id}_biotype_featureCounts.txt")
+    tuple file("${run_id}_${params.fc_count_type}_featureCounts.{txt,txt.summary}"), file("${run_id}_biotype_featureCounts.{txt,txt.summary}"), file("${run_id}_${params.fc_count_type}_featureCounts_matrix.txt")
 
     script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
 
     def biotype = params.gencode ? "gene_type" : params.fc_group_features_type
-    def extraAttributes = params.fc_extra_attributes ? "--extraAttributes ${params.fc_extra_attributes }" : ''
+    def extraAttributes = params.fc_extra_attributes ? "--extraAttributes ${params.fc_extra_attributes}" : ''
     def featureCounts_direction = 0
     if (params.stranded && !params.unstranded) {
           featureCounts_direction = 1
