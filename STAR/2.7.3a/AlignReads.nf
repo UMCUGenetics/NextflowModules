@@ -8,6 +8,7 @@ process AlignReads {
     input:
     tuple sample_id, rg_id, file(r1_fastqs), file(r2_fastqs)
     file(star_genome_index)
+    file(genome_gtf)
     
 
     output:
@@ -27,7 +28,11 @@ process AlignReads {
          ${params.optional} \
          ${read_args} \
          --outFileNamePrefix ${sample_id}_ \
+         --outSAMtype BAM SortedByCoordinate \
+         --readFilesCommand zcat \
+         --outReadsUnmapped Fastx \
          --runThreadN ${task.cpus} \
+         --sjdbGTFfile ${genome_gtf} \ 
          --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}
     """
 }
