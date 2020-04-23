@@ -22,17 +22,19 @@ process AlignReads {
     if ( !params.singleEnd ){
          r2_args = r2_fastqs.collect{ "$it" }.join(",") 
     }
-    def read_args = params.singleEnd ? "--readFilesIn ${r1_args}" :"--readFilesIn ${r2_args} ${r1_args}"    
+    def read_args = params.singleEnd ? "--readFilesIn ${r1_args}" :"--readFilesIn ${r2_args} ${r1_args}" 
+    def avail_mem = task.memory ? "--limitBAMsortRAM ${task.memory.toBytes() - 100000000}" : ''   
     """
     STAR --genomeDir ${star_genome_index} \
          ${params.optional} \
          ${read_args} \
          --outFileNamePrefix ${sample_id}_ \
-         --outSAMtype BAM SortedByCoordinate \
+         --sjdbGTFfile ${genome_gtf} \
+         --runDirPerm All_RWX ${avail_mem} \
          --readFilesCommand zcat \
+         --outSAMtype BAM SortedByCoordinate \
          --outReadsUnmapped Fastx \
          --runThreadN ${task.cpus} \
-         --sjdbGTFfile ${genome_gtf} \ 
-         --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}
+         --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}  
     """
 }
