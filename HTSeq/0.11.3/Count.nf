@@ -20,6 +20,6 @@ process Count {
         s_val = params.singleEnd ? 'reverse' : 'yes'  
     } 
     """
-    htseq-count ${params.optional} -s ${s_val} -i ${params.hts_count_type} -f bam ${bam_file} ${genome_gtf}  > ${sample_id}_readCounts_raw.txt
+    htseq-count ${params.optional} -s ${s_val} -t ${params.hts_count_type} -i ${params.hts_group_features} -f bam ${bam_file} ${genome_gtf}  > ${sample_id}_readCounts_raw.txt
     """
 }
