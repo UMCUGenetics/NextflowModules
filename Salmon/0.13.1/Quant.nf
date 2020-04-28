@@ -8,6 +8,7 @@ process Quant {
     input:
     tuple sample_id, file(fastqs)
     file(salmon_index)
+    file(genome_gtf)
     
    
     output:
@@ -28,6 +29,7 @@ process Quant {
                    --seqBias --useVBOpt --gcBias \
                    --threads ${task.cpus} \
                    --libType=${rnastrandness} \
+                   --geneMap ${genome_gtf} \
                    --index ${salmon_index} \
                    ${endedness} ${unmapped} \
                   -o ${sample_id}              
