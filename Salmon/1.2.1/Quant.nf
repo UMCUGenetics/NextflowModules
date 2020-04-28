@@ -1,0 +1,38 @@
+process Quant {
+    tag {"Salmon Quant ${sample_id}"}
+    label 'Salmon_1_2_1'
+    label 'Salmon_1_2_1_Quant'
+    container = 'quay.io/biocontainers/salmon:1.2.1--hf69c8f4_0'
+    shell = ['/bin/bash', '-euo', 'pipefail']
+    
+    input:
+    tuple sample_id, file(fastqs)
+    file(salmon_index)
+    file(genome_gtf)
+    
+   
+    output:
+    tuple sample_id, file("${sample_id}/")
+
+    script:
+    //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
+    def rnastrandness = params.singleEnd ? 'U' : 'IU'
+    if (params.stranded && !params.unstranded) {
+       rnastrandness = params.singleEnd ? 'SF' : 'ISF'
+    } else if (params.revstranded && !params.unstranded) {
+       rnastrandness = params.singleEnd ? 'SR' : 'ISR'
+    }
+    def endedness = params.singleEnd ? "-r ${fastqs[0]}" : "-1 ${fastqs[0]} -2 ${fastqs[1]}"
+    def unmapped = params.saveUnaligned ? "--writeUnmappedNames" : ''
+    """
+    salmon quant --validateMappings \
+                   --seqBias --useVBOpt --gcBias \
+                   --threads ${task.cpus} \
+                   --libType=${rnastrandness} \
+                   --geneMap ${genome_gtf} \
+                   --index ${salmon_index} \
+                   ${endedness} ${unmapped} \
+                  -o ${sample_id}              
+    """
+}
+
