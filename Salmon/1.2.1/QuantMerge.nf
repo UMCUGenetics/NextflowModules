@@ -15,10 +15,8 @@ process QuantMerge {
 
     script:
     def quants = quant_dirs.collect{ "$it" }.join(",")
-    """
-    salmon quantmerge -c numreads --quants {${quants}} --genes -o ${run_name}_genes_quantmerge_numReads.txt  
+    """  
     salmon quantmerge -c numreads --quants {${quants}} -o ${run_name}_transcripts_quantmerge_numReads.txt 
-    salmon quantmerge -c tpm --quants {${quants}} --genes -o ${run_name}_genes_quantmerge_TPM.txt  
     salmon quantmerge -c tpm --quants {${quants}} -o ${run_name}_transcripts_quantmerge_TPM.txt  
     """
 }
