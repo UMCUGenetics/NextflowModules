@@ -11,7 +11,7 @@ process FeatureCounts {
     file(genome_gtf)   
   
     output:
-    tuple file("${run_id}_*_featureCounts.txt"), file("${run_id}_*_featureCounts_matrix.txt"), file("${run_id}_*_featureCounts.txt.summary")
+    tuple file("${run_id}_*_featureCounts.txt"), file("${run_id}_${params.fc_count_type}_featureCounts_matrix.txt"), file("${run_id}_biotype_featureCounts_matrix.txt"), file("${run_id}_*_featureCounts.txt.summary")
 
     script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
@@ -28,7 +28,7 @@ process FeatureCounts {
     """
     featureCounts -T ${task.cpus} -a ${genome_gtf} -t ${params.fc_count_type} -g ${params.fc_group_features} -o ${run_id}_${params.fc_count_type}_featureCounts.txt ${extraAttributes} ${params.optional} -s ${featureCounts_direction} ${bam_list}
     featureCounts -T ${task.cpus} -a ${genome_gtf} -g ${biotype} -o ${run_id}_biotype_featureCounts.txt ${params.optional} -s ${featureCounts_direction} ${bam_list}   
-    tail -n +2 ${run_id}_${params.fc_count_type}_featureCounts.txt | cut -f 1,7- | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' >  "${run_id}_${params.fc_count_type}_featureCounts_matrix.txt"
+    tail -n +2 ${run_id}_${params.fc_count_type}_featureCounts.txt | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' >  "${run_id}_${params.fc_count_type}_featureCounts_matrix.txt"
     tail -n +2 ${run_id}_biotype_featureCounts.txt | cut -f 1,7- | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' >  "${run_id}_biotype_featureCounts_matrix.txt"
 
     """
