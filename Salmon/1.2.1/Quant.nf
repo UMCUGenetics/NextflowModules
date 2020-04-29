@@ -8,8 +8,6 @@ process Quant {
     input:
     tuple sample_id, file(fastqs)
     file(salmon_index)
-    file(genome_gtf)
-    
    
     output:
     tuple sample_id, file("${sample_id}/")
