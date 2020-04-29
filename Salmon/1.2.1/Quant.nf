@@ -24,12 +24,12 @@ process Quant {
     }
     def endedness = params.singleEnd ? "-r ${fastqs[0]}" : "-1 ${fastqs[0]} -2 ${fastqs[1]}"
     def unmapped = params.saveUnaligned ? "--writeUnmappedNames" : ''
+
     """
     salmon quant --validateMappings \
-                   --seqBias --useVBOpt --gcBias \
+                   ${params.optional} \
                    --threads ${task.cpus} \
                    --libType=${rnastrandness} \
-                   --geneMap ${genome_gtf} \
                    --index ${salmon_index} \
                    ${endedness} ${unmapped} \
                   -o ${sample_id}              
