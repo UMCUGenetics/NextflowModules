@@ -10,7 +10,7 @@ process SortMeRna {
    
     
     output:
-    tuple sample_id, rg_id, file("*.fastq.gz"), file("*_rRNA_report.txt")
+    tuple sample_id, rg_id, file("*_non_rRNA.fastq.gz"), file("*_filtered_rRNA.fastq.gz"), file("*_rRNA_report.txt")
     
     script:
     def Refs =  db_fasta.collect{ "$it" }.join(" -ref ")  
@@ -26,6 +26,7 @@ process SortMeRna {
             --other non-rRNA-reads 
             
         gzip -f < non-rRNA-reads.fastq > ${reads[0].simpleName}_non_rRNA.fastq.gz
+        gzip -f < rRNA-reads.fastq > ${reads[0].simpleName}_filtered_rRNA.fastq.gz
         mv rRNA-reads.log ${sample_id}_rRNA_report.txt
         """
     } else {
@@ -42,6 +43,8 @@ process SortMeRna {
         
         gzip < non-rRNA-reads_fwd.fastq >  ${reads[0].simpleName}_non_rRNA.fastq.gz
         gzip < non-rRNA-reads_rev.fastq >  ${reads[1].simpleName}_non_rRNA.fastq.gz
+        gzip < rRNA-reads_fwd.fastq >  ${reads[0].simpleName}_filtered_rRNA.fastq.gz
+        gzip < rRNA-reads_rev.fastq >  ${reads[1].simpleName}_filtered_rRNA.fastq.gz
         mv rRNA-reads.log ${sample_id}_rRNA_report.txt
         """
     }
