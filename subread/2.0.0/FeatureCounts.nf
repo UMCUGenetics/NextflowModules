@@ -18,6 +18,7 @@ process FeatureCounts {
 
     def biotype = params.gencode ? "gene_type" : params.fc_group_features_type
     def extraAttributes = params.fc_extra_attributes ? "--extraAttributes ${params.fc_extra_attributes}" : ''
+    def endedness = !params.singleEnd ? "-p" : ""
     def featureCounts_direction = 0
     if (params.stranded && !params.unstranded) {
           featureCounts_direction = 1
@@ -26,8 +27,8 @@ process FeatureCounts {
     }     
     def bam_list = bam_file.collect{ "$it" }.join(" ")
     """
-    featureCounts -T ${task.cpus} -a ${genome_gtf} -t ${params.fc_count_type} -g ${params.fc_group_features} -o ${run_id}_${params.fc_count_type}_featureCounts.txt ${extraAttributes} ${params.optional} -s ${featureCounts_direction} ${bam_list}
-    featureCounts -T ${task.cpus} -a ${genome_gtf} -g ${biotype} -o ${run_id}_biotype_featureCounts.txt ${params.optional} -s ${featureCounts_direction} ${bam_list}   
+    featureCounts -T ${task.cpus} -a ${genome_gtf} -t ${params.fc_count_type} -g ${params.fc_group_features} -o ${run_id}_${params.fc_count_type}_featureCounts.txt ${extraAttributes} ${endedness} ${params.optional} -s ${featureCounts_direction} ${bam_list}
+    featureCounts -T ${task.cpus} -a ${genome_gtf} -g ${biotype} -o ${run_id}_biotype_featureCounts.txt ${params.optional} ${endedness} -s ${featureCounts_direction} ${bam_list}   
     tail -n +2 ${run_id}_${params.fc_count_type}_featureCounts.txt | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' >  "${run_id}_${params.fc_count_type}_featureCounts_matrix.txt"
     tail -n +2 ${run_id}_biotype_featureCounts.txt | cut -f 1,7 | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' >  "${run_id}_biotype_featureCounts_matrix.txt"
 
