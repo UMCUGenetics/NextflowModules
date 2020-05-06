@@ -9,7 +9,7 @@ process CollectHsMetrics {
     tuple val(sample_id), file(bam_file), file(bai_file)
 
     output:
-    tuple val(sample_id), file("${sample_id}.HsMetrics.txt")
+    file("${sample_id}.HsMetrics.txt")
 
     script:
 

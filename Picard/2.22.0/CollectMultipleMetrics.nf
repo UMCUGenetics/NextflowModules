@@ -9,7 +9,7 @@ process CollectMultipleMetrics {
     tuple val(sample_id), file(bam_file), file(bai_file)
 
     output:
-    tuple val(sample_id), file("*.txt")
+    file("*.txt")
 
     script:
 
