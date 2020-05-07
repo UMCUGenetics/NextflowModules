@@ -1,14 +1,13 @@
 process Quant {
     tag {"Salmon Quant ${sample_id}"}
-    label 'Salmon_0_13_1'
-    label 'Salmon_0_13_1_Quant'
-    container = 'quay.io/biocontainers/salmon:0.13.1--h86b0361_0'
+    label 'Salmon_1_2_1'
+    label 'Salmon_1_2_1_Quant'
+    container = 'quay.io/biocontainers/salmon:1.2.1--hf69c8f4_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
     tuple sample_id, file(fastqs)
     file(salmon_index)
-    
    
     output:
     tuple sample_id, file("${sample_id}/")
@@ -23,9 +22,10 @@ process Quant {
     }
     def endedness = params.singleEnd ? "-r ${fastqs[0]}" : "-1 ${fastqs[0]} -2 ${fastqs[1]}"
     def unmapped = params.saveUnaligned ? "--writeUnmappedNames" : ''
+
     """
     salmon quant --validateMappings \
-                   --seqBias --useVBOpt --gcBias \
+                   ${params.optional} \
                    --threads ${task.cpus} \
                    --libType=${rnastrandness} \
                    --index ${salmon_index} \

@@ -28,6 +28,6 @@ process AlignReads {
          ${read_args} \
          --outFileNamePrefix ${sample_id}_ \
          --runThreadN ${task.cpus} \
-         --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}  
+         --outSAMattrRGline ID:${rg_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}
     """
 }
