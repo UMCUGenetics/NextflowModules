@@ -8,7 +8,7 @@ process StarFusion {
     tuple sample_id, file(fastqs)
     file(star_index)
     file(genome_lib)
-    
+
     output:
     tuple sample_id, file("${sample_id}_star-fusion.tsv"), file("*.{tsv,txt}")
 
@@ -50,7 +50,7 @@ process StarFusion {
         -J Chimeric.out.junction \
         ${read_args} \
         --CPU ${task.cpus} \
-        --examine_coding_effect \
+        ${params.optional} \
         --output_dir .
     mv star-fusion.fusion_predictions.tsv ${sample}_star-fusion.tsv
     mv star-fusion.fusion_predictions.abridged.tsv ${sample}_abridged.tsv
