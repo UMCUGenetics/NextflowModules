@@ -9,7 +9,6 @@ process StarFusion {
     file(star_index)
     file(genome_lib)
     
-
     output:
     tuple sample_id, file("${sample_id}_star-fusion.tsv"), file("*.{tsv,txt}")
 
