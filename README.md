@@ -40,7 +40,6 @@ See `utils/template.nf` for a process template which uses the following guidelin
 - Set process parameters on include:
    - `include process from 'path/to/process.nf' params(optional: '')`
 - Use seperate input channels for processes as much as possible. Use tuples for linked inputs only. 
-  For example, use
     ```
     input:
           tuple sample_id, rg_id, bam, bai
