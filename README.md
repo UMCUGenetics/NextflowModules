@@ -49,7 +49,7 @@ See `utils/template.nf` for a process template which uses the following guidelin
     ```
     output:
           path "my_file.txt", emit: my_file
-          path "my_optional_file.txt",  optional: my_optional_file, emit: my_optiona_file
+          path "my_optional_file.txt",  optional: my_optional_file, emit: my_optional_file
           ......
     ```
 
