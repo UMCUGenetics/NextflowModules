@@ -39,28 +39,20 @@ See `utils/template.nf` for a process template which uses the following guidelin
 - Do not define any runtime settings like cpus, memory and time.
 - Set process parameters on include:
    - `include process from 'path/to/process.nf' params(optional: '')`
-- Define seperate input channels as much as possible. Use tuples for linked inputs only. For example, use
-```
-input:
-      tuple sample_id, rg_id, bam, bai
-      file(genome_gtf)`
-```
-
-instead of:
-```
-input:
-      tuple sample_id, rg_id, bam, bai, genome_gtf
-```
-- Define named output channels for processes. This ensures that output can be reference in external scope which is clearer to read then referencing an output by its index.
-```
-output:
-      path "my_file.txt", emit: my_file
-      path "my_optional_file.txt",  optional: my_optional_file, emit: my_optiona_file
-      ......
-```
-
-
-
+- Use seperate input channels for processes as much as possible. Use tuples for linked inputs only. 
+  For example, use
+    ```
+    input:
+          tuple sample_id, rg_id, bam, bai
+          file(genome_fasta)`
+    ```
+- Define named output channels for processes. This ensures that output can be reference in external scope by its name which improves readabiliy. 
+    ```
+    output:
+          path "my_file.txt", emit: my_file
+          path "my_optional_file.txt",  optional: my_optional_file, emit: my_optiona_file
+          ......
+    ```
 
 ## GUIX
 1. Creating squashfs immage
