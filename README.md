@@ -45,7 +45,7 @@ See `utils/template.nf` for a process template which uses the following guidelin
           tuple sample_id, rg_id, bam, bai
           file(genome_fasta)`
     ```
-- Define named output channels for processes. This ensures that outputs can be referenced in external scope by their respective names. 
+- Define named output channels for processes. This ensures that outputs can be referenced in external scope by their respective names. Indicate wheter an output channel is optional. 
     ```
     output:
           path "my_file.txt", emit: my_file
