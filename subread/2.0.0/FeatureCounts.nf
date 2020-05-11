@@ -11,11 +11,13 @@ process FeatureCounts {
     file(genome_gtf)   
   
     output:
-    tuple file("${run_id}_*_featureCounts.txt"), file("${run_id}_${params.fc_count_type}_featureCounts_matrix.txt"), file("${run_id}_biotype_featureCounts_matrix.txt"), file("${run_id}_*_featureCounts.txt.summary")
+    path "${run_id}_${params.fc_count_type}_featureCounts.raw.txt"
+    path "${run_id}_${params.fc_count_type}_featureCounts.txt.summary"
+    path "${run_id}_biotype_featureCounts.{matrix.txt,txt.summary}", optional: true
 
     script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
-
+    def bam_list = bam_file.collect{ "$it" }.join(" ")
     def biotype = params.gencode ? "gene_type" : params.fc_group_features_type
     def extraAttributes = params.fc_extra_attributes ? "--extraAttributes ${params.fc_extra_attributes}" : ''
     def endedness = !params.singleEnd ? "-p" : ""
@@ -24,13 +26,14 @@ process FeatureCounts {
           featureCounts_direction = 1
     } else if (params.revstranded && !params.unstranded) {
           featureCounts_direction = 2
-    }     
-    def bam_list = bam_file.collect{ "$it" }.join(" ")
+    }  
+    //optional biotype QC
+    def biotype_qc = params.biotypeQC ? "featureCounts -a ${genome_gtf} -g ${biotype} -o ${run_id}_biotype_featureCounts.txt ${endedness} -s ${featureCounts_direction} ${bam_file}": ''
+    def mod_biotype = params.biotypeQC ? "cut -f 1,7 ${run_id}_biotype_featureCounts.txt | tail -n +2 | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g'  > ${run_id}_biotype_featureCounts.matrix.txt": ''
     """
-    featureCounts -T ${task.cpus} -a ${genome_gtf} -t ${params.fc_count_type} -g ${params.fc_group_features} -o ${run_id}_${params.fc_count_type}_featureCounts.txt ${extraAttributes} ${endedness} ${params.optional} -s ${featureCounts_direction} ${bam_list}
-    featureCounts -T ${task.cpus} -a ${genome_gtf} -g ${biotype} -o ${run_id}_biotype_featureCounts.txt ${params.optional} ${endedness} -s ${featureCounts_direction} ${bam_list}   
-    tail -n +2 ${run_id}_${params.fc_count_type}_featureCounts.txt | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' >  "${run_id}_${params.fc_count_type}_featureCounts_matrix.txt"
-    tail -n +2 ${run_id}_biotype_featureCounts.txt | cut -f 1,7 | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' >  "${run_id}_biotype_featureCounts_matrix.txt"
-
+    featureCounts -T ${task.cpus} -a ${genome_gtf} -t ${params.fc_count_type} -g ${params.fc_group_features} -o ${run_id}_${params.fc_count_type}_featureCounts.txt ${extraAttributes} ${endedness} ${params.optional} -s ${featureCounts_direction} ${bam_list}   
+    tail -n +2 ${run_id}_${params.fc_count_type}_featureCounts.txt | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' > "${run_id}_${params.fc_count_type}_featureCounts.raw.txt"
+    ${biotype_qc}
+    ${mod_biotype}
     """
 }
