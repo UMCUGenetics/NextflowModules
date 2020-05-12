@@ -1,16 +1,16 @@
 
 process CollectWGSMetrics {
-  tag {"GATK_Collectwgsmetrics ${sample_id}"}
+  tag {"GATK CollectWGSMetrics ${sample_id}"}
   label 'GATK_4_1_3_0'
-  label 'GATK_4_1_3_0_Collectwgsmetrics'
+  label 'GATK_4_1_3_0_CollectWGSMetrics'
   clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
   container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
-
+  shell = ['/bin/bash', '-euo', 'pipefail']
   input:
-    tuple sample_id, file(bam)
+    tuple sample_id, path(bam)
 
   output:
-    file ("${sample_id}.wgs_metrics.txt")
+    path ("${sample_id}.wgs_metrics.txt"), emit: wgs_metrics
 
   script:
   """

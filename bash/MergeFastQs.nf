@@ -1,5 +1,5 @@
 
-process MergeFastQs {
+process MergeFastqs {
     tag {"bash MergeFastqs ${sample_id} - ${read_nr}"}
     label 'bash_4_2_46'
     label 'bash_4_2_46_MergeFastqs'
@@ -7,10 +7,10 @@ process MergeFastQs {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, flowcell, file(fastq: "*")
+    tuple sample_id, flowcell, path(fastq: "*")
 
     output:
-    tuple sample_id, flowcell, read_nr ,file("${sample_id}_${flowcell}_${read_nr}.fastq.gz")
+    tuple sample_id, flowcell, read_nr ,path("${sample_id}_${flowcell}_${read_nr}.fastq.gz"), emit : merged_fastqs
 
 
     script:

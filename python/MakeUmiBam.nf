@@ -1,15 +1,15 @@
-process MakeUmiBam {
-    tag {"python MakeUmiBam ${sample_id} "}
+process MakeUMIBam {
+    tag {"python MakeUMIBam ${sample_id} "}
     label 'python_2_7_10'
-    label 'python_2_7_10_MakeUmiBam'
+    label 'python_2_7_10_MakeUMIBam'
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, flowcell, machine, run_nr, file(fastq: "*")
+    tuple sample_id, flowcell, machine, run_nr, path(fastq: "*")
 
     output:
-    tuple sample_id, flowcell, machine, run_nr, file("${sample_id}.u.grouped.bam")
+    tuple sample_id, flowcell, machine, run_nr, path("${sample_id}.u.grouped.bam"), emit: umi_bams
 
 
     script:
