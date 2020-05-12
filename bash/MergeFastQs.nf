@@ -21,6 +21,9 @@ process MergeFastQs {
       case ~/.*_R2_.*/:
         read_nr = 'R2';
         break;
+      case ~/.*_R3_.*/:
+        read_nr = 'R3';
+        break;
       case ~/.*_I1_.*/:
         read_nr = 'I1';
         break;
