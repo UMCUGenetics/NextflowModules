@@ -6,11 +6,11 @@ process Index {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-    file(transcripts_fasta)
+    path(transcripts_fasta)
     
    
     output:
-    file("${transcripts_fasta.baseName}/")
+    path "${transcripts_fasta.baseName}/", emit: salmon_index
 
     script:
     def gencode = params.gencode  ? "--gencode" : ""
