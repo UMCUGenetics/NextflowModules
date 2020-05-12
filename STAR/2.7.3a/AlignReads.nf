@@ -6,13 +6,17 @@ process AlignReads {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, file(r1_fastqs), file(r2_fastqs)
-    file(star_genome_index)
-    file(genome_gtf)
+    tuple sample_id, rg_id, path(r1_fastqs), path(r2_fastqs)
+    path(star_genome_index)
+    path(genome_gtf)
     
 
     output:
-    tuple sample_id, file("${sample_id}_Aligned.sortedByCoord.out.bam" ), file("*Unmapped*"), file("*Log.final.out"), file("*Log.out"), file("*SJ.out.tab")
+    tuple sample_id, "${sample_id}_Aligned.sortedByCoord.out.bam", emit: star_aligned
+    path "*Unmapped*", emit: star_unmapped 
+    path "*Log.final.out", emit: star_final_log
+    path "*Log.out", emit: star_log
+    path "*SJ.out.tab", emit: star_sj
      
    
     script:

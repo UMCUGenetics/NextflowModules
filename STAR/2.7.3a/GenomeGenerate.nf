@@ -6,12 +6,12 @@ process GenomeGenerate {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    file(genome_fasta)
-    file(genome_gtf)
+    path(genome_fasta)
+    path(genome_gtf)
    
    
     output:
-    file("${genome_fasta.baseName}")
+    path "${genome_fasta.baseName}", emit: star_index
      
    
     script:
