@@ -6,10 +6,10 @@ process CreateSequenceDictionary  {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    file(genome_fasta)
+    path(genome_fasta)
 
     output:
-    file("${genome_fasta.baseName}.dict")
+    path("${genome_fasta.baseName}.dict"), emit: genome_dict
 
     script:
     """

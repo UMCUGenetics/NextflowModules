@@ -10,7 +10,7 @@ process StarFusion {
     file(genome_lib)
 
     output:
-    tuple sample_id, file("${sample_id}_star-fusion.tsv"), file("*.{tsv,txt}")
+    tuple sample_id, "${sample_id}_star-fusion.tsv", "*.{tsv,txt}"
 
 
     script:
