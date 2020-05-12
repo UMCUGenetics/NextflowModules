@@ -1,6 +1,6 @@
-process StarFusion {
-    tag {"StarFusion ${sample_id}"}
-    label 'StarFusion_1_8_1'
+process STARFusion {
+    tag {"STARFusion ${sample_id}"}
+    label 'STARFusion_1_8_1'
     container = 'quay.io/biocontainers/star-fusion:1.8.1--2'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
