@@ -62,11 +62,11 @@ def extractAllFastqFromDir(dir) {
         fastq_files = [r1_path]
         sample_id = r1_path.getSimpleName().split('_')[0]
         r2_path = file(r1_path.toString().replace('_R1_', '_R2_'))
-        i1_path = file(r1_path.toString().replace('_R1_', '_I1_'))
-        i2_path = file(r1_path.toString().replace('_R1_', '_I2_'))
+        r3_path = file(r1_path.toString().replace('_R1_', '_R3_'))
+        
         if (r2_path.exists()) fastq_files.add(r2_path)
-        if (i1_path.exists()) fastq_files.add(i1_path)
-        if (i2_path.exists()) fastq_files.add(i2_path)
+        if (r3_path.exists()) fastq_files.add(r3_path)
+
         (flowcell, lane, machine, run_nr) = flowcellLaneFromFastq(r1_path)
         rg_id = "${sample_id}_${flowcell}_${lane}"
         [sample_id, rg_id, machine, run_nr ,fastq_files]
