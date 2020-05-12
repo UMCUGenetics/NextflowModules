@@ -7,11 +7,11 @@ process QuantMerge {
     
     input:
     path(quant_dirs)
-    val run_name
+    val(run_name)
     
    
     output:
-    path "*txt", emit: salmon_quants_merged
+    path("*txt"), emit: salmon_quants_merged
 
     script:
     def quants = quant_dirs.collect{ "$it" }.join(",")

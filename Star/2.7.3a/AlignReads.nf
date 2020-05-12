@@ -12,12 +12,13 @@ process AlignReads {
     
 
     output:
-    tuple sample_id, "${sample_id}_Aligned.sortedByCoord.out.bam", emit: star_aligned
-    path "*Unmapped*", emit: star_unmapped 
+    tuple sample_id, rg_id, "${sample_id}_Aligned.sortedByCoord.out.bam", emit: star_aligned
     path "*Log.final.out", emit: star_final_log
     path "*Log.out", emit: star_log
     path "*SJ.out.tab", emit: star_sj
-     
+    path "*Unmapped*", emit: star_unmapped 
+
+
    
     script:
     def barcode = rg_id.split('_')[1]

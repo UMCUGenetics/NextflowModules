@@ -10,7 +10,7 @@ process Index {
     
    
     output:
-    path "${transcripts_fasta.baseName}/", emit: salmon_index
+    path("${transcripts_fasta.baseName}/"), emit: salmon_index
 
     script:
     def gencode = params.gencode  ? "--gencode" : ""

@@ -10,7 +10,7 @@ process Count {
     path(genome_gtf)   
   
     output:
-    tuple sample_id, "${sample_id}_readCounts_raw.txt" 
+    tuple sample_id, "${sample_id}_readCounts_raw.txt", emit: hts_counts_raw 
 
     shell:
     def s_val = 'no'

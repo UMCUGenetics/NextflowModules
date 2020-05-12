@@ -4,11 +4,11 @@ process CreateIntervalList {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    file(genome_index) 
-    file(genome_dict)
+    path(genome_index) 
+    path(genome_dict)
 
     output:
-    file("${genome_dict.baseName}.interval_list")
+    path("${genome_dict.baseName}.interval_list"), emit: genome_interval_list
 
 
     script:
