@@ -1,7 +1,7 @@
 process FeatureCounts {
-    tag {"subread FeatureCounts ${run_id}"}
-    label 'subread_2_0_0'
-    label 'subread_2_0_0_FeatureCounts'
+    tag {"Subread FeatureCounts ${run_id}"}
+    label 'Subread_2_0_0'
+    label 'Subread_2_0_0_FeatureCounts'
     container = 'quay.io/biocontainers/subread:2.0.0--hed695b0_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -11,10 +11,10 @@ process FeatureCounts {
     path(genome_gtf)   
   
     output:
-    path("${run_id}_${params.fc_count_type}_featureCounts.raw.txt"), emit: fc_raw
-    path("${run_id}_${params.fc_count_type}_featureCounts.txt.summary"), emit: fc_summary
-    path("${run_id}_biotype_featureCounts.matrix.txt"), emit: fc_biotypes, optional: true
-    path("${run_id}_biotype_featureCounts.txt.summary"), emit: fc_biotypes_summary, optional: true
+    path "${run_id}_${params.fc_count_type}_featureCounts.raw.txt", emit: fc_raw
+    path "${run_id}_${params.fc_count_type}_featureCounts.txt.summary", emit: fc_summary
+    path "${run_id}_biotype_featureCounts.matrix.txt", emit: fc_biotypes, optional: true
+    path "${run_id}_biotype_featureCounts.txt.summary", emit: fc_biotypes_summary, optional: true
 
     script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén

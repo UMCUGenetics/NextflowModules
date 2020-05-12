@@ -4,10 +4,10 @@ process mergeFastqLanes {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, file(r1_fastqs), file(r2_fastqs)
+    tuple sample_id, rg_id, path(r1_fastqs), path(r2_fastqs)
 
     output:
-    tuple sample_id, file("${sample_id}_${rg_id}_*.fastq.gz")
+    tuple sample_id, "${sample_id}_${rg_id}_*.fastq.gz"
 
 
     script:

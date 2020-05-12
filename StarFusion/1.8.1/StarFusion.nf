@@ -11,7 +11,7 @@ process StarFusion {
 
     output:
     tuple sample_id, "${sample_id}_star-fusion.tsv", emit: star_fusion_predictions 
-    path("*.{tsv,txt}"), emit: star_fusion_abridged
+    path "*.{tsv,txt}", emit: star_fusion_abridged
 
 
     script:

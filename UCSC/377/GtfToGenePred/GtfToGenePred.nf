@@ -9,7 +9,7 @@ process GtfToGenePred {
     path(genome_gtf)
 
     output:
-    path("${genome_gtf.baseName}.genePred"), emit: genome_genepred
+    path "${genome_gtf.baseName}.genePred", emit: genome_genepred
 
 
     script:

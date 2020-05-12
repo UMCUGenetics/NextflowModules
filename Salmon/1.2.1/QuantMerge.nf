@@ -1,17 +1,16 @@
 process QuantMerge {
-    tag {"Salmon QuantMerge ${sample_id}"}
+    tag {"Salmon QuantMerge ${run_name}"}
     label 'Salmon_1_2_1'
     label 'Salmon_1_2_1_QuantMerge'
     container = 'quay.io/biocontainers/salmon:1.2.1--hf69c8f4_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-    path(quant_dirs)
     val(run_name)
-    
+    path(quant_dirs)
    
     output:
-    path("*txt"), emit: salmon_quants_merged
+    path "*.txt", emit: salmon_quants_merged
 
     script:
     def quants = quant_dirs.collect{ "$it" }.join(",")
