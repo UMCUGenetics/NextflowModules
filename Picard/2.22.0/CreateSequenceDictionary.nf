@@ -9,7 +9,7 @@ process CreateSequenceDictionary  {
     path(genome_fasta)
 
     output:
-    path("${genome_fasta.baseName}.dict"), emit: genome_dict
+    path "${genome_fasta.baseName}.dict", emit: genome_dict
 
     script:
     """

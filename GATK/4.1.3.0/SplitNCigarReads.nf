@@ -6,10 +6,10 @@ process SplitNCigarReads {
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     
     input:
-      tuple sample_id, file(bam), file(bai)
+    tuple sample_id, path(bam), path(bai)
    
     output:
-      tuple sample_id, file("${sample_id}.split.bam"), file("${sample_id}.split.bai")
+    tuple sample_id, "${sample_id}.split.bam", "${sample_id}.split.bai", emit: bam_ncigar_split
 
     script:
     """
