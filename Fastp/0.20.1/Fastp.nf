@@ -5,11 +5,11 @@ process Fastp {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, path(fastqs)
+      tuple(sample_id, rg_id, path(fastqs))
 
     output:
-    tuple sample_id, rg_id, "*.fastq.gz", emit: fastqs_cleaned
-    path "${sample_id}_fastp.json", emit: fastp_report
+      tuple(sample_id, rg_id, path("*.fastq.gz"), emit: fastqs_cleaned)
+      path("${sample_id}_fastp.json", emit: fastp_report)
 
     script:
     //adapted from https://github.com/nf-core/eager/blob/master/LICENSE, Copyright (c) Alexander Peltzer, Stephen Clayton, James A. Fellows Yates, Maxime Borry

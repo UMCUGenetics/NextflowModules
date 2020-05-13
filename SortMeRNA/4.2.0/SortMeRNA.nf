@@ -5,14 +5,14 @@ process SortMeRNA {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-    tuple sample_id, rg_id, path(reads)
-    path(db_fasta) 
+      tuple(sample_id, rg_id, path(reads))
+      path(db_fasta) 
    
     
     output:
-    tuple sample_id, rg_id, "*_non_rRNA.fastq.gz", emit: non_rRNA_fastqs
-    path "*_filtered_rRNA.fastq.gz", emit: rRNA_fastqs
-    path "*_rRNA_report.txt", emit: sortmerna_report
+      tuple(sample_id, rg_id,path("*_non_rRNA.fastq.gz"), emit: non_rRNA_fastqs)
+      path("*_filtered_rRNA.fastq.gz", emit: rRNA_fastqs)
+      path("*_rRNA_report.txt", emit: sortmerna_report)
     
     script:
     def Refs =  db_fasta.collect{ "$it" }.join(" -ref ")  

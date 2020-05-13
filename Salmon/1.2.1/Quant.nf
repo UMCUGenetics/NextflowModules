@@ -6,11 +6,11 @@ process Quant {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-    tuple sample_id, path(fastqs)
-    path(salmon_index)
+      tuple(sample_id, path(fastqs))
+      path(salmon_index)
    
     output:
-    tuple sample_id, "${sample_id}/", emit: salmon_quants
+      tuple(sample_id, path("${sample_id}/"), emit: salmon_quants)
 
     script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén

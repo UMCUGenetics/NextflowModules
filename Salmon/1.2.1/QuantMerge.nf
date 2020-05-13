@@ -6,11 +6,11 @@ process QuantMerge {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-    val(run_name)
-    path(quant_dirs)
+      val(run_name)
+      path(quant_dirs)
    
     output:
-    path "*.txt", emit: salmon_quants_merged
+      path("*.txt", emit: salmon_quants_merged)
 
     script:
     def quants = quant_dirs.collect{ "$it" }.join(",")

@@ -5,12 +5,12 @@ process TrimGalore {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, path(fastqs) 
+      tuple(sample_id, rg_id, path(fastqs)) 
 
     output:
-    tuple sample_id, rg_id, "*fastq.gz", emit: trimmed_fastqs 
-    path "*trimming_report.txt", emit: trimming_report
-    path "*_fastqc.{zip,html}", emit: trimming_fastqc 
+      tuple(sample_id, rg_id, path("*fastq.gz"), emit: trimmed_fastqs) 
+      path("*trimming_report.txt", emit: trimming_report)
+      path("*_fastqc.{zip,html}", emit: trimming_fastqc) 
 
     script:
     if (params.singleEnd) {

@@ -6,15 +6,15 @@ process FeatureCounts {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    val(run_id)
-    path(bam_file)
-    path(genome_gtf)   
+      val(run_id)
+      path(bam_file)
+      path(genome_gtf)   
   
     output:
-    path "${run_id}_${params.fc_count_type}_featureCounts.raw.txt", emit: fc_raw
-    path "${run_id}_${params.fc_count_type}_featureCounts.txt.summary", emit: fc_summary
-    path "${run_id}_biotype_featureCounts.matrix.txt", emit: fc_biotypes, optional: true
-    path "${run_id}_biotype_featureCounts.txt.summary", emit: fc_biotypes_summary, optional: true
+      path("${run_id}_${params.fc_count_type}_featureCounts.raw.txt", emit: fc_raw)
+      path("${run_id}_${params.fc_count_type}_featureCounts.txt.summary", emit: fc_summary)
+      path("${run_id}_biotype_featureCounts.matrix.txt", emit: fc_biotypes, optional: true)
+      path("${run_id}_biotype_featureCounts.txt.summary", emit: fc_biotypes_summary, optional: true)
 
     script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén

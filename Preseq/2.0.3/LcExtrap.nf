@@ -6,10 +6,10 @@
       shell = ['/bin/bash', '-euo', 'pipefail']
 
       input:
-      tuple sample_id, path(bam), path(bai)
+        tuple(sample_id, path(bam), path(bai))
 
       output:
-      tuple sample_id, "${bam.baseName}.ccurve.txt" , emit: preseqc_ccurve
+        tuple(sample_id, path("${bam.baseName}.ccurve.txt") , emit: preseqc_ccurve)
 
       script:
       //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén

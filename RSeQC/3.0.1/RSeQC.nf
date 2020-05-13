@@ -6,11 +6,11 @@ process RSeQC {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, path(bam), path(bai)
-    path(genome_bed12)
+      tuple(sample_id, path(bam), path(bai))
+      path(genome_bed12)
 
     output:
-    tuple sample_id, "*.{txt,pdf,r,xls}", emit: rseqc_stats
+      tuple(sample_id, path("*.{txt,pdf,r,xls}"), emit: rseqc_stats)
 
     script:
     //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
