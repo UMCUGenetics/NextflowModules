@@ -1,7 +1,7 @@
- process LcExtrap {
-      tag {"Preseq LcExtrap ${sample_id} "}
+ process LCExtrap {
+      tag {"Preseq LCExtrap ${sample_id} "}
       label 'Preseq_2_0_3'
-      label 'Preseq_2_0_3_LcExtrap'
+      label 'Preseq_2_0_3_LCExtrap'
       container = "quay.io/biocontainers/preseq:2.0.3--hf53bd2b_3"
       shell = ['/bin/bash', '-euo', 'pipefail']
 
