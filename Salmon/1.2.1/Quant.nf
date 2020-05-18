@@ -16,9 +16,9 @@ process Quant {
         //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
         def rnastrandness = params.singleEnd ? 'U' : 'IU'
         if (params.stranded && !params.unstranded) {
-          rnastrandness = params.singleEnd ? 'SF' : 'ISF'
+            rnastrandness = params.singleEnd ? 'SF' : 'ISF'
         } else if (params.revstranded && !params.unstranded) {
-          rnastrandness = params.singleEnd ? 'SR' : 'ISR'
+            rnastrandness = params.singleEnd ? 'SR' : 'ISR'
         }
         def endedness = params.singleEnd ? "-r ${fastq_files[0]}" : "-1 ${fastq_files[0]} -2 ${fastq_files[1]}"
         def unmapped = params.saveUnaligned ? "--writeUnmappedNames" : ''

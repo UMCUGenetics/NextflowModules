@@ -10,10 +10,11 @@ process Command {
      
     output:
         tuple(sample_id, path(output_file), emit: output_file)
+        path("*.{tsv,txt}", emit: my_output)
+
     
     script:
         """
         tool command ${params.optional}
         """
-
 }

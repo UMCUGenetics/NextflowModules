@@ -12,10 +12,10 @@ process MergeFastqLanes {
 
     script:
         if (params.singleEnd) {
-          r1 = r1_fastqs.collect{ "$it" }.join(" ")
-          """
-          cat ${r1} > ${sample_id}_${rg_id}_R1.fastq.gz
-          """
+            r1 = r1_fastqs.collect{ "$it" }.join(" ")
+            """
+            cat ${r1} > ${sample_id}_${rg_id}_R1.fastq.gz
+            """
         } else {
             r1 = r1_fastqs.collect{ "$it" }.join(" ")
             r2 = r2_fastqs.collect{ "$it" }.join(" ")
@@ -25,6 +25,5 @@ process MergeFastqLanes {
             cat ${r2} > ${sample_id}_${rg_id}_R2.fastq.gz
             """
         }
-
 }
 
