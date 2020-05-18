@@ -6,13 +6,13 @@ process Index {
   shell = ['/bin/bash', '-euo', 'pipefail']
 
   input:
-    tuple(sample_id, path(bam_file))
+      tuple(sample_id, path(bam_file))
 
   output:
-    tuple(sample_id, path("${bam_file}.bai"), emit: bam_index)
+      tuple(sample_id, path("${bam_file}.bai"), emit: bai_file)
 
   script:
-  """
-  sambamba index -t ${task.cpus} ${bam_file} ${bam_file}.bai
-  """
+      """
+      sambamba index -t ${task.cpus} ${bam_file} ${bam_file}.bai
+      """
 }

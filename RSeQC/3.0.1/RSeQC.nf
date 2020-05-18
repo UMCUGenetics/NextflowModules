@@ -6,21 +6,21 @@ process RSeQC {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-      tuple(sample_id, path(bam), path(bai))
-      path(genome_bed12)
+        tuple(sample_id, path(bam_file), path(bai_file))
+        path(genome_bed12)
 
     output:
-      tuple(sample_id, path("*.{txt,pdf,r,xls}"), emit: rseqc_stats)
+        tuple(sample_id, path("*.{txt,pdf,r,xls}"), emit: qc_files)
 
     script:
-    //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
-    """
-    inner_distance.py -i ${bam} -o ${bam.baseName}.rseqc -r ${genome_bed12}
-    read_distribution.py -i ${bam} -r ${genome_bed12} > ${bam.baseName}.read_distribution.txt
-    infer_experiment.py -i ${bam} -r ${genome_bed12} > ${bam.baseName}.infer_experiment.txt
-    junction_annotation.py -i ${bam} -o ${bam.baseName}.rseqc -r ${genome_bed12}
-    bam_stat.py -i ${bam} 2> ${bam.baseName}.bam_stat.txt
-    junction_saturation.py -i ${bam} -o ${bam.baseName}.rseqc -r ${genome_bed12} 2> ${bam.baseName}.junction_annotation_log.txt
-    read_duplication.py -i ${bam} -o ${bam.baseName}.read_duplication
-    """
+        //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
+        """
+        inner_distance.py -i ${bam_file} -o ${bam_file.baseName}.rseqc -r ${genome_bed12}
+        read_distribution.py -i ${bam_file} -r ${genome_bed12} > ${bam_file.baseName}.read_distribution.txt
+        infer_experiment.py -i ${bam_file} -r ${genome_bed12} > ${bam_file.baseName}.infer_experiment.txt
+        junction_annotation.py -i ${bam_file} -o ${bam_file.baseName}.rseqc -r ${genome_bed12}
+        bam_stat.py -i ${bam_file} 2> ${bam_file.baseName}.bam_stat.txt
+        junction_saturation.py -i ${bam_file} -o ${bam_file.baseName}.rseqc -r ${genome_bed12} 2> ${bam_file.baseName}.junction_annotation_log.txt
+        read_duplication.py -i ${bam_file} -o ${bam_file.baseName}.read_duplication
+        """
 }

@@ -6,19 +6,19 @@ process QuantMerge {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-      val(run_name)
-      path(quant_dirs)
+        val(run_name)
+        path(quant_dirs)
    
     output:
-      path("*.txt", emit: salmon_quants_merged)
+        path("*.txt", emit: quant_tables_merged)
 
     script:
-    def quants = quant_dirs.collect{ "$it" }.join(",")
-    """  
-    salmon quantmerge -c numreads --quants {${quants}} -o ${run_name}_transcripts_quantmerge_numReads.txt 
-    salmon quantmerge -c tpm --quants {${quants}} -o ${run_name}_transcripts_quantmerge_TPM.txt  
-    salmon quantmerge -c len --quants {${quants}} -o ${run_name}_transcripts_quantmerge_Length.txt
-    salmon quantmerge -c elen --quants {${quants}} -o ${run_name}_transcripts_quantmerge_EffectiveLength.txt
-    """
+        def quants = quant_dirs.collect{ "$it" }.join(",")
+        """  
+        salmon quantmerge -c numreads --quants {${quants}} -o ${run_name}_transcripts_quantmerge_numReads.txt 
+        salmon quantmerge -c tpm --quants {${quants}} -o ${run_name}_transcripts_quantmerge_TPM.txt  
+        salmon quantmerge -c len --quants {${quants}} -o ${run_name}_transcripts_quantmerge_Length.txt
+        salmon quantmerge -c elen --quants {${quants}} -o ${run_name}_transcripts_quantmerge_EffectiveLength.txt
+        """
 }
 

@@ -6,16 +6,16 @@ process GenePredToBed {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-      path(genome_genepred)
+        path(genome_genepred)
 
     output:
-      path("${genome_genepred.baseName}.sorted.bed12", emit: genome_bed12)
-
+        path("${genome_genepred.baseName}.sorted.bed12", emit: genome_bed12)
+  
 
     script:
-    """
-    genePredToBed ${genome_genepred} ${genome_genepred.baseName}.bed12
-    sort -k1,1 -k2,2n ${genome_genepred.baseName}.bed12 > ${genome_genepred.baseName}.sorted.bed12
-    """
+        """
+        genePredToBed ${genome_genepred} ${genome_genepred.baseName}.bed12
+        sort -k1,1 -k2,2n ${genome_genepred.baseName}.bed12 > ${genome_genepred.baseName}.sorted.bed12
+        """
 
 }
