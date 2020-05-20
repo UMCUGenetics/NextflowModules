@@ -12,7 +12,7 @@ process Count {
     output:
         tuple(sample_id, path("${sample_id}_readCounts_raw.txt"), emit: count_table) 
 
-    shell:
+    script:
         def s_val = 'no'
         if (params.stranded && !params.unstranded) {
             s_val = 'yes'

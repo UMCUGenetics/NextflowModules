@@ -25,12 +25,12 @@ process Quant {
 
         """
         salmon quant --validateMappings \
-                      ${params.optional} \
-                      --threads ${task.cpus} \
-                      --libType=${rnastrandness} \
-                      --index ${salmon_index} \
-                      ${endedness} ${unmapped} \
-                      -o ${sample_id}              
+                    ${params.optional} \
+                    --threads ${task.cpus} \
+                    --libType=${rnastrandness} \
+                    --index ${salmon_index} \
+                    ${endedness} ${unmapped} \
+                    -o ${sample_id}              
         """
 }
 
