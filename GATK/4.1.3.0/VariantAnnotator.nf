@@ -13,7 +13,7 @@ process VariantAnnotator {
       tuple (run_id, path("${vcf.baseName}_${db_name}.vcf"), path("${vcf.baseName}_${db_name}.vcf.idx"), emit: annotated_vcfs)
 
     script:
-    db_file = path(params.genome_variant_annotator_db).getBaseName()
+    db_file = file(params.genome_variant_annotator_db).getBaseName()
     db_name = db_file.replaceFirst(~/\.[^\.]+$/, '')
 
     """

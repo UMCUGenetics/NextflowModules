@@ -10,7 +10,7 @@ process CollectWGSMetrics {
     tuple (sample_id, path(bam))
 
   output:
-    path ("${sample_id}.wgs_metrics.txt"), emit: wgs_metrics
+    path ("${sample_id}.wgs_metrics.txt" , emit: wgs_metrics)
 
   script:
   """

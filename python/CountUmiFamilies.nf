@@ -9,7 +9,7 @@ process CountUMIFamilies {
     tuple (sample_id, flowcell, machine, run_nr, path(bam))
 
     output:
-    path("${sample_id}_${flowcell}.family_counts"), emit:family_counts
+    path("${sample_id}_${flowcell}.family_counts", emit:family_counts)
 
     script:
 

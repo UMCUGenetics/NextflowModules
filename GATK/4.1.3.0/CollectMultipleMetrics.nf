@@ -10,7 +10,7 @@ process CollectMultipleMetrics {
     tuple (sample_id, path(bam))
 
   output:
-    path ("${sample_id}.multiple_metrics*"), emit : multiple_metrics
+    path ("${sample_id}.multiple_metrics*", emit : multiple_metrics)
 
   script:
   """

@@ -9,7 +9,7 @@ process SplitIntervals {
       path(scatter_interval_list)
 
     output:
-      path("temp_*/scattered.interval_list"), emit: interval_lists
+      path("temp_*/scattered.interval_list", emit: interval_lists)
 
     script:
 

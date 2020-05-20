@@ -14,7 +14,7 @@ process Index {
 
     output:
 
-    path("${fasta}.{alt,amb,ann,bwt,pac,sa}"), emit: bwa_index
+    path("${fasta}.{alt,amb,ann,bwt,pac,sa}", emit: bwa_index)
 
 
     script:
