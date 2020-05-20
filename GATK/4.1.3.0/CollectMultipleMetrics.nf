@@ -7,7 +7,7 @@ process CollectMultipleMetrics {
   container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
   shell = ['/bin/bash', '-euo', 'pipefail']
   input:
-    tuple sample_id, path(bam)
+    tuple (sample_id, path(bam))
 
   output:
     path ("${sample_id}.multiple_metrics*"), emit : multiple_metrics

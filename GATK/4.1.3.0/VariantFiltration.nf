@@ -7,10 +7,10 @@ process VariantFiltration {
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-      tuple run_id, interval, type, path(vcf), path(vcfidx)
+      tuple (run_id, interval, type, path(vcf), path(vcfidx))
 
     output:
-      tuple run_id, interval, type, path("${run_id}.${interval}.${type}.filtered_variants.vcf"), path("${run_id}.${interval}.${type}.filtered_variants.vcf.idx"), emit: filtered_vcfs
+      tuple (run_id, interval, type, path("${run_id}.${interval}.${type}.filtered_variants.vcf"), path("${run_id}.${interval}.${type}.filtered_variants.vcf.idx"), emit: filtered_vcfs)
 
     script:
     if (type == 'SNP'){

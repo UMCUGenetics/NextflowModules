@@ -6,10 +6,10 @@ process GenotypeGVCFs {
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-      tuple run_id, interval, path(gvcf), path(gvcfidx), path(interval_file)
+      tuple (run_id, interval, path(gvcf), path(gvcfidx), path(interval_file))
 
     output:
-      tuple run_id, interval, path("${run_id}.${interval}.vcf"),path("${run_id}.${interval}.vcf.idx"),path(interval_file), emit : genotyped_vcfs
+      tuple (run_id, interval, path("${run_id}.${interval}.vcf"),path("${run_id}.${interval}.vcf.idx"),path(interval_file), emit : genotyped_vcfs)
 
     script:
 
