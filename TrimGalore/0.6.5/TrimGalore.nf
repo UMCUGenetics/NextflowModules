@@ -10,7 +10,7 @@ process TrimGalore {
     output:
         tuple(sample_id, rg_id, path("*fastq.gz"), emit: fastqs_trimmed) 
         path("*trimming_report.txt", emit: trimming_report)
-        path("*_fastqc.{zip,html}", emit: fastqc_report) 
+        path("*_fastqc.{zip,html}", optional: true, emit: fastqc_report) 
 
     script:
         if (params.singleEnd) {
