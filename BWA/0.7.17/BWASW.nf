@@ -6,13 +6,13 @@ process BWASW {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, file(fastq: "*")
+        tuple(sample_id, rg_id, path(fastq: "*"))
 
     output:
-    tuple sample_id, rg_id, file("${fastq[0].simpleName}.sam")
+        tuple(sample_id, rg_id, path("${fastq[0].simpleName}.sam"), emit: sam_file)
 
     script:
-    """
-    bwa bwasw -t ${task.cpus} ${params.optional} ${params.genome} ${fastq} > ${fastq[0].simpleName}.sam
-    """
+        """
+        bwa bwasw -t ${task.cpus} ${params.optional} ${params.genome} ${fastq} > ${fastq[0].simpleName}.sam
+        """
 }

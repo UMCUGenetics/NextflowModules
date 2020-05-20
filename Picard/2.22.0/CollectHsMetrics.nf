@@ -6,14 +6,13 @@ process CollectHsMetrics {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple val(sample_id), file(bam_file), file(bai_file)
+        tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-    file("${sample_id}.HsMetrics.txt")
+        path("${sample_id}.HsMetrics.txt", emit: txt_file)
 
     script:
-
-    """
-    picard -Xmx${task.memory.toGiga()-4}G CollectHsMetrics TMP_DIR=\$TMPDIR R=${params.genome} INPUT=${bam_file} OUTPUT=${sample_id}.HsMetrics.txt BAIT_INTERVALS=${params.bait} TARGET_INTERVALS=${params.target} ${params.optional}
-    """
+        """
+        picard -Xmx${task.memory.toGiga()-4}G CollectHsMetrics TMP_DIR=\$TMPDIR R=${params.genome} INPUT=${bam_file} OUTPUT=${sample_id}.HsMetrics.txt BAIT_INTERVALS=${params.bait} TARGET_INTERVALS=${params.target} ${params.optional}
+        """
 }

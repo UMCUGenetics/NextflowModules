@@ -6,14 +6,13 @@ process EstimateLibraryComplexity {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple val(sample_id), file(bam_file), file(bai_file)
+        tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-    file("${sample_id}.LibraryComplexity.txt")
+        path("${sample_id}.LibraryComplexity.txt", emit: txt_file)
 
     script:
-
-    """
-    picard -Xmx${task.memory.toGiga()-4}G EstimateLibraryComplexity TMP_DIR=\$TMPDIR INPUT=${bam_file} OUTPUT=${sample_id}.LibraryComplexity.txt ${params.optional}
-    """
+        """
+        picard -Xmx${task.memory.toGiga()-4}G EstimateLibraryComplexity TMP_DIR=\$TMPDIR INPUT=${bam_file} OUTPUT=${sample_id}.LibraryComplexity.txt ${params.optional}
+        """
 }
