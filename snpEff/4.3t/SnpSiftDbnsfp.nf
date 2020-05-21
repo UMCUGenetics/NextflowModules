@@ -1,16 +1,16 @@
 
-process SnpSiftDbnsfp {
-    tag {"SNPEFF_Snpsiftsbnsfp ${run_id}"}
-    label 'SNPEFF_4_3t'
-    label 'SNPEFF_4_3t_Snpsiftsbnsfp'
+process SNPSiftDbnsfp {
+    tag {"SNPEff SNPSiftDbnsfp ${run_id}"}
+    label 'SNPEff_4_3t'
+    label 'SNPEff_4_3t_SNPSiftDbnsfp'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:snpeff-4.3t'
-
+    shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-      tuple run_id, file(vcf), file(vcfidx)
+      tuple (run_id, path(vcf), path(vcfidx))
 
     output:
-      tuple run_id, file("${vcf.baseName}_dbnsfp.vcf"), file("${vcf.baseName}_dbnsfp.vcf.idx")
+      tuple (run_id, path("${vcf.baseName}_dbnsfp.vcf"), path("${vcf.baseName}_dbnsfp.vcf.idx"), emit : snpsift_dbnsfp_vcfs)
 
     script:
 

@@ -1,16 +1,16 @@
 
 process VariantFiltration {
-    tag {"GATK_Variantfiltration ${run_id}.${interval}.${type}"}
+    tag {"GATK VariantFiltration ${run_id}.${interval}.${type}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_4_1_3_0_Variantfiltration'
+    label 'GATK_4_1_3_0_VariantFiltration'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
-
+    shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-      tuple run_id, interval, type, file(vcf), file(vcfidx)
+      tuple (run_id, interval, type, path(vcf), path(vcfidx))
 
     output:
-      tuple run_id, interval, type, file("${run_id}.${interval}.${type}.filtered_variants.vcf"), file("${run_id}.${interval}.${type}.filtered_variants.vcf.idx")
+      tuple (run_id, interval, type, path("${run_id}.${interval}.${type}.filtered_variants.vcf"), path("${run_id}.${interval}.${type}.filtered_variants.vcf.idx"), emit: filtered_vcfs)
 
     script:
     if (type == 'SNP'){

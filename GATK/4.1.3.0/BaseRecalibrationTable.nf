@@ -1,16 +1,16 @@
 
 process BaseRecalibrationTable {
-    tag {"GATK_Baserecalibrator ${sample_id}.${int_tag}"}
+    tag {"GATK BaseRecalibrationTable ${sample_id}.${int_tag}"}
     label 'GATK_4_1_3_0'
-    label 'GATK_4_1_3_0_Baserecalibrator'
+    label 'GATK_4_1_3_0_BaseRecalibrationTable'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
-
+    shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-      tuple sample_id, file(bam), file(bai), file(interval_file)
+      tuple (sample_id, path(bam), path(bai), path(interval_file))
 
     output:
-      tuple sample_id, file("${sample_id}.${int_tag}.recal.table")
+      tuple (sample_id, path("${sample_id}.${int_tag}.recal.table"), emit: recalibration_tables)
 
     script:
     known = params.genome_known_sites ? '--known-sites ' + params.genome_known_sites.join(' --known-sites ') : ''

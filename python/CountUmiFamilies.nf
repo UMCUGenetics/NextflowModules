@@ -1,15 +1,15 @@
-process CountUmiFamilies {
-    tag {"python CountUmiFamilies ${sample_id} "}
+process CountUMIFamilies {
+    tag {"python CountUMIFamilies ${sample_id} "}
     label 'python_2_7_10'
-    label 'python_2_7_10_CountUmiFamilies'
+    label 'python_2_7_10_CountUMIFamilies'
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, flowcell, machine, run_nr, file(bam)
+    tuple (sample_id, flowcell, machine, run_nr, path(bam))
 
     output:
-    file("${sample_id}_${flowcell}.family_counts")
+    path("${sample_id}_${flowcell}.family_counts", emit:family_counts)
 
     script:
 

@@ -1,15 +1,15 @@
 process MarkDup {
-  tag {"SAMBAMBA_Markdup ${sample_id}"}
-  label 'SAMBAMBA_0_6_8'
-  label 'SAMBAMBA_0_6_8_Markdup'
+  tag {"Sambamba MarkDup ${sample_id}"}
+  label 'Sambamba_0_6_8'
+  label 'Sambamba_0_6_8_MarkDup'
   clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
   container = 'library://sawibo/default/bioinf-tools:sambamba-0.6.8'
-
+  shell = ['/bin/bash', '-euo', 'pipefail']
   input:
-    tuple sample_id, rg_ids, file(bams), file(bais)
+    tuple (sample_id, rg_ids, path(bams), path(bais))
 
   output:
-    tuple sample_id, file("${sample_id}_dedup.bam"), file("${sample_id}_dedup.bai")
+    tuple (sample_id, path("${sample_id}_dedup.bam"), path("${sample_id}_dedup.bai"), emit: deduplicated_bams)
 
   script:
   """

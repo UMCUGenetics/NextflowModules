@@ -1,16 +1,16 @@
 
-process SnpSiftAnnotate {
-    tag {"SNPEFF_Snpsiftannotate ${run_id}"}
-    label 'SNPEFF_4_3t'
-    label 'SNPEFF_4_3t_Snpsiftannotate'
+process SNPSiftAnnotate {
+    tag {"SNPEff SNPSiftAnnotate ${run_id}"}
+    label 'SNPEff_4_3t'
+    label 'SNPEff_4_3t_SNPSiftAnnotate'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:snpeff-4.3t'
-
+    shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-      tuple run_id, file(vcf), file(vcfidx)
+      tuple (run_id, path(vcf), path(vcfidx))
 
     output:
-      tuple run_id, file("${vcf.baseName}_${db_name}.vcf"), file("${vcf.baseName}_${db_name}.vcf.idx")
+      tuple (run_id, path("${vcf.baseName}_${db_name}.vcf"), path("${vcf.baseName}_${db_name}.vcf.idx"), emit: snpsift_annoted_vcfs)
 
     script:
     db_file = file(params.genome_snpsift_annotate_db).getBaseName()
