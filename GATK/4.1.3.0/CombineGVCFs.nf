@@ -8,7 +8,7 @@ process CombineGVCFs {
     input:
       tuple (run_id, interval, path(gvcf_chunks), path(gvcf_chunk_idxs), path(interval_file))
     output:
-      tuple (run_id, interval, path("${run_id}.${interval}.g.vcf"), path("${run_id}.${interval}.g.vcf.idx"),path(interval_file), emit: combined_gvcfs)
+      tuple (run_id, interval, path("${run_id}.${interval}.g.vcf"), path("${run_id}.${interval}.g.vcf.idx"), path(interval_file), emit: combined_gvcfs)
 
     script:
     vcfs = gvcf_chunks.join(' -V ')
