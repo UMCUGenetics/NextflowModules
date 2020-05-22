@@ -7,10 +7,10 @@ process MergeFastqs {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple (sample_id, flowcell, path(fastq))
+        tuple (sample_id, flowcell, path(fastq))
 
     output:
-    tuple (sample_id, flowcell, read_nr ,path("${sample_id}_${flowcell}_${read_nr}.fastq.gz"), emit : merged_fastqs)
+        tuple (sample_id, flowcell, read_nr ,path("${sample_id}_${flowcell}_${read_nr}.fastq.gz"), emit : merged_fastqs)
 
 
     script:
