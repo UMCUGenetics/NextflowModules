@@ -13,12 +13,12 @@ process CollectMultipleMetrics {
     path ("${sample_id}.multiple_metrics*", emit : multiple_metrics)
 
   script:
-  """
-  gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-  CollectMultipleMetrics \
-  -I $bam \
-  -O ${sample_id}.multiple_metrics\
-  -R ${params.genome_fasta} \
-  ${params.optional}
-  """
+    """
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
+    CollectMultipleMetrics \
+    -I $bam \
+    -O ${sample_id}.multiple_metrics\
+    -R ${params.genome_fasta} \
+    ${params.optional}
+    """
 }
