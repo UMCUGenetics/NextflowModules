@@ -17,8 +17,7 @@ process Index {
 
 
     script:
-    """
-    bwa index $params.optional $fasta
-    """
-
+        """
+        bwa index $params.optional $fasta
+        """
 }
