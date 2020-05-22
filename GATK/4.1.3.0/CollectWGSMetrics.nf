@@ -13,13 +13,13 @@ process CollectWGSMetrics {
     path ("${sample_id}.wgs_metrics.txt" , emit: wgs_metrics)
 
   script:
-  """
-  gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-  CollectWgsMetrics \
-  -I $bam \
-  -O ${sample_id}.wgs_metrics.txt \
-  -R ${params.genome_fasta} \
-  ${params.optional}
-  sed -i 's/picard\\.analysis\\.WgsMetrics/picard\\.analysis\\.CollectWgsMetrics\\\$WgsMetrics/' ${sample_id}.wgs_metrics.txt
-  """
+    """
+    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
+    CollectWgsMetrics \
+    -I $bam \
+    -O ${sample_id}.wgs_metrics.txt \
+    -R ${params.genome_fasta} \
+    ${params.optional}
+    sed -i 's/picard\\.analysis\\.WgsMetrics/picard\\.analysis\\.CollectWgsMetrics\\\$WgsMetrics/' ${sample_id}.wgs_metrics.txt
+    """
 }
