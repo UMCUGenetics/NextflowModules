@@ -12,7 +12,7 @@ process FastQC {
         path("*_fastqc.{zip,html}", emit: fastqc_reports)
 
     script:
-    """
-    fastqc ${params.optional} -t ${task.cpus} $fastq
-    """
+        """
+        fastqc ${params.optional} -t ${task.cpus} $fastq
+        """
 }
