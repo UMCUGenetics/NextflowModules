@@ -11,10 +11,10 @@ process MergeBams {
     tuple (sample_id, path("${sample_id}_${ext}"), path("${sample_id}_${ext}.bai"), emit: merged_bams)
 
   script:
-  ext = bams[0].toRealPath().toString().split("_")[-1]
+    ext = bams[0].toRealPath().toString().split("_")[-1]
 
-  """
-  sambamba merge -t ${task.cpus} ${sample_id}_${ext} ${bams}
-  sambamba index -t ${task.cpus} ${sample_id}_${ext} ${sample_id}_${ext}.bai
-  """
+    """
+    sambamba merge -t ${task.cpus} ${sample_id}_${ext} ${bams}
+    sambamba index -t ${task.cpus} ${sample_id}_${ext} ${sample_id}_${ext}.bai
+    """
 }

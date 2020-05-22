@@ -7,33 +7,33 @@ process MergeFastqs {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple (sample_id, flowcell, path(fastq))
+        tuple (sample_id, flowcell, path(fastq))
 
     output:
-    tuple (sample_id, flowcell, read_nr ,path("${sample_id}_${flowcell}_${read_nr}.fastq.gz"), emit : merged_fastqs)
+        tuple (sample_id, flowcell, read_nr ,path("${sample_id}_${flowcell}_${read_nr}.fastq.gz"), emit : merged_fastqs)
 
 
     script:
-    switch(fastq[0]){
-      case ~/.*_R1_.*/:
-        read_nr = 'R1';
-        break;
-      case ~/.*_R2_.*/:
-        read_nr = 'R2';
-        break;
-      case ~/.*_R3_.*/:
-        read_nr = 'R3';
-        break;
-      case ~/.*_I1_.*/:
-        read_nr = 'I1';
-        break;
-      case ~/.*_I2_.*/:
-        read_nr = 'I2';
-        break;
-    }
+        switch(fastq[0]){
+          case ~/.*_R1_.*/:
+            read_nr = 'R1';
+            break;
+          case ~/.*_R2_.*/:
+            read_nr = 'R2';
+            break;
+          case ~/.*_R3_.*/:
+            read_nr = 'R3';
+            break;
+          case ~/.*_I1_.*/:
+            read_nr = 'I1';
+            break;
+          case ~/.*_I2_.*/:
+            read_nr = 'I2';
+            break;
+        }
 
-    """
-    cat $fastq > "${sample_id}_${flowcell}_${read_nr}.fastq.gz"
-    """
+        """
+        cat $fastq > "${sample_id}_${flowcell}_${read_nr}.fastq.gz"
+        """
 
 }

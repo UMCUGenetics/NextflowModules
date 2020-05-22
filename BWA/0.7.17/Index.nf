@@ -10,16 +10,14 @@ process Index {
     storeDir = index_loc
 
     input:
-    path(fasta)
+        path(fasta)
 
     output:
-
-    path("${fasta}.{alt,amb,ann,bwt,pac,sa}", emit: bwa_index)
+        path("${fasta}.{alt,amb,ann,bwt,pac,sa}", emit: bwa_index)
 
 
     script:
-    """
-    bwa index $params.optional $fasta
-    """
-
+        """
+        bwa index $params.optional $fasta
+        """
 }

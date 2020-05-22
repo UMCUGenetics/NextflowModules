@@ -9,20 +9,19 @@ process SamToFastq {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-      tuple (sample_id, flowcell, machine, run_nr,path(bam))
+        tuple (sample_id, flowcell, machine, run_nr, path(bam))
 
     output:
-      tuple (sample_id, flowcell, machine, run_nr,path("*.fastq.gz"), emit: converted_fastqs)
+        tuple (sample_id, flowcell, machine, run_nr, path("*.fastq.gz"), emit: converted_fastqs)
 
     script:
-
-    """
-    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-    SamToFastq  \
-    ${params.optional} \
-    --INPUT $bam \
-    --FASTQ ${sample_id}_${flowcell}_R1_001.fastq.gz \
-    --SECOND_END_FASTQ ${sample_id}_${flowcell}_R2_001.fastq.gz \
-    --INCLUDE_NON_PF_READS true \
-    """
+        """
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
+        SamToFastq  \
+        ${params.optional} \
+        --INPUT $bam \
+        --FASTQ ${sample_id}_${flowcell}_R1_001.fastq.gz \
+        --SECOND_END_FASTQ ${sample_id}_${flowcell}_R2_001.fastq.gz \
+        --INCLUDE_NON_PF_READS true \
+        """
 }

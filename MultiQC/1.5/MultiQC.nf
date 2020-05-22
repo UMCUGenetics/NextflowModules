@@ -6,15 +6,14 @@ process MultiQC {
     container = 'library://sawibo/default/bioinf-tools:multiqc-1.5'
     shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-    path("*")
+        path("*")
 
     output:
-    path ("multiqc_report.html", emit : multiqc_report)
-    path ("multiqc_data", emit : multiqc_data)
+        path ("multiqc_report.html", emit : multiqc_report)
+        path ("multiqc_data", emit : multiqc_data)
 
     script:
-    """
-
-    multiqc ${params.optional} .
-    """
+        """
+        multiqc ${params.optional} .
+        """
 }

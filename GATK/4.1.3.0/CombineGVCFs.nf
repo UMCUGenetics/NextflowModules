@@ -8,18 +8,17 @@ process CombineGVCFs {
     input:
       tuple (run_id, interval, path(gvcf_chunks), path(gvcf_chunk_idxs), path(interval_file))
     output:
-      tuple (run_id, interval, path("${run_id}.${interval}.g.vcf"), path("${run_id}.${interval}.g.vcf.idx"),path(interval_file), emit: combined_gvcfs)
+      tuple (run_id, interval, path("${run_id}.${interval}.g.vcf"), path("${run_id}.${interval}.g.vcf.idx"), path(interval_file), emit: combined_gvcfs)
 
     script:
-    vcfs = gvcf_chunks.join(' -V ')
+        vcfs = gvcf_chunks.join(' -V ')
 
-    """
-
-    gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-    CombineGVCFs \
-    -R ${params.genome_fasta} \
-    -V $vcfs \
-    -O ${run_id}.${interval}.g.vcf \
-    -L $interval_file
-    """
+        """
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
+        CombineGVCFs \
+        -R ${params.genome_fasta} \
+        -V $vcfs \
+        -O ${run_id}.${interval}.g.vcf \
+        -L $interval_file
+        """
 }

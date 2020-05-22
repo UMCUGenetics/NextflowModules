@@ -12,8 +12,8 @@ process MarkDup {
     tuple (sample_id, path("${sample_id}_dedup.bam"), path("${sample_id}_dedup.bai"), emit: deduplicated_bams)
 
   script:
-  """
-  sambamba markdup ${params.optional} --tmpdir=\$PWD/tmp -t ${task.cpus} ${bams} ${sample_id}_dedup.bam
-  sambamba index -t ${task.cpus} ${sample_id}_dedup.bam ${sample_id}_dedup.bai
-  """
+    """
+    sambamba markdup ${params.optional} --tmpdir=\$PWD/tmp -t ${task.cpus} ${bams} ${sample_id}_dedup.bam
+    sambamba index -t ${task.cpus} ${sample_id}_dedup.bam ${sample_id}_dedup.bai
+    """
 }
