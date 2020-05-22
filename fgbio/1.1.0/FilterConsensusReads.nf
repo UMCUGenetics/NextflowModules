@@ -6,18 +6,17 @@ process FilterConsensusReads {
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-      tuple (sample_id, flowcell, machine, run_nr, path(bam))
+        tuple (sample_id, flowcell, machine, run_nr, path(bam))
 
     output:
-      tuple (sample_id, flowcell, machine, run_nr, path("${sample_id}.u.consensus.filtered.bam"), emit: filtered_bams)
+        tuple (sample_id, flowcell, machine, run_nr, path("${sample_id}.u.consensus.filtered.bam"), emit: filtered_bams)
 
     script:
-
-    """
-    java -Xmx${task.memory.toGiga()-4}g -jar /bin/fgbio-1.1.0.jar --tmp-dir \$PWD FilterConsensusReads \
-    --input $bam \
-    --output ${sample_id}.u.consensus.filtered.bam \
-    --ref $params.genome_fasta \
-    ${params.optional}
-    """
+        """
+        java -Xmx${task.memory.toGiga()-4}g -jar /bin/fgbio-1.1.0.jar --tmp-dir \$PWD FilterConsensusReads \
+        --input $bam \
+        --output ${sample_id}.u.consensus.filtered.bam \
+        --ref $params.genome_fasta \
+        ${params.optional}
+        """
 }
