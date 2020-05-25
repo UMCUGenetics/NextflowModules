@@ -1,22 +1,19 @@
 
 process MultiQC {
-    tag {"MULTIQC ${id}"}
-    label 'MULTIQC_1_5'
+    tag {"MultiQC"}
+    label 'MultiQC_1_5'
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:multiqc-1.5'
-
+    shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-
-    file(qc_files: "*")
+        path("*")
 
     output:
-    file "multiqc_report.html"
-    file "multiqc_data"
-
+        path ("multiqc_report.html", emit : multiqc_report)
+        path ("multiqc_data", emit : multiqc_data)
 
     script:
-    """
-
-    multiqc ${params.optional} .
-    """
+        """
+        multiqc ${params.optional} .
+        """
 }

@@ -4,7 +4,7 @@ process SplitNCigarReads {
     label 'GATK_4_1_3_0'
     label 'GATK_4_1_3_0_SplitNCigarReads'
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
-    
+    shell = ['/bin/bash', '-euo', 'pipefail']
     input:
         tuple(sample_id, path(bam_file), path(bai_file))
    
