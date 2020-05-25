@@ -6,15 +6,15 @@ process Command {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(input_file)
-
+        tuple(sample_id, path(input_file))
+     
     output:
-    tuple sample_id, file(output_file)
+        tuple(sample_id, path(output_file), emit: output_file)
+        path("*.{tsv,txt}", emit: my_output)
 
-
+    
     script:
-    """
-    tool command ${params.optional}
-    """
-
+        """
+        tool command ${params.optional}
+        """
 }

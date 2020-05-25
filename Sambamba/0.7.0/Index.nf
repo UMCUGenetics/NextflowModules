@@ -1,8 +1,8 @@
 process Index {
   tag {"SAMBAMBA_Index ${sample_id}"}
-  label 'SAMBAMBA_0_6_8'
-  label 'SAMBAMBA_0_6_8_Index'
-  container = 'library://sawibo/default/bioinf-tools:sambamba-0.6.8'
+  label 'SAMBAMBA_0_7_0'
+  label 'SAMBAMBA_0_7_0_Index'
+  container = 'quay.io/biocontainers/sambamba:0.7.0--h89e63da_1'
   shell = ['/bin/bash', '-euo', 'pipefail']
 
   input:
