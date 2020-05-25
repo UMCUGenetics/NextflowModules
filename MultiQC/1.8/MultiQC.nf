@@ -5,7 +5,7 @@ process MultiQC {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        analysis_id
+        val(analysis_id)
         path(qc_files)
 
     output:
