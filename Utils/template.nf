@@ -13,7 +13,6 @@ process Command {
         tuple(sample_id, path(output_file), emit: output_file)
         path("log.txt", emit: log)
 
-    
     script:
         """
         tool command ${params.optional} ${analysis_id} ${params.resource_file} ${input_file} 
