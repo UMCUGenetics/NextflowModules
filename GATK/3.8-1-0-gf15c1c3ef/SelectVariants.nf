@@ -6,8 +6,7 @@ process SelectVariantsSample {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(vcf_file), path(vcf_idx_file))
-        sample_id
+        tuple(analysis_id, path(vcf_file), path(vcf_idx_file), sample_id)
 
     output:
         tuple(sample_id, path("${sample_id}_${vcf_file.baseName}.vcf"), path("${sample_id}_${vcf_file.baseName}.vcf.idx"), emit: vcf_file)

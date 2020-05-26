@@ -6,9 +6,7 @@ process HaplotypeCaller {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        analysis_id
-        tuple(path(bam_files), path(bai_files))
-        path(interval_file)
+        tuple(analysis_id, path(bam_files), path(bai_files), path(interval_file))
 
     output:
         tuple(val(analysis_id), file("${analysis_id}.${interval_file.baseName}.vcf"), file("${analysis_id}.${interval_file.baseName}.vcf.idx"), emit: vcf_file)
