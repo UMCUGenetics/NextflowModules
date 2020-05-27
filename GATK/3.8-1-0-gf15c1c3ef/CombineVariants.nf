@@ -6,14 +6,14 @@ process CombineVariants {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple val(analysis_id), file(vcf_files), file(vcf_idx_files)
+        tuple(analysis_id, path(vcf_files), path(vcf_idx_files))
 
     output:
-    tuple val(analysis_id), file("${analysis_id}.vcf"), file("${analysis_id}.vcf.idx")
+        tuple(analysis_id, path("${analysis_id}.vcf"), path("${analysis_id}.vcf.idx"), emit:vcf_file)
 
     script:
-    def input_files = vcf_files.collect{"$it"}.join(" -V ")
-    """
-    java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T CombineVariants --reference_sequence ${params.genome} -V ${input_files} --out ${analysis_id}.vcf ${params.optional}
-    """
+        def input_files = vcf_files.collect{"$it"}.join(" -V ")
+        """
+        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T CombineVariants --reference_sequence ${params.genome} -V ${input_files} --out ${analysis_id}.vcf ${params.optional}
+        """
 }

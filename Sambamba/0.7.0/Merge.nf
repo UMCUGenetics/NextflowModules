@@ -6,13 +6,13 @@ process Merge {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(bam_files), file(bai_files)
+        tuple(sample_id, path(bam_files), path(bai_files))
 
     output:
-    tuple sample_id, file("${sample_id}.bam"), file("${sample_id}.bam.bai")
+        tuple(sample_id, path("${sample_id}.bam"), path("${sample_id}.bam.bai"), emit: bam_file)
 
     script:
-    """
-    sambamba merge -t ${task.cpus} ${sample_id}.bam ${bam_files}
-    """
+        """
+        sambamba merge -t ${task.cpus} ${sample_id}.bam ${bam_files}
+        """
 }
