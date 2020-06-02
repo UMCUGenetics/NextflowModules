@@ -6,7 +6,7 @@ process MultiQC {
 
     input:
         val(analysis_id)
-        path(qc_files)
+        file(qc_files)
 
     output:
         tuple(path("${analysis_id}_multiqc_report.html"), path("${analysis_id}_multiqc_report_data"), emit: report)
