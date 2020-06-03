@@ -15,7 +15,8 @@ process SortMeRNA {
         path("*_rRNA_report.txt", emit: qc_report)
     
     script:
-        def Refs =  db_fasta.collect{ "$it" }.join(" -ref ")  
+        def Refs =  db_fasta.collect{ "$it" }.join(" -ref ")
+        def report_title = fastq_files[0].simpleName.split("_R1_")[0]  
         if (params.singleEnd) {
             """
             sortmerna -ref ${Refs} \
@@ -29,7 +30,7 @@ process SortMeRNA {
                 
             gzip -f < non-rRNA-reads.fastq > ${fastq_files[0].simpleName}_non_rRNA.fastq.gz
             gzip -f < rRNA-reads.fastq > ${fastq_files[0].simpleName}_filtered_rRNA.fastq.gz
-            mv rRNA-reads.log ${sample_id}_rRNA_report.txt
+            mv rRNA-reads.log ${report_title}_rRNA_report.txt
             """
         } else {
             """
@@ -47,7 +48,7 @@ process SortMeRNA {
             gzip < non-rRNA-reads_rev.fastq >  ${fastq_files[1].simpleName}_non_rRNA.fastq.gz
             gzip < rRNA-reads_fwd.fastq >  ${fastq_files[0].simpleName}_filtered_rRNA.fastq.gz
             gzip < rRNA-reads_rev.fastq >  ${fastq_files[1].simpleName}_filtered_rRNA.fastq.gz
-            mv rRNA-reads.log ${sample_id}_rRNA_report.txt
+            mv rRNA-reads.log ${report_title}_rRNA_report.txt
             """
         }
 }
