@@ -26,7 +26,7 @@ process HaplotypeCaller {
 process HaplotypeCallerGVCF {
     tag {"GATK HaplotypeCallerGVCF ${sample_id} - ${interval_file.baseName}"}
     label 'GATK_3_8_1_0_gf15c1c3ef'
-    label 'GATK_3_8_1_0_gf15c1c3ef_HaplotypeCaller'
+    label 'GATK_3_8_1_0_gf15c1c3ef_HaplotypeCallerGVCF'
     container = 'quay.io/biocontainers/gatk:3.8--py27_1'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
