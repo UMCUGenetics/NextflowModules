@@ -34,7 +34,7 @@ process HaplotypeCallerGVCF {
         tuple(sample_id, path(bam_file), path(bai_file), path(interval_file))
 
     output:
-        tuple(val(sample_id), file("${sample_id}.${interval_file.baseName}.g.vcf."), file("${sample_id}.${interval_file.baseName}.g.vcf.idx"), emit: vcf_file)
+        tuple(val(sample_id), file("${sample_id}_${interval_file.baseName}.g.vcf"), file("${sample_id}_${interval_file.baseName}.g.vcf.idx"), emit: vcf_file)
 
     script:
         """
@@ -42,7 +42,7 @@ process HaplotypeCallerGVCF {
         --reference_sequence ${params.genome} \
         --input_file ${bam_file} \
         --intervals ${interval_file} \
-        --out ${analysis_id}.${interval_file.baseName}.g.vcf \
+        --out ${sample_id}_${interval_file.baseName}.g.vcf \
         --emitRefConfidence GVCF \
         ${params.optional}
         """
