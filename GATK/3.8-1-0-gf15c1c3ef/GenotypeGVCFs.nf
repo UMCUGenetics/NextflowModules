@@ -6,7 +6,7 @@ process GenotypeGVCFs {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(gvcf_files), path(gvcf_idx_files))
+        tuple(analysis_id, path(gvcf_files), path(gvcf_idx_files), path(interval_file))
 
     output:
         tuple(analysis_id, path("${analysis_id}.vcf"), path("${analysis_id}.vcf.idx"), emit:vcf_file)
@@ -14,6 +14,11 @@ process GenotypeGVCFs {
     script:
         def input_files = gvcf_files.collect{"$it"}.join(" -V ")
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T GenotypeGVCFs --reference_sequence ${params.genome} -V ${input_files} --out ${analysis_id}.vcf ${params.optional}
+        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T GenotypeGVCFs \
+        --reference_sequence ${params.genome} \
+        -V ${input_files} \
+        --out ${analysis_id}.vcf \
+        --intervals ${interval_file} \
+        ${params.optional} \
         """
 }
