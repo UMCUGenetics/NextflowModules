@@ -1,6 +1,6 @@
 process Freec {
-    tag {"Control-FREEC ${sample_id}"}
-    label 'Control-FREEC_11_6'
+    tag {"Control_FREEC ${sample_id}"}
+    label 'Control_FREEC_11_6'
     container = 'quay.io/biocontainers/control-freec:11.6--he1b5a44_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
