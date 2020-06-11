@@ -27,7 +27,7 @@ process AlignReads {
         if ( !params.singleEnd ){
             r2_args = r2_fastqs.collect{ "$it" }.join(",") 
         }
-        def read_args = params.singleEnd ? "--readFilesIn ${r1_args}" :"--readFilesIn ${r2_args} ${r1_args}" 
+        def read_args = params.singleEnd ? "--readFilesIn ${r1_args}" :"--readFilesIn ${r1_args} ${r2_args}" 
         def avail_mem = task.memory ? "--limitBAMsortRAM ${task.memory.toBytes() - 100000000}" : ''   
         """
         STAR --genomeDir ${star_genome_index} \
