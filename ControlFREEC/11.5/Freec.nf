@@ -13,7 +13,22 @@ process Freec {
         tuple(sample_id, path("${bam_file.name}_sample.cpn"), path("${bam_file.name}_ratio.BedGraph"), path("${bam_file.name}_info.txt"), emit: other)
 
     script:
+        def config = '${sample_id}.config'
         """
-        freec -conf ${params.config} -sample ${bam_file}
+        touch ${config}
+        echo "[general]" >> ${config}
+        echo "chrLenFile = ${params.chr_len_file}" >> ${config}
+        echo "chrFiles = ${params.chr_files}" >> ${config}
+        echo "gemMappabilityFile = ${params.gem_mappability_file}" >> ${config}
+        echo "ploidy = ${params.ploidy}" >> ${config}
+        echo "window = ${params.window}" >> ${config}
+        echo "BedGraphOutput=TRUE" >> ${config}
+        echo "maxThreads=${task.cpus}" >> ${config}
+
+        echo "[sample]" >> ${config}
+        echo "inputFormat = BAM" >> ${config}
+        echo "mateFile = ${bam_file}" >> ${config}
+
+        freec -conf ${config}
         """
 }
