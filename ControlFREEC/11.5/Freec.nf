@@ -13,7 +13,7 @@ process Freec {
         tuple(sample_id, path("${bam_file.name}_sample.cpn"), path("${bam_file.name}_ratio.BedGraph"), path("${bam_file.name}_info.txt"), emit: other)
 
     script:
-        def config = '${sample_id}.config'
+        def config = "${sample_id}.config"
         """
         touch ${config}
         echo "[general]" >> ${config}
