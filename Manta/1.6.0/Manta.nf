@@ -14,13 +14,13 @@ process Manta {
     script:
         """
         ${params.manta_path}/configManta.py --referenceFasta ${params.genome_fasta} --runDir . --bam $bam_file
-        ${params.manta_path}/runWorkflow.py -m local -j ${task.cpus}
+        ./runWorkflow.py -m local -j ${task.cpus}
 
-        mv Manta/results/variants/candidateSmallIndels.vcf.gz Manta_${sample_id}.candidateSmallIndels.vcf.gz
-        mv Manta/results/variants/candidateSmallIndels.vcf.gz.tbi Manta_${sample_id}.candidateSmallIndels.vcf.gz.tbi
-        mv Manta/results/variants/candidateSV.vcf.gz Manta_${sample_id}.candidateSV.vcf.gz
-        mv Manta/results/variants/candidateSV.vcf.gz.tbi Manta_${sample_id}.candidateSV.vcf.gz.tbi
-        mv Manta/results/variants/diploidSV.vcf.gz Manta_${sample_id}.diploidSV.vcf.gz
-        mv Manta/results/variants/diploidSVSV.vcf.gz.tbi Manta_${sample_id}.diploidSV.vcf.gz.tbi
+        mv results/variants/candidateSmallIndels.vcf.gz Manta_${sample_id}.candidateSmallIndels.vcf.gz
+        mv results/variants/candidateSmallIndels.vcf.gz.tbi Manta_${sample_id}.candidateSmallIndels.vcf.gz.tbi
+        mv results/variants/candidateSV.vcf.gz Manta_${sample_id}.candidateSV.vcf.gz
+        mv results/variants/candidateSV.vcf.gz.tbi Manta_${sample_id}.candidateSV.vcf.gz.tbi
+        mv results/variants/diploidSV.vcf.gz Manta_${sample_id}.diploidSV.vcf.gz
+        mv results/variants/diploidSV.vcf.gz.tbi Manta_${sample_id}.diploidSV.vcf.gz.tbi
         """
 }
