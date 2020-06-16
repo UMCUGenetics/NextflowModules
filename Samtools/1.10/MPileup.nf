@@ -7,15 +7,15 @@ process MPileup {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(bam_file), file(bai_file)
+        tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-    tuple sample_id, file("${bam_file.baseName}.pileup")
+        tuple(sample_id, path("${bam_file.baseName}.pileup"), emit: pileup)
 
     script:
-    """
-    samtools mpileup ${params.optional} -f ${params.genome} ${bam_file} > ${bam_file.baseName}.pileup
-    """
+        """
+        samtools mpileup ${params.optional} -f ${params.genome} ${bam_file} > ${bam_file.baseName}.pileup
+        """
 }
 
 process MPileup_bcf {
@@ -27,13 +27,13 @@ process MPileup_bcf {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(bam_file), file(bai_file)
+        tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-    tuple sample_id, file("${bam_file.baseName}.bcf")
+        tuple(sample_id, path("${bam_file.baseName}.bcf"), emit: bcf)
 
     script:
-    """
-    samtools mpileup ${params.optional} -u -f ${params.genome} ${bam_file} > ${bam_file.baseName}.bcf
-    """
+        """
+        samtools mpileup ${params.optional} -u -f ${params.genome} ${bam_file} > ${bam_file.baseName}.bcf
+        """
 }

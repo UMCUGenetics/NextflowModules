@@ -1,7 +1,7 @@
 process MultiQC {
     tag {"MultiQC"}
-    label 'MultiQC_1_8'
-    container = 'quay.io/biocontainers/multiqc:1.8--py_1'
+    label 'MultiQC_1_9'
+    container = 'quay.io/biocontainers/multiqc:1.9--pyh9f0ad1d_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:

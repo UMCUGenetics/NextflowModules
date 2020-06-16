@@ -6,13 +6,13 @@ process View {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(bam_file), file(bai_file)
+        tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-    tuple sample_id, file("${bam_file.baseName}.sam")
+        tuple(sample_id, path("${bam_file.baseName}.sam"), emit: sam_file)
 
     script:
-    """
-    samtools view ${params.optional} ${bam_file} ${params.region} > ${bam_file.baseName}.sam
-    """
+        """
+        samtools view ${params.optional} ${bam_file} ${params.region} > ${bam_file.baseName}.sam
+        """
 }

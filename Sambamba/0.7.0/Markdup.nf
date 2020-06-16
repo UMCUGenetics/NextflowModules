@@ -6,15 +6,14 @@ process Markdup {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, file(bam_file), file(bai_file)
-
+        tuple(sample_id, rg_id, path(bam_file), path(bai_file))
     output:
-    tuple sample_id, rg_id, file("${bam_file.baseName}.markdup.bam"), file("${bam_file.baseName}.markdup.bam.bai")
+        tuple(sample_id, rg_id, path("${bam_file.baseName}.markdup.bam"), path("${bam_file.baseName}.markdup.bam.bai"), emit: bam_file)
 
     script:
-    """
-    sambamba markdup -t ${task.cpus} ${bam_file} ${bam_file.baseName}.markdup.bam
-    """
+        """
+        sambamba markdup -t ${task.cpus} ${bam_file} ${bam_file.baseName}.markdup.bam
+        """
 }
 
 process MarkdupMerge {
@@ -25,13 +24,13 @@ process MarkdupMerge {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(bam_files)
+        tuple(sample_id, path(bam_files))
 
     output:
-    tuple sample_id, file("${sample_id}.markdup.bam"), file("${sample_id}.markdup.bam.bai")
+        tuple(sample_id, path("${sample_id}.markdup.bam"), path("${sample_id}.markdup.bam.bai"), emit: bam_file)
 
     script:
-    """
-    sambamba markdup -t ${task.cpus} ${bam_files} ${sample_id}.markdup.bam
-    """
+        """
+        sambamba markdup -t ${task.cpus} ${bam_files} ${sample_id}.markdup.bam
+        """
 }
