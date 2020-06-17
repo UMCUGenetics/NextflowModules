@@ -22,7 +22,6 @@ process AlignReads {
    
     script:
         def barcode = rg_id.split('_')[1]
-        def id = rg_id.split('_')[0]
         def r1_args = r1_fastqs.collect{ "$it" }.join(",")
         def r2_args
         if ( !params.singleEnd ){
@@ -40,6 +39,6 @@ process AlignReads {
             --readFilesCommand zcat \
             --outSAMtype BAM SortedByCoordinate \
             --runThreadN ${task.cpus} \
-            --outSAMattrRGline ID:${id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}  
+            --outSAMattrRGline ID:${sample_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}  
         """
 }
