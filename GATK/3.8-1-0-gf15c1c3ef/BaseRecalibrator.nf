@@ -19,7 +19,7 @@ process BaseRecalibrator {
         --input_file ${bam_file} \
         --intervals ${chr} \
         --out ${bam_file.baseName}.bqsr.${chr}.table \
-        ${params.optional}
+        ${params.optional_bqsr}
 
         java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T PrintReads \
         --num_cpu_threads_per_data_thread ${task.cpus} \
@@ -27,6 +27,7 @@ process BaseRecalibrator {
         --input_file ${bam_file} \
         --BQSR ${bam_file.baseName}.bqsr.${chr}.table \
         --intervals ${chr} \
-        --out ${bam_file.baseName}.bqsr.${chr}.bam
+        --out ${bam_file.baseName}.bqsr.${chr}.bam \
+        ${params.optional_pr}
         """
 }
