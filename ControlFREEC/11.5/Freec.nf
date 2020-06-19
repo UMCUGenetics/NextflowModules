@@ -2,7 +2,8 @@ process Freec {
     tag {"Control Freec ${sample_id}"}
     label 'ControlFreec_11_5'
     label 'ControlFreec_11_5_Freec'
-    container = 'quay.io/biocontainers/control-freec:11.5--he1b5a44_1'
+    //TODO: upload to singularity library
+    container = 'library://sawibo/default/bioinf-tools:freec11.5'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
@@ -22,6 +23,7 @@ process Freec {
         echo "gemMappabilityFile = ${params.gem_mappability_file}" >> ${config}
         echo "ploidy = ${params.ploidy}" >> ${config}
         echo "window = ${params.window}" >> ${config}
+        echo "telocentromeric = ${params.telocentromeric}" >> ${config}
         echo "BedGraphOutput=TRUE" >> ${config}
         echo "maxThreads=${task.cpus}" >> ${config}
 

@@ -2,7 +2,7 @@ process MakeGraph {
     tag {"Control Freec MakeGraph ${sample_id}"}
     label 'ControlFreec_11_5'
     label 'ControlFreec_11_5_MakeGraph'
-    container = 'quay.io/biocontainers/control-freec:11.5--he1b5a44_1'
+    container = 'library://sawibo/default/bioinf-tools:freec11.5'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
@@ -13,6 +13,6 @@ process MakeGraph {
 
     script:
         """
-        cat /usr/local/bin/makeGraph.R | R --slave --args ${params.ploidy} ${ratio_file}
+        cat /bin/makeGraph.R | R --slave --args ${params.ploidy} ${ratio_file}
         """
 }

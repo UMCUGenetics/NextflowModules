@@ -2,7 +2,7 @@ process AssessSignificance {
     tag {"Control Freec AssessSignificance ${sample_id}"}
     label 'ControlFreec_11_5'
     label 'ControlFreec_11_5_AssessSignificance'
-    container = 'quay.io/biocontainers/control-freec:11.5--he1b5a44_1'
+    container = 'library://sawibo/default/bioinf-tools:freec11.5'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
@@ -13,6 +13,6 @@ process AssessSignificance {
 
     script:
         """
-        cat /usr/local/bin/assess_significance.R | R --slave --args ${cnv_file} ${ratio_file}
+        cat /bin/assess_significance.R | R --slave --args ${cnv_file} ${ratio_file}
         """
 }
