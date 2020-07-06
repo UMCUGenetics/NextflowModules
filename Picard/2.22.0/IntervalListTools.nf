@@ -18,7 +18,8 @@ process IntervalListTools {
         SUBDIVISION_MODE=BALANCING_WITHOUT_INTERVAL_SUBDIVISION_WITH_OVERFLOW \
         SCATTER_COUNT=${params.scatter_count} \
         UNIQUE=true \
-
+        ${params.optional}
+        
         for folder in temp*; do mv \$folder/scattered.interval_list \$folder/\$folder\\.interval_list; done
         """
 }
