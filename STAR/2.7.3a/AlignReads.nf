@@ -21,7 +21,6 @@ process AlignReads {
 
    
     script:
-        def barcode = rg_id.split('_')[1]" 
         def avail_mem = task.memory ? "--limitBAMsortRAM ${task.memory.toBytes() - 100000000}" : ''   
         """
         STAR --genomeDir ${star_genome_index} \
@@ -33,6 +32,6 @@ process AlignReads {
             --readFilesCommand zcat \
             --outSAMtype BAM SortedByCoordinate \
             --runThreadN ${task.cpus} \
-            --outSAMattrRGline ID:${sample_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}  
+            --outSAMattrRGline ID:${sample_id} LB:${sample_id} PL:IllUMINA PU:${rg_id} SM:${sample_id}  
         """
 }
