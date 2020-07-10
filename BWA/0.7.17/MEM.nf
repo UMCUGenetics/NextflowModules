@@ -6,16 +6,16 @@ process MEM {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, file(fastq: "*")
+        tuple(sample_id, rg_id, path(fastq))
 
     output:
-    tuple sample_id, rg_id, file("${fastq[0].simpleName}.sam")
+        tuple(sample_id, rg_id, path("${fastq[0].simpleName}.sam"), emit: sam_file)
 
     script:
-    def barcode = rg_id.split('_')[1]
-    def readgroup = "\"@RG\\tID:${rg_id}\\tSM:${sample_id}\\tPL:ILLUMINA\\tLB:${sample_id}\\tPU:${barcode}\""
+        def barcode = rg_id.split('_')[1]
+        def readgroup = "\"@RG\\tID:${rg_id}\\tSM:${sample_id}\\tPL:ILLUMINA\\tLB:${sample_id}\\tPU:${barcode}\""
 
-    """
-    bwa mem -t ${task.cpus} -R ${readgroup} ${params.optional} ${params.genome} ${fastq}  > ${fastq[0].simpleName}.sam
-    """
+        """
+        bwa mem -t ${task.cpus} -R ${readgroup} ${params.optional} ${params.genome} ${fastq} > ${fastq[0].simpleName}.sam
+        """
 }

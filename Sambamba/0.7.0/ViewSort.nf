@@ -6,13 +6,13 @@ process ViewSort {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, rg_id, file(sam_file)
+        tuple(sample_id, rg_id, path(sam_file))
 
     output:
-    tuple sample_id, rg_id, file("${sam_file.baseName}.sort.bam"), file("${sam_file.baseName}.sort.bam.bai")
+        tuple(sample_id, rg_id, path("${sam_file.baseName}.sort.bam"), path("${sam_file.baseName}.sort.bam.bai"), emit: bam_file)
 
     script:
-    """
-    sambamba view -t ${task.cpus} -S -f bam ${sam_file} | sambamba sort -t ${task.cpus} -m ${task.memory.toGiga()}G -o ${sam_file.baseName}.sort.bam /dev/stdin
-    """
+        """
+        sambamba view -t ${task.cpus} -S -f bam ${sam_file} | sambamba sort -t ${task.cpus} -m ${task.memory.toGiga()}G -o ${sam_file.baseName}.sort.bam /dev/stdin
+        """
 }

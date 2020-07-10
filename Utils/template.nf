@@ -6,15 +6,15 @@ process Command {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(input_file)
-
+        val(analysis_id)
+        tuple(sample_id, path(input_file))
+     
     output:
-    tuple sample_id, file(output_file)
-
+        tuple(sample_id, path(output_file), emit: output_file)
+        path("log.txt", emit: log)
 
     script:
-    """
-    tool command ${params.optional}
-    """
-
+        """
+        tool command ${params.optional} ${analysis_id} ${params.resource_file} ${input_file} 
+        """
 }

@@ -6,20 +6,20 @@ process IntervalListTools {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    file(interval_list)
+        path(interval_list)
 
     output:
-    file("temp_*/*.interval_list")
+        path("temp_*/*.interval_list", emit: interval_list)
 
     script:
-
-    """
-    picard -Xmx${task.memory.toGiga()-4}G IntervalListTools TMP_DIR=\$TMPDIR \
-    INPUT=${interval_list} OUTPUT=. \
-    SUBDIVISION_MODE=BALANCING_WITHOUT_INTERVAL_SUBDIVISION_WITH_OVERFLOW \
-    SCATTER_COUNT=${params.scatter_count} \
-    UNIQUE=true \
-
-    for folder in temp*; do mv \$folder/scattered.interval_list \$folder/\$folder\\.interval_list; done
-    """
+        """
+        picard -Xmx${task.memory.toGiga()-4}G IntervalListTools TMP_DIR=\$TMPDIR \
+        INPUT=${interval_list} OUTPUT=. \
+        SUBDIVISION_MODE=BALANCING_WITHOUT_INTERVAL_SUBDIVISION_WITH_OVERFLOW \
+        SCATTER_COUNT=${params.scatter_count} \
+        UNIQUE=true \
+        ${params.optional}
+        
+        for folder in temp*; do mv \$folder/scattered.interval_list \$folder/\$folder\\.interval_list; done
+        """
 }

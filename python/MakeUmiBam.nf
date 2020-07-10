@@ -1,96 +1,93 @@
-process MakeUmiBam {
-    tag {"python MakeUmiBam ${sample_id} "}
+process MakeUMIBam {
+    tag {"python MakeUMIBam ${sample_id} "}
     label 'python_2_7_10'
-    label 'python_2_7_10_MakeUmiBam'
+    label 'python_2_7_10_MakeUMIBam'
     container = 'library://sawibo/default/bioinf-tools:idt-umi-dependencies'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, flowcell, machine, run_nr, file(fastq: "*")
+        tuple (sample_id, flowcell, machine, run_nr, path(fastq))
 
     output:
-    tuple sample_id, flowcell, machine, run_nr, file("${sample_id}.u.grouped.bam")
+        tuple (sample_id, flowcell, machine, run_nr, path("${sample_id}.u.grouped.bam"), emit: umi_bams)
 
 
     script:
+        """
+        #!/gnu/store/vbvjlhhx6y64fvbxh2604sqw9shn02wq-python2-2.7.16R/bin/python
 
-    """
+        import sys
+        import pysam
+        import re
 
-    #!/gnu/store/vbvjlhhx6y64fvbxh2604sqw9shn02wq-python2-2.7.16R/bin/python
-
-    import sys
-    import pysam
-    import re
-
-    fastqs = "${fastq}".split()
-    flowcell = "${flowcell}"
-    id = "${sample_id}_"+flowcell
-    sample_name = "${sample_id}"
-    out_bam = "${sample_id}.u.grouped.bam"
+        fastqs = "${fastq}".split()
+        flowcell = "${flowcell}"
+        id = "${sample_id}_"+flowcell
+        sample_name = "${sample_id}"
+        out_bam = "${sample_id}.u.grouped.bam"
 
 
-    header = {
-        'HD': {'VN': '1.6', 'SO':'unsorted', 'GO':'query'},
-        'RG': [{
-            'ID':id,
-            'SM':sample_name,
-            'LB':sample_name,
-            'PL':'ILLUMINA',
-            'PU':flowcell
-        }]
-    }
-    umis = {}
-    group_ids = {}
-    # Create groups
-    with pysam.FastxFile(fastqs[0]) as r1:
+        header = {
+            'HD': {'VN': '1.6', 'SO':'unsorted', 'GO':'query'},
+            'RG': [{
+                'ID':id,
+                'SM':sample_name,
+                'LB':sample_name,
+                'PL':'ILLUMINA',
+                'PU':flowcell
+            }]
+        }
+        umis = {}
+        # Create groups
+        r1,r2,umi_reads = (None,None,None)
+        out = pysam.AlignmentFile(out_bam, 'wb', header=header)
+
+        if len(fastqs) == 2:
+            r1 = pysam.FastxFile(fastqs[0])
+            umi_reads = pysam.FastxFile(fastqs[1])
+        elif len(fastqs) == 3:
+            r1 = pysam.FastxFile(fastqs[0])
+            umi_reads = pysam.FastxFile(fastqs[1])
+            r2 = pysam.FastxFile(fastqs[2])
+
+        group_id = 0
         for r1_read in r1:
-            name_parts = r1_read.name.split(':')
-            new_name = ":".join(name_parts[0:7])
-            umi = "".join(name_parts[-1].split('/')[0].split('-'))
-            # if umi not in umis:
-            umis[umi] = None
-            # umis[umi].append(new_name)
+            r1_read.sequence[0:9]
+            umi_read = umi_reads.next()
+            umi_seq = r1_read.sequence[0:9]+umi_read.sequence
 
-    for group_id, umi in enumerate(umis.keys()):
-        group_ids[umi] = group_id
+            if umi_seq not in umis:
+                umis[umi_seq] = group_id
+                group_id+=1
 
-    r1 = pysam.FastxFile(fastqs[0])
-    r2 = None
-    if len(fastqs) > 1: r2 = pysam.FastxFile(fastqs[1])
-    out = pysam.AlignmentFile(out_bam, 'wb', header=header)
+            tags = (
+                ("MI", str(umis[umi_seq])),
+                ("RX", str(umi_seq))
+            )
 
-    for r1_read in r1:
+            a1 = pysam.AlignedSegment()
+            a1.query_name = r1_read.name
+            a1.query_sequence = r1_read.sequence
+            a1.flag = 77
+            a1.query_qualities = pysam.qualitystring_to_array(r1_read.quality)
+            a1.tags = tags
+            out.write(a1)
 
-        name_parts = r1_read.name.split(':')
-        new_name = ":".join(name_parts[0:7])
-        umi = "".join(name_parts[-1].split('/')[0].split('-'))
-        tags = (
-            ("MI", str(group_ids[umi])),
-            ("RX", str(umi))
-        )
+            if r2:
+                r2_read = r2.next()
+                a2 = pysam.AlignedSegment()
+                a2.query_name = r2_read.name
+                a2.query_sequence = r2_read.sequence
+                a2.flag = 141
+                a2.query_qualities = pysam.qualitystring_to_array(r2_read.quality)
+                a2.tags = tags
+                out.write(a2)
 
-        a1 = pysam.AlignedSegment()
-        a1.query_name = new_name
-        a1.query_sequence = r1_read.sequence
-        a1.flag = 77
-        a1.query_qualities = pysam.qualitystring_to_array(r1_read.quality)
-        a1.tags = tags
-        out.write(a1)
+        r1.close()
+        if r2: r2.close()
+        umi_reads.close()
+        out.close()
 
-        if r2:
-            r2_read = r2.next()
-            a2 = pysam.AlignedSegment()
-            a2.query_name = new_name
-            a2.query_sequence = r2_read.sequence
-            a2.flag = 141
-            a2.query_qualities = pysam.qualitystring_to_array(r2_read.quality)
-            a2.tags = tags
-            out.write(a2)
-
-    r1.close()
-    if r2: r2.close()
-    out.close()
-
-    """
+        """
 
 }

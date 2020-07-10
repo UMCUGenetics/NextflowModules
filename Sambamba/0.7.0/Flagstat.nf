@@ -6,13 +6,13 @@ process Flagstat {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(bam_file), file(bai_file)
+        tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-    file("${bam_file.baseName}.flagstat")
+        path("${bam_file.baseName}.flagstat", emit: flagstat)
 
     script:
-    """
-    sambamba flagstat -t ${task.cpus} ${bam_file} > ${bam_file.baseName}.flagstat
-    """
+        """
+        sambamba flagstat -t ${task.cpus} ${bam_file} > ${bam_file.baseName}.flagstat
+        """
 }

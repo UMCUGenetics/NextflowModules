@@ -6,14 +6,14 @@ process ViewUnmapped {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple sample_id, file(bam_file), file(bai_file)
+        tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-    tuple sample_id, file("${bam_file.baseName}.unmapped.bam"), file("${bam_file.baseName}.unmapped.bam.bai")
+        tuple(sample_id, path("${bam_file.baseName}.unmapped.bam"), path("${bam_file.baseName}.unmapped.bam.bai"), emit: bam_file)
 
     script:
-    """
-    sambamba view -t ${task.cpus} -f bam -F 'unmapped and mate_is_unmapped' ${bam_file} > ${bam_file.baseName}.unmapped.bam
-    sambamba index -t ${task.cpus} ${bam_file.baseName}.unmapped.bam
-    """
+        """
+        sambamba view -t ${task.cpus} -f bam -F 'unmapped and mate_is_unmapped' ${bam_file} > ${bam_file.baseName}.unmapped.bam
+        sambamba index -t ${task.cpus} ${bam_file.baseName}.unmapped.bam
+        """
 }

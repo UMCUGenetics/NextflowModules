@@ -6,15 +6,15 @@ process GtfToGenePred {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    file(genome_gtf)
+        path(genome_gtf)
 
     output:
-    file("${genome_gtf.baseName}.genePred")
+        path("${genome_gtf.baseName}.genePred", emit: genome_genepred)
 
 
     script:
-    """
-    gtfToGenePred ${genome_gtf} ${genome_gtf.baseName}.genePred
-    """
+        """
+        gtfToGenePred ${genome_gtf} ${genome_gtf.baseName}.genePred
+        """
 
 }
