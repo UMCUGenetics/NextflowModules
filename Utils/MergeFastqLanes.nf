@@ -7,7 +7,7 @@ process MergeFastqLanes {
         tuple(sample_id, rg_id, path(fastqs))
 
     output:
-        tuple(sample_id, barcode, path("${sample_id}_${barcode}_merged_*.fastq.gz"), emit: fastqs_merged)
+        tuple(sample_id, rg_id, path("${sample_id}_${barcode}_merged_*.fastq.gz"), emit: fastqs_merged)
 
 
     script:
