@@ -12,8 +12,8 @@ process MergeFastqLanes {
 
     script:
         barcode = rg_id.split('_')[1]
-        def R1_pattern="${sample_id}_*_S*_L00*_R1_*.fastq.gz"
-        def R2_pattern="${sample_id}_*_S*_L00*_R2_*.fastq.gz"
+        def R1_pattern="${sample_id}_*_S*_L00*_R1_001*.fastq.gz"
+        def R2_pattern="${sample_id}_*_S*_L00*_R2_001*.fastq.gz"
         if (params.singleEnd) {
             """
             cat \$( ls ${R1_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R1_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R1.fastq.gz
