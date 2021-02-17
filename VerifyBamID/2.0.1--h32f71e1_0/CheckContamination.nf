@@ -18,14 +18,15 @@ process CheckContamination {
         # creates a ${output_prefix}.selfSM file, a TSV file with 2 rows, 19 columns.
         # First row are the keys (e.g., SEQ_SM, RG, FREEMIX), second row are the associated values
         verifybamid2 \
-        --Verbose \
-        --NumPC 4 \
-        --Output  ${output_prefix} \
-        --BamFile ${bam} \
         --Reference ${params.genome_fasta} \
+        --BamFile ${bam} \
+        --SVDPrefix ${params.contamination_path_prefix} \
         --UDPath ${params.contamination_sites_ud} \
         --MeanPath ${params.contamination_sites_mu} \
         --BedPath ${params.contamination_sites_bed} \
+        --Verbose \
+        --NumPC 4 \
+        --Output  ${output_prefix} \
         1>/dev/null
 
         """
