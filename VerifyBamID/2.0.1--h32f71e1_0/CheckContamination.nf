@@ -17,7 +17,7 @@ process CheckContamination {
         """
         # creates a ${output_prefix}.selfSM file, a TSV file with 2 rows, 19 columns.
         # First row are the keys (e.g., SEQ_SM, RG, FREEMIX), second row are the associated values
-        verifyBamID \
+        verifybamid2 \
         --Verbose \
         --NumPC 4 \
         --Output  ${output_prefix} \
