@@ -6,7 +6,7 @@ process CheckContamination {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple (sample_id, path(bam), path(bai)))
+        tuple (sample_id, path(bam), path(bai))
 
     output:
         tuple(sample_id, path("${output_prefix}.selfSM"), stdout(contamination))
