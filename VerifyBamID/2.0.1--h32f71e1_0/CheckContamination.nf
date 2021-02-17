@@ -9,7 +9,7 @@ process CheckContamination {
         tuple (sample_id, path(bam), path(bai))
 
     output:
-        tuple (sample_id, path("${output_prefix}.selfSM"))
+        tuple (sample_id, path("${output_prefix}.selfSM"), emit:contamination)
 
     script:
         output_prefix = ${sample_id}.${params.library_strategy}.contamination
