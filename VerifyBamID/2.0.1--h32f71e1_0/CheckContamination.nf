@@ -18,7 +18,7 @@ process CheckContamination {
         # creates a ${output_prefix}.selfSM file, a TSV file with 2 rows, 19 columns.
         # First row are the keys (e.g., SEQ_SM, RG, FREEMIX), second row are the associated values
         verifybamid2 \
-        --Reference ${params.genome_fasta} \
+        --Reference ${params.genome} \
         --BamFile ${bam} \
         --SVDPrefix ${params.contamination_path_prefix} \
         --UDPath ${params.contamination_sites_ud} \
