@@ -12,7 +12,7 @@ process CheckContamination {
         tuple (sample_id, path("${output_prefix}.selfSM"), emit:contamination)
 
     script:
-        def output_prefix = "${sample_id}.${params.library_strategy}.contamination"
+        output_prefix = "${sample_id}.${params.library_strategy}.contamination"
 
         """
         # creates a ${output_prefix}.selfSM file, a TSV file with 2 rows, 19 columns.
