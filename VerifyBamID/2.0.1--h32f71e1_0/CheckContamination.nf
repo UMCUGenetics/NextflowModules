@@ -9,7 +9,7 @@ process CheckContamination {
         tuple (sample_id, path(bam), path(bai))
 
     output:
-        tuple (sample_id, path("${output_prefix}.selfSM"), emit:contamination)
+        tuple (sample_id, path("${output_prefix}.selfSM"), stdout)
 
     script:
         output_prefix = "${sample_id}.${params.library_strategy}.contamination"
@@ -29,8 +29,6 @@ process CheckContamination {
         --Output  ${output_prefix} \
         1>/dev/null
 
-        """
-        /*
         # used to read from the selfSM file and calculate contamination, which gets printed out
         python3 <<CODE
         import csv
@@ -53,6 +51,5 @@ process CheckContamination {
             sys.stderr.write("Found %d rows in .selfSM file. Was expecting exactly 1. This is an error"%(i))
             sys.exit(2)
         CODE
-        */
-
+        """
 }
