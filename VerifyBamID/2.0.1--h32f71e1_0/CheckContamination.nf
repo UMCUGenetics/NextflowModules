@@ -6,10 +6,16 @@ process CheckContamination {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple (sample_id, path(bam), path(bai))
+        tuple (
+            sample_id, 
+            path(bam), 
+            path(bai))
 
     output:
-        tuple (sample_id, path("${output_prefix}.selfSM"), stdout)
+        tuple (
+            sample_id, 
+            path("${output_prefix}.selfSM"), 
+            stdout)
 
     script:
         output_prefix = "${sample_id}.${params.library_strategy}.contamination"
@@ -29,7 +35,7 @@ process CheckContamination {
         --Output  ${output_prefix} \
         1>/dev/null
 
-        source ${params.exoncov_path}/venv/bin/activate
+        source ${params.python_venv_path}/venv/bin/activate
         # read the selfSM file and calculate contamination, which gets printed out
         python3 <<CODE
         import csv
