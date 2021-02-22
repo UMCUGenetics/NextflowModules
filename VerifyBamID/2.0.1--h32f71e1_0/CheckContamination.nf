@@ -3,7 +3,7 @@ process CheckContamination {
     label 'VERIFYBAMID_2_0_1_h32f71e1_0'
     label 'VERIFYBAMID_2_0_1_h32f71e1_0_CheckContamination'
     container = 'quay.io/biocontainers/verifybamid2:2.0.1--h32f71e1_0'
-    shell = ['/bin/bash', '-euo', 'pipefail']
+    shell = ['/bin/bash', '-eo', 'pipefail']
 
     input:
         tuple (
