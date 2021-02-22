@@ -51,7 +51,7 @@ process CheckContamination {
                     # if the bam isn't really empty, this is probably due to the use of a incompatible reference build between
                     # vcf and bam.
                 
-                print(float(row["FREEMIX"])/${contamination_underestimation_factor})
+                print(float(row["FREEMIX"])/${params.contamination_underestimation_factor})
                 i = i + 1
                 
                 # there should be exactly one row, and if this isn't the case the format of the output is unexpectedly different
