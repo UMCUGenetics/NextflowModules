@@ -1,5 +1,5 @@
 process VerifyBamID2 {
-    tag {"VerifyBamID VerifyBamID2 ${sample_id}"}
+    tag {"VerifyBamID2 ${sample_id}"}
     label 'VERIFYBAMID_2_0_1_h32f71e1_0'
     label 'VERIFYBAMID_2_0_1_h32f71e1_0_VerifyBamID2'
     container = 'quay.io/biocontainers/verifybamid2:2.0.1--h32f71e1_0'
