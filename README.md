@@ -1,4 +1,5 @@
-# Nextflow Modules
+# Nextflow Modules [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4552062.svg)](https://doi.org/10.5281/zenodo.4552062)
+
 UMCU Genetics Nextflow modules
 
 ## Getting started with Nextflow
