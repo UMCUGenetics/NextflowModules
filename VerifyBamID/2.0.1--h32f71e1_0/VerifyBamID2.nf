@@ -9,7 +9,7 @@ process VerifyBamID2 {
         tuple (sample_id, path(bam), path(bai))
 
     output:
-        tuple (sample_id, path("${output_prefix}.selfSM"), path("${output_prefix}.Ancestry"))
+        tuple (sample_id, path("${output_prefix}.selfSM"))
 
     script:
         output_prefix = "${sample_id}.contamination"
