@@ -12,7 +12,7 @@ process HaplotypeCaller {
         tuple(val(analysis_id), path("${analysis_id}.${interval_file.baseName}.vcf"), path("${analysis_id}.${interval_file.baseName}.vcf.idx"), emit: vcf_file)
 
     script:
-        def input_files = bam_files.collect{"$it"}.join(" --input_file ")
+        def input_files = bam_files.collect{"$it"}.join(" --input ")
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" HaplotypeCaller \
         --reference ${params.genome} \
