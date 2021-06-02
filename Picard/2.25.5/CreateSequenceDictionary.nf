@@ -2,7 +2,7 @@ process CreateSequenceDictionary  {
     tag {"PICARD CreateSequenceDictionary"}
     label 'PICARD_2_25_5'
     label 'PICARD_2_25_5_CreateSequenceDictionary'
-    container = 'uay.io/biocontainers/picard:2.25.5--hdfd78af_0'
+    container = 'quay.io/biocontainers/picard:2.25.5--hdfd78af_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
