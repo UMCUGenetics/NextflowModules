@@ -1,12 +1,12 @@
 process GtcToVcf {
+    tag {"GtcToVcf ${sample_id}"}
     label 'PICARD_2_25_5'
     label 'PICARD_2_25_5_GtcToVcf'
     container = 'quay.io/biocontainers/picard:2.25.5--hdfd78af_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-        val(sample_id)
-        path(gtc_file)
+        tuple(val(sample_id), path(gtc_file))
     
     output:
         tuple(sample_id, path("${sample_id}.vcf.gz"), path("${sample_id}.vcf.gz.tbi"), emit : genotyped_vcfs)
