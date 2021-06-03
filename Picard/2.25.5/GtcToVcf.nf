@@ -9,7 +9,7 @@ process GtcToVcf {
         path(gtc_file)
     
     output:
-        tuple(sample_id, path("${sample_id}.vcf.gz"), path("${sample_id}.vcf.tbi"), emit : genotyped_vcfs)
+        tuple(sample_id, path("${sample_id}.vcf.gz"), path("${sample_id}.vcf.gz.tbi"), emit : genotyped_vcfs)
     
     script:
         """
