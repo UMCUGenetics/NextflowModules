@@ -7,7 +7,7 @@ process VcfToAdpc {
     
     input:
         tuple (
-            val(assay_id),
+            val(sample_id),
             path(input_vcf),
             path(input_vcf_index)
         )
@@ -16,7 +16,7 @@ process VcfToAdpc {
         tuple (
             sample_id,
             path("${sample_id}_samples.txt"),
-            path("${sample_id}_samples.txt").countLines(),
+            file("${sample_id}_samples.txt").countLines(),
             path("${sample_id}_num_markers.txt"),
             path("${sample_id}_adpc.bin")
         )
