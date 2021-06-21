@@ -10,7 +10,7 @@ def extractIdatPairFromDir(dir) {
         if (! red_path.exists()) {
             exit 1, "Red idat file not found: ${red_path}."
         }
-        def assay_id = "${array_id}_${position}"
-        [assay_id, array_id, grn_path, red_path]
+        def sample_id = "${array_id}_${position}"
+        [sample_id, array_id, grn_path, red_path]
     }
 }
