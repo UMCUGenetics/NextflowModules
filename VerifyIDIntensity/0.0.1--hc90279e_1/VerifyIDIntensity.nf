@@ -20,6 +20,7 @@ process VerifyIDIntensity {
 
     script:
         """
+        num_markers=\$(cat ${num_markers_file})
         verifyIDintensity -m ${num_markers} -n ${num_samples} -i ${adpc_file} -v -p > ${sample_id}_verifyIDIntensity.txt
         """
 }
