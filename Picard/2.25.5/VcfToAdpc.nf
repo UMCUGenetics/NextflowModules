@@ -16,7 +16,7 @@ process VcfToAdpc {
         tuple (
             sample_id,
             path("${sample_id}_samples.txt"),
-            file("${sample_id}_samples.txt").countLines(),
+            env(num_lines),
             path("${sample_id}_num_markers.txt"),
             path("${sample_id}_adpc.bin")
         )
@@ -24,12 +24,14 @@ process VcfToAdpc {
     script:
     // params.optional could contain an additional VCF for contamination_controls_vcf.
         """
-        picard -Xmx${task.memory} -Dpicard.useLegacyParser=false \
+        picard -Xmx${task.memory.toGiga()}G -Dpicard.useLegacyParser=false \
         VcfToAdpc \
         --VCF ${input_vcf} \
         --SAMPLES_FILE ${sample_id}_samples.txt \
         --NUM_MARKERS_FILE ${sample_id}_num_markers.txt \
         --OUTPUT ${sample_id}_adpc.bin \
         ${params.optional}
+
+        num_lines=\$(wc -l "${sample_id}_samples.txt")
         """
 }
