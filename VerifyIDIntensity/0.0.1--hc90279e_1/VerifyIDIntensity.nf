@@ -8,10 +8,8 @@ process VerifyIDIntensity {
     input:
         tuple (
             val(sample_id),
-            // path(input_vcf),
-            // path(input_vcf_index),
-            val(num_samples),
-            path(num_markers_file),
+            path(samples_file),
+            path(num_markes_file),
             path(adpc_file)
         )
 
@@ -20,7 +18,8 @@ process VerifyIDIntensity {
 
     script:
         """
-        num_markers=\$(cat ${num_markers_file})
+        num_markers=\$(cat "${num_markers_file}" )
+        num_samples=\${cat "${samples_file}" | wc -l }
         verifyIDintensity -m ${num_markers} -n ${num_samples} -i ${adpc_file} -v -p > ${sample_id}_verifyIDIntensity.txt
         """
 }

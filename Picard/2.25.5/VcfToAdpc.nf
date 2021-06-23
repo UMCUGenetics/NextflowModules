@@ -16,7 +16,6 @@ process VcfToAdpc {
         tuple (
             sample_id,
             path("${sample_id}_samples.txt"),
-            env(num_lines),
             path("${sample_id}_num_markers.txt"),
             path("${sample_id}_adpc.bin")
         )
@@ -31,7 +30,5 @@ process VcfToAdpc {
         --NUM_MARKERS_FILE ${sample_id}_num_markers.txt \
         --OUTPUT ${sample_id}_adpc.bin \
         ${params.optional}
-
-        num_lines=\$(wc -l "${sample_id}_samples.txt")
         """
 }
