@@ -9,7 +9,7 @@ process VerifyIDIntensity {
         tuple (
             val(sample_id),
             path(samples_file),
-            path(num_markes_file),
+            path(num_markers_file),
             path(adpc_file)
         )
 
