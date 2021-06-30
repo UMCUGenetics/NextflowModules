@@ -1,6 +1,6 @@
 ################## BASE IMAGE ######################
 
-FROM ubuntu:latest
+FROM --platform=linux/amd64 ubuntu:latest
 
 ################## METADATA ######################
 LABEL base_image="biocontainers:v1.0.0_cv4"
@@ -19,15 +19,17 @@ ARG bcftools_version=1.11
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
     build-essential \
     r-base \
     r-cran-randomforest \
     python \
     libbz2-dev zlib1g-dev liblzma-dev \
-    wget
+    wget \
+    git
 
-WORKDIR /data/
+WORKDIR /tools/
 
 # Install BafRegress
 RUN wget 'https://genome.sph.umich.edu/w/images/d/d5/BafRegress.tar.gz' && \
@@ -45,10 +47,9 @@ RUN wget -q https://github.com/samtools/bcftools/releases/download/${bcftools_ve
     cd ../ && \
     rm -r bcftools-${bcftools_version}  # Don't need the source directory now that we've installed the binary.
 
-RUN cd /data \        
-    git clone https://github.com/jpdna/VCFtoFinalReportForBafRegress.git
-# RUN gzip -d /data/VCFtoFinalReportForBafRegress/GDA.MAF.txt.gz
-# COPY parseVcfToBAFRegress.py ./parseVcfToBAFRegress.py
+# install VCFtoFinalReportForBafRegress using git.
+RUN git clone https://github.com/jpdna/VCFtoFinalReportForBafRegress.git
+
 
 
 
