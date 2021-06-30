@@ -10,13 +10,14 @@ process CreateVerifyIDIntensityContaminationMetricsFile {
         tuple (sample_id, path(input_file))
     
     output:
-        tuple (sample_id, path("${sample_id}_verifyidintensity_metrics"))
+        // Programm uses the defined OUTPUT parameter as prefix to '.verifyidintensity_metrics'
+        tuple (sample_id, path("${sample_id}.verifyidintensity_metrics"))
     
     script:
         """
-        picard -Xmx${task.memory} -Dpicard.useLegacyParser=false \
+        picard -Xmx${task.memory.toGiga()}G -Dpicard.useLegacyParser=false \
         CreateVerifyIDIntensityContaminationMetricsFile \
         --INPUT ${input_file} \
-        --OUTPUT ${sample_id}_verifyidintensity_metrics
+        --OUTPUT ${sample_id}
         """
 }
