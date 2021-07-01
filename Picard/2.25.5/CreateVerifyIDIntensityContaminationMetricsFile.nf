@@ -15,7 +15,7 @@ process CreateVerifyIDIntensityContaminationMetricsFile {
     
     script:
         """
-        picard -Xmx${task.memory.toGiga()}G -Dpicard.useLegacyParser=false \
+        picard "-Xmx${task.memory.toGiga()-4}G" -Dpicard.useLegacyParser=false \
         CreateVerifyIDIntensityContaminationMetricsFile \
         --INPUT ${input_file} \
         --OUTPUT ${sample_id}
