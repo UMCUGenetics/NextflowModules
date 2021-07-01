@@ -7,7 +7,6 @@ process BafRegress {
     label 'BafRegress_1_0_0_BafRegress'
     shell = ['/bin/bash', '-euo', 'pipefail']
     container = 'evandegeer/bafregress:1.0.0'
-    cache = true 
 
     input:
         tuple (val(sample_id), path(input_vcf), path(input_vcf_index))
