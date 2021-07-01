@@ -9,14 +9,15 @@ process SelectVariantsSample {
         tuple(analysis_id, path(vcf_file), path(vcf_idx_file), sample_id)
 
     output:
-        tuple(sample_id, path("${sample_id}_${vcf_file.baseName}.vcf"), path("${sample_id}_${vcf_file.baseName}.vcf.idx"), emit: vcf_file)
+        // getSimpleName instead of baseName, in case of .vcf.gz
+        tuple(sample_id, path("${sample_id}_${vcf_file.getSimpleName}.vcf"), path("${sample_id}_${vcf_file.getSimpleName}.vcf.idx"), emit: vcf_file)
 
     script:
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" SelectVariants \
         --reference ${params.genome} \
         -variant ${vcf_file} \
-        --output ${sample_id}_${vcf_file.baseName}.vcf \
+        --output ${sample_id}_${vcf_file.getSimpleName}.vcf \
         --sample-name ${sample_id} \
         ${params.optional}
         """
