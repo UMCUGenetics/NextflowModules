@@ -25,11 +25,12 @@ process HaplotypeCaller {
 
 process HaplotypeCallerGVCF {
     tag {"GATK HaplotypeCallerGVCF ${sample_id} - ${interval_file.baseName}"}
-    label 'GATK_4_2_0_0_gf15c1c3ef'
-    label 'GATK_4_2_0_0_gf15c1c3ef_HaplotypeCallerGVCF'
+    label 'GATK_4_2_0_0'
+    label 'GATK_4_2_0_0_HaplotypeCallerGVCF'
     container = 'broadinstitute/gatk:4.2.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
-
+    params.emit_ref_confidence = 'GVCF'
+ 
     input:
         tuple(sample_id, path(bam_file), path(bai_file), path(interval_file))
 
@@ -43,7 +44,7 @@ process HaplotypeCallerGVCF {
         --input ${bam_file} \
         --intervals ${interval_file} \
         --output ${sample_id}_${interval_file.baseName}.g.vcf \
-        --emit-ref-confidence GVCF \
+        --emit-ref-confidence ${params.emit_ref_confidence} \
         ${params.optional}
         """
 }
