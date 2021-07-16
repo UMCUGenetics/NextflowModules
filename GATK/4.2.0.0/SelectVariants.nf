@@ -13,6 +13,11 @@ process SelectVariantsSample {
 
     script:
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" SelectVariants --reference ${params.genome} -variant ${vcf_file} --output ${sample_id}_${vcf_file.baseName}.vcf --sample-name ${sample_id}
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" SelectVariants \
+        --reference ${params.genome} \
+        -variant ${vcf_file} \
+        --output ${sample_id}_${vcf_file.baseName}.vcf \
+        --sample-name ${sample_id} \
+        ${params.optional}
         """
 }
