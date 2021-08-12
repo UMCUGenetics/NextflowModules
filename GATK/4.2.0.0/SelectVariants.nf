@@ -31,13 +31,13 @@ process SelectVariants {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(path(vcf_file), path(vcf_idx_file), output_prefix, sample_id)
+        tuple(identifier, path(vcf_file), path(vcf_idx_file), output_prefix)
         def ext_vcf = params.compress ? ".vcf.gz" : ".vcf"
         def ext_vcf_index = params.compress ? ".tbi" : ".idx"
 
     output:
         // simpleName instead of baseName, in case of .vcf.gz
-        tuple(sample_id, path("${output_prefix}${ext_vcf}"), path("${output_prefix}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+        tuple(identifier, path("${output_prefix}${ext_vcf}"), path("${output_prefix}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
 
     script:
         """

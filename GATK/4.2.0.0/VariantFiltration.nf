@@ -24,19 +24,19 @@ process VariantFiltrationSnpIndel {
 }
 
 process VariantFiltration {
-    tag {"GATK VariantFiltration ${analysis_id}"}
+    tag {"GATK VariantFiltration ${identifier}"}
     label 'GATK_4_2_0_0'
     label 'GATK_4_2_0_0_VariantFiltration'
     container = 'broadinstitute/gatk:4.2.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(vcf_file), path(vcf_idx_file), output_prefix)
+        tuple(identifier, path(vcf_file), path(vcf_idx_file), output_prefix)
         def ext_vcf = params.compress ? ".vcf.gz" : ".vcf"
         def ext_vcf_index = params.compress ? ".tbi" : ".idx"
 
     output:
-        tuple(analysis_id, path("${output_prefix}${ext_vcf}"), path("${output_prefix}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+        tuple(identifier, path("${output_prefix}${ext_vcf}"), path("${output_prefix}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
 
     script:
         """
