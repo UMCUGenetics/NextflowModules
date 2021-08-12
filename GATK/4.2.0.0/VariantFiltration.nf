@@ -22,3 +22,29 @@ process VariantFiltrationSnpIndel {
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" MergeVcfs --INPUT ${vcf_file.baseName}.snp_filter.vcf --INPUT ${vcf_file.baseName}.indel_filter.vcf --OUTPUT ${vcf_file.baseName}.filter.vcf
         """
 }
+
+process VariantFiltration {
+    tag {"GATK VariantFiltration ${analysis_id}"}
+    label 'GATK_4_2_0_0'
+    label 'GATK_4_2_0_0_VariantFiltration'
+    container = 'broadinstitute/gatk:4.2.0.0'
+    shell = ['/bin/bash', '-euo', 'pipefail']
+
+    input:
+        tuple(analysis_id, path(vcf_file), path(vcf_idx_file), output_prefix)
+        def ext_vcf = params.compress ? ".vcf.gz" : ".vcf"
+        def ext_vcf_index = params.compress ? ".tbi" : ".idx"
+
+    output:
+        tuple(analysis_id, path("${output_prefix}${ext_vcf}"), path("${output_prefix}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+
+    script:
+        """
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" VariantFiltration \
+        --reference ${params.genome} \
+        --variant ${vcf_file} \
+        --output ${output_prefix}${ext_vcf} \
+        ${params.filter} \
+        ${params.optional}
+        """
+}
