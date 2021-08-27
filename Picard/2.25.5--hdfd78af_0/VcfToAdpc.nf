@@ -1,5 +1,5 @@
 process VcfToAdpc {
-    tag {"VcfToAdpc ${sample_id}"}
+    tag {"VcfToAdpc ${identifier}"}
     label 'PICARD_2_25_5_hdfd78af_0'
     label 'PICARD_2_25_5_hdfd78af_0_VcfToAdpc'
     container = 'quay.io/biocontainers/picard:2.25.5--hdfd78af_0'
@@ -7,17 +7,17 @@ process VcfToAdpc {
     
     input:
         tuple (
-            val(sample_id),
+            val(identifier),
             path(input_vcf),
-            path(input_vcf_index)
+            path(input_vcf_index),
         )
     
     output:
         tuple (
-            sample_id,
-            path("${sample_id}_samples.txt"),
-            path("${sample_id}_num_markers.txt"),
-            path("${sample_id}_adpc.bin")
+            identifier,
+            path("${identifier}_samples.txt"),
+            path("${identifier}_num_markers.txt"),
+            path("${identifier}_adpc.bin")
         )
     
     script:
@@ -26,9 +26,9 @@ process VcfToAdpc {
         picard "-Xmx${task.memory.toGiga()-4}G" -Dpicard.useLegacyParser=false \
         VcfToAdpc \
         --VCF ${input_vcf} \
-        --SAMPLES_FILE ${sample_id}_samples.txt \
-        --NUM_MARKERS_FILE ${sample_id}_num_markers.txt \
-        --OUTPUT ${sample_id}_adpc.bin \
+        --SAMPLES_FILE ${identifier}_samples.txt \
+        --NUM_MARKERS_FILE ${identifier}_num_markers.txt \
+        --OUTPUT ${identifier}_adpc.bin \
         ${params.optional}
         """
 }
