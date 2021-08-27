@@ -5,32 +5,36 @@ process CollectArraysVariantCallingMetrics {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-        val(output_name)
-    
+        tuple (
+            val(identifier),
+            path(input_vcf),
+            path(input_vcf_index)
+        )
     output:
         tuple(
-            path("${output_name}.arrays_variant_calling_summary_metrics"),
-            path("${output_name}.arrays_variant_calling_detail_metrics"),
-            path("${output_name}.arrays_control_code_summary_metrics"),
+            path("${output_prefix}.arrays_variant_calling_summary_metrics"),
+            path("${output_prefix}.arrays_variant_calling_detail_metrics"),
+            path("${output_prefix}.arrays_control_code_summary_metrics"),
             path("pass.txt")
         )
 
     script:
+        def output_prefix = params.output_prefix ?  params.output_prefix : identifier + "_VC_metrics"
+
         """
         picard -Xmx${task.memory.toGiga()-4}G \
         CollectArraysVariantCallingMetrics \
         --TMP_DIR \$TMPDIR \
-        --INPUT ${input_vcf_file} \
-        --OUTPUT ${output_name} \
-        --DBSNP ${params.dbsnp}
-        --CALL_RATE_PF_THRESHOLD ${params.call_rate_threshold} \
-        ${params.optional}
+        --INPUT ${input_vcf} \
+        --OUTPUT ${output_prefix} \
+        --DBSNP ${params.dbsnp} \
+        --CALL_RATE_PF_THRESHOLD ${params.call_rate_threshold}
 
         # Need to determine the disposition from the metrics.
         # Remove all the comments and blank lines from the file
         # Find the column number of AUTOCALL_PF and retrieve the value in the second line of the AUTOCALL_PF column
         # AUTOCALL_PF set to empty if file has more than 2 lines (should only have column headers and one data line)
-        AUTOCALL_PF=$(sed '/#/d' ${output_name}.arrays_variant_calling_detail_metrics | sed '/^\s*$/d' |
+        AUTOCALL_PF=$(sed '/#/d' ${output_prefix}.arrays_variant_calling_detail_metrics | sed '/^\s*$/d' |
         awk -v col=AUTOCALL_PF -F '\t' \
         'NR==1 {
             for(i=1;i<=NF;i++){

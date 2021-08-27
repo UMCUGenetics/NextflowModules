@@ -31,14 +31,15 @@ process VariantFiltration {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(identifier, path(vcf_file), path(vcf_idx_file), output_prefix)
-        def ext_vcf = params.compress ? ".vcf.gz" : ".vcf"
-        def ext_vcf_index = params.compress ? ".tbi" : ".idx"
+        tuple(identifier, path(vcf_file), path(vcf_idx_file))
 
     output:
         tuple(identifier, path("${output_prefix}${ext_vcf}"), path("${output_prefix}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
 
     script:
+        def ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
+        def ext_vcf_index = params.compress || vcf_file.getExtenstion() == ".gz" ? ".tbi" : ".idx"
+        def output_prefix = params.output_prefix ?  params.output_prefix : identifier + "_filter"
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" VariantFiltration \
         --reference ${params.genome} \
