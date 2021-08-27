@@ -38,7 +38,7 @@ process VariantFiltration {
 
     script:
         def ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
-        def ext_vcf_index = params.compress || vcf_file.getExtenstion() == ".gz" ? ".tbi" : ".idx"
+        def ext_vcf_index = params.compress || vcf_file.getExtension() == ".gz" ? ".tbi" : ".idx"
         def output_prefix = params.output_prefix ?  params.output_prefix : identifier + "_filter"
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" VariantFiltration \
