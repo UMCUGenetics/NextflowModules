@@ -39,7 +39,7 @@ process SelectVariants {
     script:
         ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
         ext_vcf_index = params.compress || vcf_file.getExtension() == ".gz" ? ".tbi" : ".idx"
-        output_prefix = params.output_prefix ?  params.output_prefix : identifier + "_select"
+        output_prefix = params.output_prefix ? identifier + params.output_prefix : identifier + "_select"
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" SelectVariants \
         --reference ${params.genome} \

@@ -20,7 +20,7 @@ process CollectArraysVariantCallingMetrics {
         )
 
     script:
-        output_prefix = params.output_prefix ?  params.output_prefix : identifier + "_VC_metrics"
+        output_prefix = params.output_prefix ? identifier + params.output_prefix : identifier + "_VC_metrics"
 
         """
         picard -Xmx${task.memory.toGiga()-4}G \
