@@ -15,8 +15,7 @@ process CollectArraysVariantCallingMetrics {
         tuple(
             path("${output_prefix}.arrays_variant_calling_summary_metrics"),
             path("${output_prefix}.arrays_variant_calling_detail_metrics"),
-            path("${output_prefix}.arrays_control_code_summary_metrics"),
-            path("pass.txt")
+            path("${output_prefix}.arrays_control_code_summary_metrics")
         )
 
     script:
