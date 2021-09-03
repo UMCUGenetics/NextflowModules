@@ -23,7 +23,7 @@ process CollectArraysVariantCallingMetrics {
         output_prefix = params.output_prefix ? identifier + params.output_prefix : identifier + "_VC_metrics"
 
         """
-        picard -Xmx!{task.memory.toGiga()-4}G \
+        picard -Xmx${task.memory.toGiga()-4}G \
         CollectArraysVariantCallingMetrics \
         --TMP_DIR \$TMPDIR \
         --INPUT ${input_vcf} \
