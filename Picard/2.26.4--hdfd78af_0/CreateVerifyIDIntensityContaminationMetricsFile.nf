@@ -1,9 +1,9 @@
 
 process CreateVerifyIDIntensityContaminationMetricsFile {
     tag {"CreateVerifyIDIntensityContaminationMetricsFile ${sample_id}"}
-    label 'PICARD_2_25_5_hdfd78af_0'
-    label 'PICARD_2_25_5_hdfd78af_0_CreateVerifyIDIntensityContaminationMetricsFile'
-    container = 'quay.io/biocontainers/picard:2.25.5--hdfd78af_0'
+    label 'PICARD_2_26_4_hdfd78af_0'
+    label 'PICARD_2_26_4_hdfd78af_0_CreateVerifyIDIntensityContaminationMetricsFile'
+    container = 'quay.io/biocontainers/picard:2.26.4--hdfd78af_0
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:

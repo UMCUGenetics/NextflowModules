@@ -1,7 +1,7 @@
 process CreateExtendedIlluminaManifest {
-    label 'PICARD_2_25_5_hdfd78af_0'
-    label 'PICARD_2_25_5_hdfd78af_0_CreateExtendedIlluminaManifest'
-    container = 'quay.io/biocontainers/picard:2.25.5--hdfd78af_0'
+    label 'PICARD_2_26_4_hdfd78af_0'
+    label 'PICARD_2_26_4_hdfd78af_0_CreateExtendedIlluminaManifest'
+    container = 'quay.io/biocontainers/picard:2.26.4--hdfd78af_0
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
