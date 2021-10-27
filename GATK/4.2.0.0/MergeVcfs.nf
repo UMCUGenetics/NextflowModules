@@ -6,10 +6,10 @@ process MergeVcfs {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(vcf_files), path(vcf_idx_files))
+        tuple(val(analysis_id), path(vcf_files), path(vcf_idx_files))
 
     output:
-        tuple(analysis_id, path("${analysis_id}.vcf"), path("${analysis_id}.vcf.idx"), emit:vcf_file)
+        tuple(val(analysis_id), path("${analysis_id}.vcf"), path("${analysis_id}.vcf.idx"), emit:vcf_file)
 
     script:
         def input_files = vcf_files.collect{"$it"}.join(" --INPUT ")

@@ -6,7 +6,7 @@ process SelectVariantsSample {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(vcf_file), path(vcf_idx_file), sample_id)
+        tuple(val(analysis_id), path(vcf_file), path(vcf_idx_file), sample_id)
 
     output:
         // simpleName instead of baseName, in case of .vcf.gz
@@ -31,10 +31,10 @@ process SelectVariants {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(identifier, path(vcf_file), path(vcf_idx_file))
+        tuple(val(identifier), path(vcf_file), path(vcf_idx_file))
 
     output:
-        tuple(identifier, path("${output_prefix}${ext_vcf}"), path("${output_prefix}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+        tuple(val(identifier), path("${output_prefix}${ext_vcf}"), path("${output_prefix}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
 
     script:
         ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
