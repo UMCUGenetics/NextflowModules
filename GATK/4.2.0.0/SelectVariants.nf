@@ -10,7 +10,12 @@ process SelectVariantsSample {
 
     output:
         // simpleName instead of baseName, in case of .vcf.gz
-        tuple(sample_id, path("${sample_id}_${vcf_file.simpleName}.vcf.gz"), path("${sample_id}_${vcf_file.simpleName}.vcf.gz.tbi"), emit: vcf_file)
+        tuple(
+            val(sample_id), 
+            path("${sample_id}_${vcf_file.simpleName}.vcf.gz"), 
+            path("${sample_id}_${vcf_file.simpleName}.vcf.gz.tbi"), 
+            emit: vcf_file
+        )
 
     script:
         """

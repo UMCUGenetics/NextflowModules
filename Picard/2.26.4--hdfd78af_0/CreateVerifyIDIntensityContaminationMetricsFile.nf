@@ -7,11 +7,11 @@ process CreateVerifyIDIntensityContaminationMetricsFile {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-        tuple (sample_id, path(input_file))
+        tuple (val(sample_id), path(input_file))
     
     output:
         // Programm uses the defined OUTPUT parameter as prefix to '.verifyidintensity_metrics'
-        tuple (sample_id, path("${sample_id}.verifyidintensity_metrics"))
+        tuple (val(sample_id), path("${sample_id}.verifyidintensity_metrics"))
     
     script:
         """
