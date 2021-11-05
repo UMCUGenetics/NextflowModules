@@ -2,6 +2,7 @@ process ExportParams {
     tag {"Workflow Export Params"}
     label 'Workflow_Export_Params'
     shell = ['/bin/bash', '-euo', 'pipefail']
+    cache = false  //Disable cache to force a new export when restarting the workflow.
 
     output:
         path("workflow_params.txt")
