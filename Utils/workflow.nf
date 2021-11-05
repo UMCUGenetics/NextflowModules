@@ -1,5 +1,5 @@
 process ExportParams {
-    tag {"Workflow Export Params ${sample_id}"}
+    tag {"Workflow Export Params"}
     label 'Workflow_Export_Params'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
