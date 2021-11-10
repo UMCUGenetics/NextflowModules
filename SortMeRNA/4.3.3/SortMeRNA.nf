@@ -1,7 +1,7 @@
 process SortMeRNA {
     tag {"SortMeRNA ${sample_id}"}
-    label 'SortMeRNA_4_2_0'
-    container = 'quay.io/biocontainers/sortmerna:4.2.0--0'
+    label 'SortMeRNA_4_3_3'
+    container = 'quay.io/biocontainers/sortmerna:4.3.3--h9ee0642_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
@@ -26,13 +26,12 @@ process SortMeRNA {
                 --fastx \
                 -workdir \${PWD} \
                 --aligned rRNA-reads \
-                --other non-rRNA-reads 
-                
-            gzip -f < non-rRNA-reads.fastq > ${fastq_files[0].simpleName}_non_rRNA.fastq.gz
-            gzip -f < rRNA-reads.fastq > ${fastq_files[0].simpleName}_filtered_rRNA.fastq.gz
+                --other non-rRNA-reads  \
+                --zip-out
+ 
+            mv non-rRNA-reads.fq.gz ${fastq_files[0].simpleName}_non_rRNA.fastq.gz
+            mv rRNA-reads.fq.gz ${fastq_files[0].simpleName}_filtered_rRNA.fastq.gz
             mv rRNA-reads.log ${report_title}_rRNA_report.txt
-            rm non-rRNA-reads.fastq
-            rm rRNA-reads.fastq
             """
         } else {
             """
@@ -44,17 +43,14 @@ process SortMeRNA {
                 --fastx -paired_in \
                 --aligned rRNA-reads \
                 --other non-rRNA-reads \
-                -out2 
-            
-            gzip < non-rRNA-reads_fwd.fastq >  ${fastq_files[0].simpleName}_non_rRNA.fastq.gz
-            gzip < non-rRNA-reads_rev.fastq >  ${fastq_files[1].simpleName}_non_rRNA.fastq.gz
-            gzip < rRNA-reads_fwd.fastq >  ${fastq_files[0].simpleName}_filtered_rRNA.fastq.gz
-            gzip < rRNA-reads_rev.fastq >  ${fastq_files[1].simpleName}_filtered_rRNA.fastq.gz
+                -out2 \
+                --zip-out
+
+            mv non-rRNA-reads_fwd.fq.gz  ${fastq_files[0].simpleName}_non_rRNA.fastq.gz
+            mv non-rRNA-reads_rev.fq.gz  ${fastq_files[1].simpleName}_non_rRNA.fastq.gz
+            mv rRNA-reads_fwd.fq.gz  ${fastq_files[0].simpleName}_filtered_rRNA.fastq.gz
+            mv rRNA-reads_rev.fq.gz  ${fastq_files[1].simpleName}_filtered_rRNA.fastq.gz            
             mv rRNA-reads.log ${report_title}_rRNA_report.txt
-            rm non-rRNA-reads_fwd.fastq
-            rm non-rRNA-reads_rev.fastq
-            rm rRNA-reads_fwd.fastq
-            rm rRNA-reads_rev.fastq
             """
         }
 }
