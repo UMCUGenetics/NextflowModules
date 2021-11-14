@@ -13,7 +13,7 @@ process TrimGalore {
         path("*_fastqc.{zip,html}", optional: true, emit: fastqc_report) 
 
     script:
-        if (params.singleEnd) {
+        if (params.single_end) {
             """
             trim_galore ${fastq_files} --gzip ${params.optional}
             mv ${fastq_files[0].simpleName}_trimmed.fq.gz ${fastq_files[0].simpleName}_trimmed.fastq.gz 

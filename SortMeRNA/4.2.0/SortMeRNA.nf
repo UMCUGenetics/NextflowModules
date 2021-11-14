@@ -17,7 +17,7 @@ process SortMeRNA {
     script:
         def Refs =  db_fasta.collect{ "$it" }.join(" -ref ")
         def report_title = fastq_files[0].simpleName.split("_R1_")[0]  
-        if (params.singleEnd) {
+        if (params.single_end) {
             """
             sortmerna -ref ${Refs} \
                 -reads ${fastq_files} \
