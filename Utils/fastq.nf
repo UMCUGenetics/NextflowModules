@@ -20,7 +20,7 @@ def flowcellLaneFromFastq(path) {
     String fcid
     int lane
 
-    if (fields.size() == 7) {
+    if (fields.size() == 7 || fields.size() == 8) {
         // CASAVA 1.8+ format
         machine = fields[0]
         run_nr = fields[1].toInteger()
