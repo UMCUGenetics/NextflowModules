@@ -10,15 +10,15 @@ process MarkdownToPdf {
         path(md_file)
      
     output:        
-        file "output.pdf"
+        path("${md_file.baseName}.pdf")
    
     script:
         """
-        pandoc ${md_file} 
+        pandoc ${md_file} \
             --variable urlcolor=blue \
             -s \
             --toc \
             -f markdown \
-            -o output.pdf
+            -o ${md_file.baseName}.pdf
         """
 }
