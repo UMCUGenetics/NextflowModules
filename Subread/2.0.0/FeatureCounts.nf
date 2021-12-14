@@ -21,7 +21,7 @@ process FeatureCounts {
         def bam_list = bam_file.collect{ "$it" }.join(" ")
         def biotype = params.gencode ? "gene_type" : params.fc_group_features_type
         def extraAttributes = params.fc_extra_attributes ? "--extraAttributes ${params.fc_extra_attributes}" : ''
-        def fragment_mode = !params.singleEnd ? "-p": ''
+        def fragment_mode = !params.single_end ? "-p": ''
         //Get strandedness
         def featureCounts_direction = 0
         if (params.stranded && !params.unstranded) {
