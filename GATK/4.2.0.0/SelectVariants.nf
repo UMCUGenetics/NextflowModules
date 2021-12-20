@@ -39,7 +39,12 @@ process SelectVariants {
         tuple(val(identifier), path(vcf_file), path(vcf_idx_file))
 
     output:
-        tuple(val(identifier), path("${output_prefix}${ext_vcf}"), path("${output_prefix}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+        tuple(
+            val(identifier), 
+            path("${output_prefix}${ext_vcf}"), 
+            path("${output_prefix}${ext_vcf}${ext_vcf_index}"), 
+            emit: vcf_file
+        )
 
     script:
         ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
@@ -47,9 +52,9 @@ process SelectVariants {
         output_prefix = params.output_prefix ? identifier + params.output_prefix : identifier + "_select"
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" SelectVariants \
-        --reference ${params.genome} \
-        -variant ${vcf_file} \
-        --output ${output_prefix}${ext_vcf}\
-        ${params.optional}
+            --reference ${params.genome} \
+            --variant ${vcf_file} \
+            --output ${output_prefix}${ext_vcf}\
+            ${params.optional}
         """
 }
