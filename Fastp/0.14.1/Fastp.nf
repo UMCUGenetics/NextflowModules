@@ -13,7 +13,7 @@ process Fastp {
 
     script:
         //adapted from https://github.com/nf-core/eager/blob/master/LICENSE, Copyright (c) Alexander Peltzer, Stephen Clayton, James A. Fellows Yates, Maxime Borry
-        if (params.singleEnd) {
+        if (params.single_end) {
             """
             fastp --in1 ${fastq_files[0]} --out1 "${fastq_files[0].simpleName}.trim.fastq.gz" -j ${sample_id}_fastp.json ${params.optional}
             """

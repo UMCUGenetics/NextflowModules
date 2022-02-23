@@ -14,13 +14,13 @@ process Quant {
 
     script:
         //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
-        def rnastrandness = params.singleEnd ? 'U' : 'IU'
+        def rnastrandness = params.single_end ? 'U' : 'IU'
         if (params.stranded && !params.unstranded) {
-            rnastrandness = params.singleEnd ? 'SF' : 'ISF'
+            rnastrandness = params.single_end ? 'SF' : 'ISF'
         } else if (params.revstranded && !params.unstranded) {
-            rnastrandness = params.singleEnd ? 'SR' : 'ISR'
+            rnastrandness = params.single_end ? 'SR' : 'ISR'
         }
-        def endedness = params.singleEnd ? "-r ${fastq_files[0]}" : "-1 ${fastq_files[0]} -2 ${fastq_files[1]}"
+        def endedness = params.single_end ? "-r ${fastq_files[0]}" : "-1 ${fastq_files[0]} -2 ${fastq_files[1]}"
         def unmapped = params.saveUnaligned ? "--writeUnmappedNames" : ''
 
         """
