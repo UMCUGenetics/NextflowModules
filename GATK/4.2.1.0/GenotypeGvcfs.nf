@@ -9,7 +9,12 @@ process GenotypeGVCFs {
         tuple(analysis_id, path(gvcf_files), path(gvcf_idx_files), path(interval_file))
 
     output:
-        tuple(analysis_id, path("${analysis_id}_${interval_file.baseName}${ext_vcf}"), path("${analysis_id}_${interval_file.baseName}${ext_vcf}${ext_vcf_index}"), emit:vcf_file)
+        tuple(
+            analysis_id,
+            path("${analysis_id}_${interval_file.baseName}${ext_vcf}"),
+            path("${analysis_id}_${interval_file.baseName}${ext_vcf}${ext_vcf_index}"),
+            emit:vcf_file
+        )
 
     script:
         def input_files = gvcf_files.collect{"$it"}.join(" --variant ")
@@ -36,7 +41,12 @@ process GenotypeGVCF {
         tuple(sample_id, path(gvcf_files), path(gvcf_idx_files), path(interval_file))
 
     output:
-        tuple(val(sample_id), path("${sample_id}_${interval_file.baseName}${ext_vcf}"), path("${sample_id}_${interval_file.baseName}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+        tuple(
+            val(sample_id),
+            path("${sample_id}_${interval_file.baseName}${ext_vcf}"),
+            path("${sample_id}_${interval_file.baseName}${ext_vcf}${ext_vcf_index}"),
+            emit: vcf_file
+        )
 
     script:
         def input_files = gvcf_files.collect{"$it"}.join(" --variant ")
