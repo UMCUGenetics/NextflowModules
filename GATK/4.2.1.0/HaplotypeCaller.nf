@@ -9,7 +9,12 @@ process HaplotypeCaller {
         tuple(analysis_id, path(bam_files), path(bai_files), path(interval_file))
 
     output:
-        tuple(val(analysis_id), path("${analysis_id}.${interval_file.baseName}${ext_vcf}"), path("${analysis_id}.${interval_file.baseName}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+        tuple(
+            val(analysis_id),
+            path("${analysis_id}.${interval_file.baseName}${ext_vcf}"),
+            path("${analysis_id}.${interval_file.baseName}${ext_vcf}${ext_vcf_index}"),
+            emit: vcf_file
+        )
 
     script:
         def input_files = bam_files.collect{"$it"}.join(" --input ")
@@ -40,7 +45,13 @@ process HaplotypeCallerGVCF {
         tuple(sample_id, path(bam_file), path(bai_file), path(interval_file))
 
     output:
-        tuple(val(sample_id), path("${sample_id}_${interval_file.baseName}${ext_gvcf}"), path("${sample_id}_${interval_file.baseName}${ext_gvcf}${ext_gvcf_index}"), path(interval_file), emit: vcf_file)
+        tuple(
+            val(sample_id),
+            path("${sample_id}_${interval_file.baseName}${ext_gvcf}"),
+            path("${sample_id}_${interval_file.baseName}${ext_gvcf}${ext_gvcf_index}"),
+            path(interval_file),
+            emit: vcf_file
+        )
 
     script:
         ext_gvcf = ".g.vcf"
