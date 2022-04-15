@@ -9,7 +9,12 @@ process SelectVariantsSample {
         tuple(analysis_id, path(vcf_file), path(vcf_idx_file), sample_id)
 
     output:
-        tuple(sample_id, path("${sample_id}_${vcf_file.baseName}${ext_vcf}"), path("${sample_id}_${vcf_file.baseName}${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+        tuple(
+            sample_id,
+            path("${sample_id}_${vcf_file.baseName}${ext_vcf}"),
+            path("${sample_id}_${vcf_file.baseName}${ext_vcf}${ext_vcf_index}"),
+            emit: vcf_file
+        )
 
     script:
         ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
