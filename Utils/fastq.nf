@@ -34,6 +34,32 @@ def flowcellLaneFromFastq(path) {
     [fcid, lane, machine, run_nr]
 }
 
+def flowcellLaneFromFastqONT(path) {
+    // parse first line of a gzipped FASTQ file from ONT data
+    InputStream fileStream = new FileInputStream(path.toFile())
+    InputStream gzipStream = new java.util.zip.GZIPInputStream(fileStream)
+    Reader decoder = new InputStreamReader(gzipStream, 'ASCII')
+    BufferedReader buffered = new BufferedReader(decoder)
+    def line = buffered.readLine()
+    assert line.startsWith('@')
+    line = line.substring(1)
+    def fields = line.split(' ')
+ 
+    //String machine
+    //int run_nr
+    //String fcid
+    //int lane
+
+    String run_id
+    run_id = fields[1].replace('runid=', '')
+
+    String sample_id
+    sample_id = fields[2].replace('sampleid=', '')
+
+    [run_id, sample_id]
+}
+
+
 def extractFastqPairFromDir(dir) {
     // Original code from: https://github.com/SciLifeLab/Sarek - MIT License - Copyright (c) 2016 SciLifeLab
     dir = dir.tokenize().collect{"$it/**_R1_*.fastq.gz"}
@@ -92,4 +118,18 @@ def extractAllFastqFromDir(dir) {
         rg_id = "${sample_id}_${flowcell}_${lane}"
         [sample_id, rg_id, machine, run_nr ,fastq_files]
     }
+}
+
+def extractAllFastqFromDirONT(dir) {
+    dir = dir.tokenize().collect{"$it/**.fastq.gz"}
+    Channel
+    .fromPath(dir, type:'file')
+    .ifEmpty { error "No fastq.gz files found in ${dir}." }
+    .map {fastq_path -> 
+        fastq_files = fastq_path
+        (run_id, sample_id) = flowcellLaneFromFastqONT(fastq_path)
+        fastq_id = fastq_files.toString().replace('.fastq.gz', '').split("/")[-1]
+        [fastq_files, fastq_id, sample_id, run_id]
+    }
+
 }
