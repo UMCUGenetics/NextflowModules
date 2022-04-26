@@ -12,7 +12,8 @@ process Merge {
         tuple(sample_id, path("${sample_id}.bam"), path("${sample_id}.bam.bai"), emit: bam_file)
 
     script:
+        def bam_files_input =  bam_files.collect{ "$it" }.join(" ")
         """
-        sambamba merge -t ${task.cpus} ${sample_id}.bam ${bam_files}
+        sambamba merge -t ${task.cpus} ${sample_id}.bam ${bam_files_input}
         """
 }
