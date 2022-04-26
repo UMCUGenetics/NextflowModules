@@ -14,7 +14,7 @@ process Split {
     script:
         """
         sambamba view -t ${task.cpus} -F "[HP] == 1" -f bam ${bam_file} > ${bam_file.baseName}_hap1.bam
-        sambamba view -t ${task.cpus} -F "[HP] == 1" -f bam ${bam_file} > ${bam_file.baseName}_hap2.bam
+        sambamba view -t ${task.cpus} -F "[HP] == 2" -f bam ${bam_file} > ${bam_file.baseName}_hap2.bam
         sambamba view -t ${task.cpus} -F "[HP] == null" -f bam ${bam_file} > ${bam_file.baseName}_nohap.bam
         sambamba index -t ${task.cpus} ${bam_file.baseName}_hap1.bam
         sambamba index -t ${task.cpus} ${bam_file.baseName}_hap2.bam
