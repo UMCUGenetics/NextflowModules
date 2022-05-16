@@ -8,12 +8,12 @@ process NanopolishCallMethylation {
         tuple(val(fastq_id), path(bam_file), path(bai_file), path(fastq), path(index), path(fai), path(gzi), path(readdb))
   
     output:
-        tuple(val(fastq_id), path("${bam_file.baseName}.csv"))
+        tuple(val(fastq_id), path("${bam_file.simpleName}.csv"))
 
     script:
         // Note, HDF5_PLUGIN_PATH is image specific
         """
         export HDF5_PLUGIN_PATH=/usr/local/hdf5/lib/plugin/ 
-        nanopolish call-methylation -t 8 -r ${fastq} -b ${bam_file} -g ${params.genome} > ${bam_file.baseName}.csv
+        nanopolish call-methylation -t 8 -r ${fastq} -b ${bam_file} -g ${params.genome} > ${bam_file.simpleName}.csv
         """
 }
