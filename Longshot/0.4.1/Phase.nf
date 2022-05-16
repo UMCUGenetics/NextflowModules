@@ -8,10 +8,10 @@ process LongshotPhase {
         tuple(sample_id, path(bam_file), path(bai_files))        
     
     output:
-        tuple (sample_id, path("${bam_file.baseName}_phased.bam"), path("${bam_file.baseName}_phased.vcf"))
+        tuple (sample_id, path("${bam_file.simpleName}_phased.bam"), path("${bam_file.simpleName}_phased.vcf"))
 
     script:
         """
-        longshot --out_bam ${bam_file.baseName}_phased.bam --bam ${bam_file} --ref ${params.genome_fasta} --out ${bam_file.baseName}_phased.vcf $params.longshotparams > ${bam_file.baseName}.out
+        longshot --out_bam ${bam_file.simpleName}_phased.bam --bam ${bam_file} --ref ${params.genome_fasta} --out ${bam_file.simpleName}_phased.vcf $params.longshotparams > ${bam_file.simpleName}.out
         """
 }
