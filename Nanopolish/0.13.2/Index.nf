@@ -12,6 +12,7 @@ process NanopolishIndex {
 
     script:
         def fast5_path = params.fast5_path
+        // ADD sequence summary to maken it waaay faster!
         """
         nanopolish index -d $fast5_path $fastq  
         """
