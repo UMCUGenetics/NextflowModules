@@ -8,10 +8,10 @@ process ToSAM {
         tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-        tuple(sample_id, path("${bam_file.baseName}.sam"))
+        tuple(sample_id, path("${bam_file.simpleName}.sam"))
 
     script:
         """
-        sambamba view -h -t ${task.cpus} ${bam_file} > ${bam_file.baseName}.sam
+        sambamba view -h -t ${task.cpus} ${bam_file} > ${bam_file.simpleName}.sam
         """
 }
