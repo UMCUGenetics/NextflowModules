@@ -8,13 +8,13 @@ process Filter {
         tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-        tuple(sample_id, path("${bam_file.baseName}_roi.bam"), path("${bam_file.baseName}_roi.bam.bai"))
+        tuple(sample_id, path("${bam_file.simpleName}_roi.bam"), path("${bam_file.simpleName}_roi.bam.bai"))
 
     script:
         roi_slice = ""
         if( params.roi )
             roi_slice = " -L $params.roi "
         """
-        sambamba view -h $roi_slice -t ${task.cpus} -f bam ${bam_file} -o  ${bam_file.baseName}_roi.bam
+        sambamba view -h $roi_slice -t ${task.cpus} -f bam ${bam_file} -o  ${bam_file.simpleName}_roi.bam
         """
 }
