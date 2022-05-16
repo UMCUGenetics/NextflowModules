@@ -11,7 +11,7 @@ process Mapping {
         tuple (sample_id, fastq_id, path("${fastq_id}.sam"), emit: mapped_sams)
 
     script:
-        readgroup = "\"@RG\\tID:${fastq.baseName}\\tSM:${sample_id}\\tPL:ONT\\tLB:${sample_id}\""
+        readgroup = "\"@RG\\tID:${fastq.simpleName}\\tSM:${sample_id}\\tPL:ONT\\tLB:${sample_id}\""
         fastq_id = fastq.toString().replace('.fastq.gz', '')
         """
         winnowmap -a -t ${task.cpus} -R $readgroup $params.optional -o ${fastq_id}.sam $params.genome_fasta ${fastq} 
