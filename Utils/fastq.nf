@@ -45,14 +45,8 @@ def flowcellLaneFromFastqONT(path) {
     line = line.substring(1)
     def fields = line.split(' ')
  
-    //String machine
-    //int run_nr
-    //String fcid
-    //int lane
-
     String run_id
     run_id = fields[1].replace('runid=', '')
-
     String sample_id
     sample_id = fields[2].replace('sampleid=', '')
 
