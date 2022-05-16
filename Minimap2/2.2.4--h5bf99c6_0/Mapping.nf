@@ -5,13 +5,14 @@ process Mapping {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-        tuple(path(fastq), rg_id, sample_id, run_id)
+        path(fastq)
+        val(sample_id)
 
     output:
         tuple (sample_id, fastq_id, path("${fastq_id}.sam"), emit: mapped_sams)
 
     script:
-        readgroup = "\"@RG\\tID:${fastq.baseName}\\tSM:${sample_id}\\tPL:ONT\\tLB:${sample_id}\""
+        readgroup = "\"@RG\\tID:${fastq.simpleName}\\tSM:${sample_id}\\tPL:ONT\\tLB:${sample_id}\""
         fastq_id = fastq.toString().replace('.fastq.gz', '')
         """
         minimap2 -t ${task.cpus} $params.optional -R $readgroup $params.genome_fasta $fastq > ${fastq_id}.sam
