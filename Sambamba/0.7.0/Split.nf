@@ -9,15 +9,15 @@ process Split {
         tuple(sample_id, path(bam_file), path(bai_file))
 
     output:
-        tuple(sample_id, path("${bam_file.baseName}_hap1.bam"), path("${bam_file.baseName}_hap1.bam.bai"), path("${bam_file.baseName}_hap2.bam"), path("${bam_file.baseName}_hap2.bam.bai"),path("${bam_file.baseName}_nohap.bam"), path("${bam_file.baseName}_nohap.bam.bai"))
+        tuple(sample_id, path("${bam_file.simpleName}_hap1.bam"), path("${bam_file.simpleName}_hap1.bam.bai"), path("${bam_file.simpleName}_hap2.bam"), path("${bam_file.simpleName}_hap2.bam.bai"),path("${bam_file.simpleName}_nohap.bam"), path("${bam_file.simpleName}_nohap.bam.bai"))
 
     script:
         """
-        sambamba view -t ${task.cpus} -F "[HP] == 1" -f bam ${bam_file} > ${bam_file.baseName}_hap1.bam
-        sambamba view -t ${task.cpus} -F "[HP] == 2" -f bam ${bam_file} > ${bam_file.baseName}_hap2.bam
-        sambamba view -t ${task.cpus} -F "[HP] == null" -f bam ${bam_file} > ${bam_file.baseName}_nohap.bam
-        sambamba index -t ${task.cpus} ${bam_file.baseName}_hap1.bam
-        sambamba index -t ${task.cpus} ${bam_file.baseName}_hap2.bam
-        sambamba index -t ${task.cpus} ${bam_file.baseName}_nohap.bam
+        sambamba view -t ${task.cpus} -F "[HP] == 1" -f bam ${bam_file} > ${bam_file.simpleName}_hap1.bam
+        sambamba view -t ${task.cpus} -F "[HP] == 2" -f bam ${bam_file} > ${bam_file.simpleName}_hap2.bam
+        sambamba view -t ${task.cpus} -F "[HP] == null" -f bam ${bam_file} > ${bam_file.simpleName}_nohap.bam
+        sambamba index -t ${task.cpus} ${bam_file.simpleName}_hap1.bam
+        sambamba index -t ${task.cpus} ${bam_file.simpleName}_hap2.bam
+        sambamba index -t ${task.cpus} ${bam_file.simpleName}_nohap.bam
         """
 }
