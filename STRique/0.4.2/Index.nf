@@ -8,11 +8,11 @@ process Index {
         path(fast5_files)
 
     output:
-        path("${fast5_files.baseName}.fofn")
+        path("${fast5_files.simpleName}.fofn")
 
     script:
         """
-        export HDF5_PLUGIN_PATH=/hpc/compgen/users/cvermeulen/hdf5_plugin/ont-vbz-hdf-plugin-1.0.1-Linux/usr/local/hdf5/lib/plugin
-        python3 /app/scripts/STRique.py index ${fast5_files}  > ${fast5_files.baseName}.fofn
+        export HDF5_PLUGIN_PATH=$params.libvbz_hdf_plugin
+        python3 /app/scripts/STRique.py index ${fast5_files}  > ${fast5_files.simpleName}.fofn
         """
 }
