@@ -11,8 +11,8 @@ process GenotypeGVCFs {
     output:
         tuple(
             analysis_id,
-            path("${analysis_id}_${interval_file.baseName}${ext_vcf}"),
-            path("${analysis_id}_${interval_file.baseName}${ext_vcf}${ext_vcf_index}"),
+            path("${analysis_id}_${interval_file.simpleName}${ext_vcf}"),
+            path("${analysis_id}_${interval_file.simpleName}${ext_vcf}${ext_vcf_index}"),
             emit:vcf_file
         )
 
@@ -24,14 +24,14 @@ process GenotypeGVCFs {
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" GenotypeGVCFs \
         --reference ${params.genome} \
         --variant $input_files \
-        --output ${analysis_id}_${interval_file.baseName}${ext_vcf} \
+        --output ${analysis_id}_${interval_file.simpleName}${ext_vcf} \
         --intervals ${interval_file} \
         ${params.optional}
         """
 }
 
 process GenotypeGVCF {
-    tag {"GATK GenotypeGVCF ${sample_id} - ${interval_file.baseName}"}
+    tag {"GATK GenotypeGVCF ${sample_id} - ${interval_file.simpleName}"}
     label 'GATK_4_2_1_0'
     label 'GATK_4_2_1_0_GenotypeGVCF'
     container = 'broadinstitute/gatk:4.2.1.0'
@@ -43,8 +43,8 @@ process GenotypeGVCF {
     output:
         tuple(
             val(sample_id),
-            path("${sample_id}_${interval_file.baseName}${ext_vcf}"),
-            path("${sample_id}_${interval_file.baseName}${ext_vcf}${ext_vcf_index}"),
+            path("${sample_id}_${interval_file.simpleName}${ext_vcf}"),
+            path("${sample_id}_${interval_file.simpleName}${ext_vcf}${ext_vcf_index}"),
             emit: vcf_file
         )
 
@@ -56,7 +56,7 @@ process GenotypeGVCF {
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" GenotypeGVCFs \
         --reference ${params.genome} \
         --variant $input_files \
-        --output ${sample_id}_${interval_file.baseName}${ext_vcf} \
+        --output ${sample_id}_${interval_file.simpleName}${ext_vcf} \
         --intervals ${interval_file} \
         ${params.optional}
         """
