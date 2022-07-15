@@ -31,9 +31,9 @@ process SelectVariantsSample {
 
 process SelectVariants {
     tag {"GATK SelectVariants ${identifier}"}
-    label 'GATK_4_2_0_0'
-    label 'GATK_4_2_0_0_SelectVariants'
-    container = 'broadinstitute/gatk:4.2.0.0'
+    label 'GATK_4_2_1_0'
+    label 'GATK_4_2_1_0_SelectVariants'
+    container = 'broadinstitute/gatk:4.2.1.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
