@@ -11,24 +11,21 @@ process HaplotypeCaller {
     output:
         tuple(
             val(analysis_id),
-            path("${analysis_id}.${interval_file.baseName}${ext_vcf}"),
-            path("${analysis_id}.${interval_file.baseName}${ext_vcf}${ext_vcf_index}"),
+            path("${analysis_id}.${interval_file.simpleName}${ext_vcf}"),
+            path("${analysis_id}.${interval_file.simpleName}${ext_vcf}${ext_vcf_index}"),
             emit: vcf_file
         )
 
     script:
         def input_files = bam_files.collect{"$it"}.join(" --input ")
-        ext_vcf = ".vcf"
-        ext_vcf_index = ".idx"
-        if( params.compress )
-            ext_vcf = ".vcf.gz"
-            ext_vcf_index = ".tbi"
+        ext_vcf = params.compress ? ".vcf.gz" : ".vcf"
+        ext_vcf_index = params.compress ? ".tbi" : ".idx"
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" HaplotypeCaller \
         --reference ${params.genome} \
         --input ${input_files} \
         --intervals ${interval_file} \
-        --output ${analysis_id}.${interval_file.baseName}${ext_vcf} \
+        --output ${analysis_id}.${interval_file.simpleName}${ext_vcf} \
         ${params.optional}
         """
 }
@@ -47,24 +44,21 @@ process HaplotypeCallerGVCF {
     output:
         tuple(
             val(sample_id),
-            path("${sample_id}_${interval_file.baseName}${ext_gvcf}"),
-            path("${sample_id}_${interval_file.baseName}${ext_gvcf}${ext_gvcf_index}"),
+            path("${sample_id}_${interval_file.simpleName}${ext_gvcf}"),
+            path("${sample_id}_${interval_file.simpleName}${ext_gvcf}${ext_gvcf_index}"),
             path(interval_file),
             emit: vcf_file
         )
 
     script:
-        ext_gvcf = ".g.vcf"
-        ext_gvcf_index = ".idx"
-        if( params.compress )
-            ext_gvcf = ".g.vcf.gz"
-            ext_gvcf_index = ".tbi"
+        ext_gvcf = params.compress ? ".g.vcf.gz" : ".g.vcf"
+        ext_gvcf_index = params.compress ? ".tbi" : ".idx"
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" HaplotypeCaller \
         --reference ${params.genome} \
         --input ${bam_file} \
         --intervals ${interval_file} \
-        --output ${sample_id}_${interval_file.baseName}${ext_gvcf} \
+        --output ${sample_id}_${interval_file.simpleName}${ext_gvcf} \
         --emit-ref-confidence ${params.emit_ref_confidence} \
         ${params.optional}
         """
