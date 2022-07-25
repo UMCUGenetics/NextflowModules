@@ -2,7 +2,7 @@ process IndexFeatureFile {
     tag {"GATK IndexFeatureFile ${identifier}"}
     label 'GATK_4_2_1_0'
     label 'GATK_4_2_1_0_IndexFeatureFile'
-    container = 'broadinstitute/gatk:4_2_1_0'
+    container = 'broadinstitute/gatk:4.2.1.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
