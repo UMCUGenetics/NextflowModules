@@ -55,9 +55,9 @@ process VariantFiltrationSnpIndel {
 
 process VariantFiltration {
     tag {"GATK VariantFiltration ${identifier}"}
-    label 'GATK_4_2_0_0'
-    label 'GATK_4_2_0_0_VariantFiltration'
-    container = 'broadinstitute/gatk:4.2.0.0'
+    label 'GATK_4_2_1_0'
+    label 'GATK_4_2_1_0_VariantFiltration'
+    container = 'broadinstitute/gatk:4.2.1.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
