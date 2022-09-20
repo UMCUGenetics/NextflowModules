@@ -21,6 +21,7 @@ process IndexFeatureFile {
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" IndexFeatureFile \
             --input ${vcf_file} \
-            --output ${vcf_file}${ext_vcf_index}
+            --output ${vcf_file}${ext_vcf_index} \
+            --TMP_DIR \$TMPDIR
         """
 }
