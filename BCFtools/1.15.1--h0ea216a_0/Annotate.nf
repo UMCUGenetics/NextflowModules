@@ -6,10 +6,10 @@ process Annotate {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple(identifier, path(input_vcf), path(input_vcf_index))
+    tuple(val(identifier), path(input_vcf), path(input_vcf_index))
 
     output:
-    tuple(identifier, path(output_vcf), path(input_vcf_index))
+    tuple(val(identifier), path(output_vcf), path(input_vcf_index))
 
     script:
     """
