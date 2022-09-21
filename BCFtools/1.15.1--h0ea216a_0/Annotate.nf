@@ -9,7 +9,7 @@ process Annotate {
     tuple(val(identifier), path(input_vcf), path(input_vcf_index))
 
     output:
-    tuple(val(identifier), path(output_vcf), path(input_vcf_index))
+    tuple(val(identifier), path("${input_vcf.simpleName}.vcf"))
 
     script:
     """
