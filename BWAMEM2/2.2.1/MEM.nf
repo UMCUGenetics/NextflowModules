@@ -6,10 +6,10 @@ process MEM {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple (sample_id, rg_id, path(fastq))
+        tuple (val(sample_id), val(rg_id), path(fastq))
 
     output:
-        tuple (sample_id, rg_id, path("${rg_id}.bam"), path("${rg_id}.bai"), emit: mapped_bams)
+        tuple (val(sample_id), val(rg_id), path("${rg_id}.bam"), path("${rg_id}.bai"), emit: mapped_bams)
 
     script:
         def barcode = rg_id.split('_')[1]
