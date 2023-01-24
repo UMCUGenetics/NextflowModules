@@ -9,7 +9,7 @@ process GatherBqsrReports {
         tuple(val(sample_id), path(recalibration_reports))
 
     output:
-        tuple(val(sample_id), path("${sample_id}.recal_data.csv") emit: recalibration_report)
+        tuple(val(sample_id), path("${sample_id}.recal_data.csv"), emit: recalibration_report)
 
     script:
         def input_files = recalibration_reports.collect{"$it"}.join(" --input_file ")
