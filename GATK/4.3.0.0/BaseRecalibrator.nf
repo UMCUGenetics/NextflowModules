@@ -2,7 +2,7 @@ process BaseRecalibrator {
     tag {"GATK BaseRecalibrator ${sample_id} - ${chr}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_BaseRecalibrator'
-    container = ' broadinstitute/gatk:4.3.0.0'
+    container = 'broadinstitute/gatk:4.3.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
