@@ -6,9 +6,9 @@ process Markdup {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, rg_id, path(bam_file), path(bai_file))
+        tuple(val(sample_id), val(rg_id), path(bam_file), path(bai_file))
     output:
-        tuple(sample_id, rg_id, path("${bam_file.baseName}.markdup.bam"), path("${bam_file.baseName}.markdup.bam.bai"), emit: bam_file)
+        tuple(val(sample_id), val(rg_id), path("${bam_file.baseName}.markdup.bam"), path("${bam_file.baseName}.markdup.bam.bai"), emit: bam_file)
 
     script:
         """
@@ -24,10 +24,10 @@ process MarkdupMerge {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_files))
+        tuple(val(sample_id), path(bam_files))
 
     output:
-        tuple(sample_id, path("${sample_id}.markdup.bam"), path("${sample_id}.markdup.bam.bai"), emit: bam_file)
+        tuple(val(sample_id), path("${sample_id}.markdup.bam"), path("${sample_id}.markdup.bam.bai"), emit: bam_file)
 
     script:
         """
