@@ -12,11 +12,11 @@ process GatherBqsrReports {
         tuple(val(sample_id), path("${sample_id}.recal_data.csv"), emit: recalibration_report)
 
     script:
-        def input_files = recalibration_reports.collect{"$it"}.join(" --input_file ")
+        def input_files = recalibration_reports.collect{"$it"}.join(" --input ")
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
         GatherBQSRReports \
-        --input_file ${input_files} \
+        --input ${input_files} \
         --output ${sample_id}.recal_data.csv
         """
 }
