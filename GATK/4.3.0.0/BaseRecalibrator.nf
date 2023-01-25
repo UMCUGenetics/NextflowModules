@@ -16,7 +16,7 @@ process BaseRecalibrator {
         gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
         BaseRecalibrator \
         --reference ${params.genome_fasta} \
-        --input $bam \
+        --input ${bam_file} \
         --use-original-qualities \
         --output ${bam_file.baseName}.${chr}.recal_data.csv \
         --intervals ${chr} \
