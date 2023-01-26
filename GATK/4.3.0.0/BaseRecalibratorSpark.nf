@@ -1,4 +1,4 @@
-process BaseRecalibrator {
+process BaseRecalibratorSpark {
     tag {"GATK BaseRecalibratorSpark ${sample_id} - ${chr}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_BaseRecalibratorSpark'
