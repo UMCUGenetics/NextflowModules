@@ -15,7 +15,7 @@ process BaseRecalibratorSpark {
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
         BaseRecalibratorSpark \
-        --spark-master local[${task.cpus}]
+        --spark-master local[${task.cpus}] \
         --reference ${params.genome_fasta} \
         --input ${bam_file} \
         --use-original-qualities \
