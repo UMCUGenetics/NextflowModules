@@ -1,5 +1,5 @@
 process BaseRecalibratorSpark {
-    tag {"GATK BaseRecalibratorSpark ${sample_id} - ${chr}"}
+    tag {"GATK BaseRecalibratorSpark ${sample_id}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_BaseRecalibratorSpark'
     container = 'broadinstitute/gatk:4.3.0.0'
