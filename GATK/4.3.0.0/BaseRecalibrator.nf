@@ -56,8 +56,7 @@ process BaseRecalibratorApplyBQSR {
         --input ${bam_file} \
         --use-original-qualities \
         --output ${bam_file.baseName}.bqsr.${region}.bam \
-        --bqsr-recal-file ${recalibration_report} \
+        --bqsr-recal-file ${bam_file.baseName}.${region}.recal_data.csv \
         --intervals ${region}
-
         """
 }
