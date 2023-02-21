@@ -9,7 +9,7 @@ process BaseRecalibrator {
         tuple(val(sample_id), path(bam_file), path(bai_file), val(chr))
 
     output:
-        tuple(val(sample_id), path("${bam_file.baseName}.${chr}.recal_data.csv"), emit: recalibration_report)
+        tuple(val(sample_id), val(chr), path("${bam_file.baseName}.${chr}.recal_data.csv"), emit: recalibration_report)
 
     script:
         """
