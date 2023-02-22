@@ -45,18 +45,17 @@ process MakeUMIBam {
     out = pysam.AlignmentFile(out_bam, 'wb', header=header)
 
     if len(fastqs) == 2:
-        r1 = pysam.FastxFile(fastqs[0])
-        umi_reads = pysam.FastxFile(fastqs[1])
+        umi_reads = pysam.FastxFile(fastqs[0])
+        r1 = pysam.FastxFile(fastqs[1])
     elif len(fastqs) == 3:
-        r1 = pysam.FastxFile(fastqs[0])
-        umi_reads = pysam.FastxFile(fastqs[1])
+        umi_reads = pysam.FastxFile(fastqs[0])
+        r1 = pysam.FastxFile(fastqs[1])
         r2 = pysam.FastxFile(fastqs[2])
-
     group_id = 0
     for r1_read in r1:
         r1_read.sequence[0:9]
         umi_read = umi_reads.next()
-        umi_seq = r1_read.sequence[0:9]+umi_read.sequence
+        umi_seq = r1_read.sequence[0:9]+umi_read.sequence[-9:]
 
         if umi_seq not in umis:
             umis[umi_seq] = group_id

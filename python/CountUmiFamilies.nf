@@ -29,7 +29,7 @@ family_counts = {}
 with pysam.AlignmentFile(bam, "r", check_sq=False) as b:
  for read in b:
 
-  if read.flag == 77:
+  if read.flag == 77 or read.flag == 4:
    if read.get_tag('cD') not in family_counts:
     family_counts[ int(read.get_tag('cD')) ] = 0
    family_counts[ int(read.get_tag('cD')) ]+= 1

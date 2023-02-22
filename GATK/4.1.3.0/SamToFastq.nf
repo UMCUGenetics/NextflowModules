@@ -15,6 +15,7 @@ process SamToFastq {
       tuple (sample_id, flowcell, machine, run_nr,path("*.fastq.gz"), emit: converted_fastqs)
 
     script:
+    second_end_fastq = params.singleEnd == true ? '' : '--SECOND_END_FASTQ '+sample_id+'_'+flowcell+'_R2_001.fastq.gz'
 
     """
     gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
@@ -22,7 +23,7 @@ process SamToFastq {
     ${params.optional} \
     --INPUT $bam \
     --FASTQ ${sample_id}_${flowcell}_R1_001.fastq.gz \
-    --SECOND_END_FASTQ ${sample_id}_${flowcell}_R2_001.fastq.gz \
+    ${second_end_fastq} \
     --INCLUDE_NON_PF_READS true \
     """
 }
