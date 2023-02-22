@@ -30,9 +30,9 @@ process HaplotypeCaller {
 }
 
 process HaplotypeCallerGVCF {
-    tag {"GATK HaplotypeCaller ${sample_id} - ${region}"}
+    tag {"GATK HaplotypeCallerGVCF ${sample_id} - ${region}"}
     label 'GATK_4_3_0_0'
-    label 'GATK_4_3_0_0_HaplotypeCaller'
+    label 'GATK_4_3_0_0_HaplotypeCallerGVCF'
     container = 'broadinstitute/gatk:4.3.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
