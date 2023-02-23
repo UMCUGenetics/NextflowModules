@@ -16,7 +16,7 @@ process MEM {
         def bwa_readgroup = "\"@RG\\tID:${rg_id}\\tSM:${sample_id}\\tPL:ILLUMINA\\tLB:${sample_id}\\tPU:${barcode}\""
         """
         bwa-mem2 mem $params.optional -t ${task.cpus} -R $bwa_readgroup $params.genome_fasta $fastq | \
-        samtools sort -@ $task.cpus > ${rg_id}.bam
+        samtools sort -T \$TMPDIR -@ $task.cpus > ${rg_id}.bam
         samtools index ${rg_id}.bam ${rg_id}.bai
         """
 }
