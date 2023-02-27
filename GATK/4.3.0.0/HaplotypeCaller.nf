@@ -1,5 +1,5 @@
 process HaplotypeCaller {
-    tag {"GATK HaplotypeCaller ${analysis_id} - ${region}"}
+    tag {"GATK HaplotypeCaller ${analysis_id} - ${interval_file.baseName}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_HaplotypeCaller'
     container = 'broadinstitute/gatk:4.3.0.0'
@@ -30,7 +30,7 @@ process HaplotypeCaller {
 }
 
 process HaplotypeCallerGVCF {
-    tag {"GATK HaplotypeCallerGVCF ${sample_id} - ${region}"}
+    tag {"GATK HaplotypeCallerGVCF ${analysis_id} - ${interval_file.baseName}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_HaplotypeCallerGVCF'
     container = 'broadinstitute/gatk:4.3.0.0'

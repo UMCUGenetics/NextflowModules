@@ -1,5 +1,5 @@
 process GenotypeGVCFs {
-    tag {"GATK GenotypeGVCFs ${analysis_id} - ${region}"}
+    tag {"GATK GenotypeGVCFs ${analysis_id}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_GenotypeGVCFs'
     container = 'broadinstitute/gatk:4.3.0.0'
