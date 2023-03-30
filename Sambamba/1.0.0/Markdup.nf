@@ -13,7 +13,7 @@ process Markdup {
 
     script:
         """
-        sambamba markdup -t ${task.cpus} --sort-buffer-size=${task.memory.toMega()-4096} --tmpdir=\$TMPDIR \
+        sambamba markdup -t ${task.cpus} --tmpdir=\$TMPDIR \
         ${bam_file} ${bam_file.baseName}.markdup.bam \
         2> ${bam_file.baseName}.markdup.txt
         """
@@ -35,7 +35,7 @@ process MarkdupMerge {
 
     script:
         """
-        sambamba markdup -t ${task.cpus} --sort-buffer-size=${task.memory.toMega()-4096} --tmpdir=\$TMPDIR \
+        sambamba markdup -t ${task.cpus} --tmpdir=\$TMPDIR \
         ${bam_files} ${sample_id}.markdup.bam \
         2> ${sample_id}.markdup.txt
         """
