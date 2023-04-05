@@ -13,8 +13,8 @@ process Filter {
     script:
         roi_slice = ""
         if( params.roi )
-            roi_slice = " -L $params.roi "
+            roi_slice = " $params.roi "
         """
-        sambamba view -h $roi_slice -t ${task.cpus} -f bam ${bam_file} -o  ${bam_file.simpleName}_roi.bam
+        sambamba view -t ${task.cpus} -f bam ${bam_file} $roi_slice -o  ${bam_file.simpleName}_roi.bam
         """
 }
