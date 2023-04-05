@@ -5,7 +5,7 @@ process LongshotPhase {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-        tuple(sample_id, path(bam_file), path(bai_files))        
+        tuple(sample_id, path(bam_file), path(bai_file))
     
     output:
         tuple (sample_id, path("${bam_file.simpleName}_phased.bam"), path("${bam_file.simpleName}_phased.vcf"))
