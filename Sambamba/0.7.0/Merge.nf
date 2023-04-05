@@ -6,7 +6,8 @@ process Merge {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_files), path(bai_files))
+        val(sample_id)
+        path(bam_files)
 
     output:
         tuple(sample_id, path("${sample_id}.bam"), path("${sample_id}.bam.bai"), emit: bam_file)
