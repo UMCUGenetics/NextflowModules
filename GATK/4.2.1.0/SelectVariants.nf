@@ -11,8 +11,8 @@ process SelectVariantsSample {
     output:
         tuple(
             sample_id,
-            path("${sample_id}_${vcf_file.baseName}${ext_vcf}"),
-            path("${sample_id}_${vcf_file.baseName}${ext_vcf}${ext_vcf_index}"),
+            path("${sample_id}_${vcf_file.simpleName}${ext_vcf}"),
+            path("${sample_id}_${vcf_file.simpleName}${ext_vcf}${ext_vcf_index}"),
             emit: vcf_file
         )
 
@@ -23,7 +23,7 @@ process SelectVariantsSample {
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" SelectVariants \
         --reference ${params.genome} \
         --variant ${vcf_file} \
-        --output ${sample_id}_${vcf_file.baseName}${ext_vcf} \
+        --output ${sample_id}_${vcf_file.simpleName}${ext_vcf} \
         --sample-name ${sample_id} \
         ${params.optional}
         """
