@@ -8,8 +8,8 @@ process Mosdepth {
         tuple(val(sample_id), path(bam_file), path(bai_file))
 
     output:
-        path("${sample_id}.mosdepth.*.txt", emit: txt_files)
-        path("${sample_id}*bed*", emit: bed_files, optional: true)
+        tuple(sample_id, path("${sample_id}.mosdepth.*.txt"), emit: txt_files)
+        tuple(sample_id, path("${sample_id}*bed*"), emit: bed_files, optional: true)
 
     script:
         """
