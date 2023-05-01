@@ -29,7 +29,7 @@ process CombineGVCFs {
 }
 
 process CombineGVCFsInterval {
-    tag {"GATK CombineGVCFs ${sample_id}"}
+    tag {"GATK CombineGVCFs ${analysis_id}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_CombineGVCFs'
     label 'GATK_4_3_0_0_CombineGVCFsInterval'
