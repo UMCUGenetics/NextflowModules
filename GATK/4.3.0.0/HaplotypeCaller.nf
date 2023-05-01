@@ -44,6 +44,7 @@ process HaplotypeCallerGVCF {
             val(analysis_id),
             path("${analysis_id}.${interval_file.baseName}.g.vcf"),
             path("${analysis_id}.${interval_file.baseName}.g.vcf.idx"),
+            path(interval_file)
             emit: vcf_file
         )
 
