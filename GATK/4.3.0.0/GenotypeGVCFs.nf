@@ -6,7 +6,7 @@ process GenotypeGVCFs {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(val(analysis_id), path(gvcf_files), path(gvcf_idx_files))
+        tuple(val(analysis_id), path(gvcf_files), path(gvcf_idx_files), path(interval_file))
 
     output:
         tuple(
@@ -24,6 +24,7 @@ process GenotypeGVCFs {
         --reference ${params.genome_fasta} \
         --variant ${input_files} \
         --output ${analysis_id}.vcf \
+        --intervals ${interval_file} \
         $params.optional
         """
 }
