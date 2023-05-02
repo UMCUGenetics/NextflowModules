@@ -6,13 +6,13 @@ process Subsample {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, val(faction), path(bam_file), path(bai_file))
+        tuple(sample_id, val(fraction), path(bam_file), path(bai_file))
 
     output:
         tuple(sample_id, path("${bam_file.baseName}.subsample.bam"), path("${bam_file.baseName}.subsample.bam.bai"), emit: subsample_bam_file)
 
     script:
         """
-        sambamba view -t ${task.cpus} -f bam -s ${faction} ${params.optional} ${bam_file} -o ${bam_file.baseName}.subsample.bam
+        sambamba view -t ${task.cpus} -f bam -s ${fraction} ${params.optional} ${bam_file} -o ${bam_file.baseName}.subsample.bam
         """
 }
