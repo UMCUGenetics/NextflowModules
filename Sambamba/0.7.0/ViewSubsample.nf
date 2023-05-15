@@ -9,7 +9,7 @@ process Subsample {
         tuple(sample_id, val(fraction), path(bam_file), path(bai_file))
 
     output:
-        tuple(sample_id, path("${bam_file.baseName}.subsample.bam"), path("${bam_file.baseName}.subsample.bam.bai"), emit: subsample_bam_file)
+        tuple(sample_id, path("${bam_file.baseName}.subsample.bam"), path("${bam_file.baseName}.subsample.bam.bai"), emit: bam_file)
 
     script:
         """
