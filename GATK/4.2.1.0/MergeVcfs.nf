@@ -13,11 +13,8 @@ process MergeVcfs {
 
     script:
         def input_files = vcf_files.collect{"$it"}.join(" --INPUT ")
-        ext_vcf = ".vcf"
-        ext_vcf_index = ".idx"
-        if( params.compress )
-            ext_vcf = ".vcf.gz"
-            ext_vcf_index = ".tbi"
+        ext_vcf = params.compress ? ".vcf.gz" : ".vcf"
+        ext_vcf_index = params.compress ? ".tbi" : ".idx"
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" MergeVcfs --INPUT ${input_files} --OUTPUT ${output_name}${ext_vcf}
         """
@@ -39,11 +36,8 @@ process MergeGvcfs {
 
     script:
         def input_files = vcf_files.collect{"$it"}.join(" --INPUT ")
-        ext_gvcf = ".g.vcf"
-        ext_gvcf_index = ".idx"
-        if( params.compress )
-            ext_gvcf = ".g.vcf.gz"
-            ext_gvcf_index = ".tbi"
+        ext_gvcf = params.compress ? ".g.vcf.gz" : ".g.vcf"
+        ext_gvcf_index = params.compress ? ".tbi" : ".idx"
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G" MergeVcfs --INPUT ${input_files} --OUTPUT ${output_name}${ext_gvcf}
         """
