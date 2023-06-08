@@ -2,7 +2,7 @@ process BWAMapping {
     tag {"BWA Mem ${sample_id} - ${rg_id}"}
     label 'BWA_0_7_17'
     label 'BWA_0_7_17_Mem'
-    container = 'library://sawibo/default/bioinf-tools:bwa-0.7.17_samtools-1.9'
+    container = 'library://library.sylabs.io/sawibo/default/bioinf-tools:bwa-0.7.17_samtools-1.9'
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
