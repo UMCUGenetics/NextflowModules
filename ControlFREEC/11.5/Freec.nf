@@ -2,8 +2,7 @@ process Freec {
     tag {"Control Freec ${sample_id}"}
     label 'ControlFreec_11_5'
     label 'ControlFreec_11_5_Freec'
-    //TODO: upload to singularity library
-    container = 'library://sawibo/default/bioinf-tools:freec11.5'
+    container = 'library://library.sylabs.io/sawibo/default/bioinf-tools:freec11.5'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
