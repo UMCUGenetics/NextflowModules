@@ -27,6 +27,7 @@ process VariantFiltration {
         -R $params.genome_fasta \
         -V $vcf \
         -O ${run_id}.${interval}.${type}.filtered_variants.vcf \
+        --tmp-dir \$TMPDIR \
         $filter_criteria
         """
 }

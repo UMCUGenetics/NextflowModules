@@ -14,7 +14,7 @@ process GenotypeGVCFs {
     script:
         def input_files = gvcf_files.collect{"$it"}.join(" -V ")
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T GenotypeGVCFs \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T GenotypeGVCFs \
         --reference_sequence ${params.genome} \
         -V ${input_files} \
         --out ${analysis_id}_${interval_file.baseName}.vcf \

@@ -19,6 +19,7 @@ process CollectMultipleMetrics {
     -I $bam \
     -O ${sample_id}.multiple_metrics\
     -R ${params.genome_fasta} \
+    --tmp-dir \$TMPDIR \
     ${params.optional}
     """
 }

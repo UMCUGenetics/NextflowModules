@@ -19,5 +19,6 @@ process GatherBaseRecalibrationTables {
         GatherBQSRReports \
         -I $tables \
         --output ${sample_id}.recal.table \
+        --tmp-dir \$TMPDIR
         """
 }

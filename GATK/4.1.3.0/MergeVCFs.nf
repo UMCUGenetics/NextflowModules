@@ -20,7 +20,8 @@ process MergeVCFs {
         gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$PWD" \
         SortVcf \
         --INPUT $vcfs \
-        --OUTPUT ${id}${ext}
+        --OUTPUT ${id}${ext} \
+        --tmp-dir \$TMPDIR
 
         bgzip ${id}${ext}
         tabix ${id}${ext}.gz

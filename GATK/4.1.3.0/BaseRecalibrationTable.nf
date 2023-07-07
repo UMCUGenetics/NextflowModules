@@ -23,7 +23,8 @@ process BaseRecalibrationTable {
         --output ${sample_id}.${int_tag}.recal.table \
         -R ${params.genome_fasta} \
         $known \
-        -L $interval_file
+        -L $interval_file \
+        --tmp-dir \$TMPDIR
         """
 }
 

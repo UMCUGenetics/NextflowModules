@@ -13,11 +13,12 @@ process SplitNCigarReads {
 
     script:
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}g" \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
         SplitNCigarReads --tmp-dir \$PWD \
         -R ${params.genome_fasta} \
         -I ${bam_file} \
         --refactor-cigar-string \
         -O ${sample_id}.split.bam
+        --tmp-dir \$TMPDIR
         """
 }

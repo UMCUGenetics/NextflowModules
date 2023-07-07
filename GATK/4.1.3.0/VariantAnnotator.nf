@@ -23,5 +23,6 @@ process VariantAnnotator {
         -V $vcf \
         --output ${vcf.baseName}_${db_name}.vcf \
         --dbsnp ${params.genome_variant_annotator_db} \
+        --tmp-dir \$TMPDIR
         """
 }
