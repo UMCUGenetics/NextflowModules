@@ -1,4 +1,3 @@
-
 process CollectWGSMetrics {
   tag {"GATK CollectWGSMetrics ${sample_id}"}
   label 'GATK_4_1_3_0'

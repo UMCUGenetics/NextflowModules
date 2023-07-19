@@ -1,4 +1,3 @@
-
 process CollectMultipleMetrics {
   tag {"GATK CollectMultipleMetrics ${sample_id}"}
   label 'GATK_4_1_3_0'

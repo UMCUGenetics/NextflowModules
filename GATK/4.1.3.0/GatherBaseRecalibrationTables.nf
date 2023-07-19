@@ -1,4 +1,3 @@
-
 process GatherBaseRecalibrationTables {
     tag {"GATK GatherBaseRecalibrationTables ${sample_id}"}
     label 'GATK_4_1_3_0'

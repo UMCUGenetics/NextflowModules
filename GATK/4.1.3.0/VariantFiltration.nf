@@ -1,4 +1,3 @@
-
 process VariantFiltration {
     tag {"GATK VariantFiltration ${run_id}.${interval}.${type}"}
     label 'GATK_4_1_3_0'

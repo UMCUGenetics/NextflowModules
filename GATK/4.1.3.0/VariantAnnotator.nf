@@ -1,4 +1,3 @@
-
 process VariantAnnotator {
     tag {"GATK VariantAnnotator ${run_id}"}
     label 'GATK_4_1_3_0'
