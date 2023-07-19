@@ -6,10 +6,15 @@ process VariantFiltrationSnpIndel {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(vcf_file), path(vcf_idx_file))
+        tuple(val(analysis_id), path(vcf_file), path(vcf_idx_file))
 
     output:
-        tuple(analysis_id, path("${vcf_file.simpleName}.filter${ext_vcf}"), path("${vcf_file.simpleName}.filter${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+        tuple(
+            val(analysis_id),
+            path("${vcf_file.simpleName}.filter${ext_vcf}"), 
+            path("${vcf_file.simpleName}.filter${ext_vcf}${ext_vcf_index}"), 
+            emit: vcf_file
+        )
 
     script:
         ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
@@ -44,5 +49,38 @@ process VariantFiltrationSnpIndel {
         --INPUT ${vcf_file.simpleName}.snp_filter${ext_vcf} \
         --INPUT ${vcf_file.simpleName}.indel_filter${ext_vcf} \
         --OUTPUT ${vcf_file.simpleName}.filter${ext_vcf}
+        """
+}
+
+
+process VariantFiltration {
+    tag {"GATK VariantFiltration ${identifier}"}
+    label 'GATK_4_2_1_0'
+    label 'GATK_4_2_1_0_VariantFiltration'
+    container = 'broadinstitute/gatk:4.2.1.0'
+    shell = ['/bin/bash', '-euo', 'pipefail']
+
+    input:
+        tuple(val(identifier), path(vcf_file), path(vcf_idx_file))
+
+    output:
+        tuple(
+            val(identifier), 
+            path("${output_prefix}${ext_vcf}"), 
+            path("${output_prefix}${ext_vcf}${ext_vcf_index}"), 
+            emit: vcf_file
+        )
+
+    script:
+        ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
+        ext_vcf_index = params.compress || vcf_file.getExtension() == ".gz" ? ".tbi" : ".idx"
+        output_prefix = params.output_prefix ? identifier + params.output_prefix : identifier + "_filter"
+        """
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" VariantFiltration \
+            --reference ${params.genome} \
+            --variant ${vcf_file} \
+            --output ${output_prefix}${ext_vcf} \
+            ${params.filter} \
+            ${params.optional}
         """
 }
