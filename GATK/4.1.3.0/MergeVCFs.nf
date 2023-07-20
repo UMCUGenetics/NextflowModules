@@ -21,7 +21,7 @@ process MergeVCFs {
         SortVcf \
         --INPUT $vcfs \
         --OUTPUT ${id}${ext} \
-        --tmp-dir \$TMPDIR
+        --TMP_DIR \$TMPDIR
 
         bgzip ${id}${ext}
         tabix ${id}${ext}.gz

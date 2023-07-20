@@ -18,7 +18,7 @@ process CollectWGSMetrics {
     -I $bam \
     -O ${sample_id}.wgs_metrics.txt \
     -R ${params.genome_fasta} \
-    --tmp-dir \$TMPDIR \
+    --TMP_DIR \$TMPDIR \
     ${params.optional}
     sed -i 's/picard\\.analysis\\.WgsMetrics/picard\\.analysis\\.CollectWgsMetrics\\\$WgsMetrics/' ${sample_id}.wgs_metrics.txt
     """

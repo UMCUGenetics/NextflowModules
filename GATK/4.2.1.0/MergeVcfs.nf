@@ -19,7 +19,7 @@ process MergeVcfs {
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" MergeVcfs \
         --INPUT ${input_files} \
         --OUTPUT ${output_name}${ext_vcf} \
-        --tmp-dir \$TMPDIR
+        --TMP_DIR \$TMPDIR
         """
 }
 
@@ -45,6 +45,6 @@ process MergeGvcfs {
         gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" MergeVcfs \
         --INPUT ${input_files} \
         --OUTPUT ${output_name}${ext_gvcf} \
-        --tmp-dir \$TMPDIR
+        --TMP_DIR \$TMPDIR
         """
 }

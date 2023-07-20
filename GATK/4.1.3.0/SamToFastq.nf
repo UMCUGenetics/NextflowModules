@@ -22,6 +22,6 @@ process SamToFastq {
         --FASTQ ${sample_id}_${flowcell}_R1_001.fastq.gz \
         --SECOND_END_FASTQ ${sample_id}_${flowcell}_R2_001.fastq.gz \
         --INCLUDE_NON_PF_READS true \
-        --tmp-dir \$TMPDIR
+        --TMP_DIR \$TMPDIR
         """
 }

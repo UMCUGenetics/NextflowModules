@@ -21,6 +21,6 @@ process SplitIntervals {
         ${params.optional} \
         --BREAK_BANDS_AT_MULTIPLES_OF $break_bands_at_multiples_of \
         -O . \
-        --tmp-dir \$TMPDIR
+        --TMP_DIR \$TMPDIR
         """
 }
