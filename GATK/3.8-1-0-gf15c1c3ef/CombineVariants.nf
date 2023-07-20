@@ -34,6 +34,10 @@ process CombineVariantsGVCF {
     script:
         def input_files = vcf_files.collect{"$it"}.join(" -V ")
         """
-        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T CombineVariants --reference_sequence ${params.genome} -V ${input_files} --out ${sample_id}.g.vcf ${params.optional}
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T CombineVariants \
+        --reference_sequence ${params.genome} \
+        -V ${input_files} \
+        --out ${sample_id}.g.vcf \
+        ${params.optional}
         """
 }
