@@ -19,6 +19,5 @@ process SplitNCigarReads {
         -I ${bam_file} \
         --refactor-cigar-string \
         -O ${sample_id}.split.bam
-        --tmp-dir \$TMPDIR
         """
 }
