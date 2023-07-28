@@ -6,7 +6,7 @@ process IndelRealigner {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(val(sample_id), path(bam_file), path(bai_file), chr, path(target_intervals))
+        tuple(val(sample_id), path(bam_file), path(bai_file), val(chr), path(target_intervals))
 
     output:
         tuple(val(sample_id), path("${bam_file.baseName}.realigned.${chr}.bam"), path("${bam_file.baseName}.realigned.${chr}.bai"), emit: bam_file)
