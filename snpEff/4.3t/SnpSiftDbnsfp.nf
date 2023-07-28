@@ -7,10 +7,10 @@ process SNPSiftDbnsfp {
     container = 'library://sawibo/default/bioinf-tools:snpeff-4.3t'
     shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-        tuple (run_id, path(vcf), path(vcfidx))
+        tuple(val(run_id), path(vcf), path(vcfidx))
 
     output:
-        tuple (run_id, path("${vcf.baseName}_dbnsfp.vcf"), path("${vcf.baseName}_dbnsfp.vcf.idx"), emit : snpsift_dbnsfp_vcfs)
+        tuple(val(run_id), path("${vcf.baseName}_dbnsfp.vcf"), path("${vcf.baseName}_dbnsfp.vcf.idx"), emit : snpsift_dbnsfp_vcfs)
 
     script:
         """

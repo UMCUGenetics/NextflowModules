@@ -6,10 +6,10 @@ process VariantFiltrationSnpIndel {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(vcf_file), path(vcf_idx_file))
+        tuple(val(analysis_id), path(vcf_file), path(vcf_idx_file))
 
     output:
-        tuple(analysis_id, path("${vcf_file.simpleName}.filter${ext_vcf}"), path("${vcf_file.simpleName}.filter${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
+        tuple(val(analysis_id), path("${vcf_file.simpleName}.filter${ext_vcf}"), path("${vcf_file.simpleName}.filter${ext_vcf}${ext_vcf_index}"), emit: vcf_file)
 
     script:
         ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"

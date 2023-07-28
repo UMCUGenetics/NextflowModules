@@ -9,10 +9,10 @@ process SamToFastq {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple (sample_id, flowcell, machine, run_nr, path(bam))
+        tuple(val(sample_id), val(flowcell), val(machine), val(run_nr), path(bam))
 
     output:
-        tuple (sample_id, flowcell, machine, run_nr, path("*.fastq.gz"), emit: converted_fastqs)
+        tuple(val(sample_id), val(flowcell), val(machine), val(run_nr), path("*.fastq.gz"), emit: converted_fastqs)
 
     script:
         """
