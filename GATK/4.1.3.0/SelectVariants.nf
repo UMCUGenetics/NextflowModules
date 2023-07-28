@@ -6,7 +6,7 @@ process SelectVariants {
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-        tuple(val(run_id), val(interval), path(vcf), path(vcfidx), type)
+        tuple(val(run_id), val(interval), path(vcf), path(vcfidx), val(type))
 
     output:
         tuple(val(run_id), val(interval), val(type), path("${run_id}.${interval}.${type}.tmp.vcf"), path("${run_id}.${interval}.${type}.tmp.vcf.idx"), emit: selected_vcfs)
