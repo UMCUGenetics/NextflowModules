@@ -21,11 +21,12 @@ process GenotypeGVCFs {
         ext_vcf = params.compress || gvcf_files.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
         ext_vcf_index = params.compress || gvcf_files.getExtension() == ".gz" ? ".tbi" : ".idx"
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" GenotypeGVCFs \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" GenotypeGVCFs \
         --reference ${params.genome} \
         --variant $input_files \
         --output ${analysis_id}_${interval_file.simpleName}${ext_vcf} \
         --intervals ${interval_file} \
+        --tmp-dir \$TMPDIR \
         ${params.optional}
         """
 }
@@ -53,11 +54,12 @@ process GenotypeGVCF {
         ext_vcf = params.compress || gvcf_files.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
         ext_vcf_index = params.compress || gvcf_files.getExtension() == ".gz" ? ".tbi" : ".idx"
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" GenotypeGVCFs \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" GenotypeGVCFs \
         --reference ${params.genome} \
         --variant $input_files \
         --output ${sample_id}_${interval_file.simpleName}${ext_vcf} \
         --intervals ${interval_file} \
+        --tmp-dir \$TMPDIR \
         ${params.optional}
         """
 }

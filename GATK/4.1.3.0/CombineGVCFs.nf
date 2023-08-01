@@ -19,6 +19,7 @@ process CombineGVCFs {
         -R ${params.genome_fasta} \
         -V $vcfs \
         -O ${run_id}.${interval}.g.vcf \
-        -L $interval_file
+        -L $interval_file \
+        --tmp-dir \$TMPDIR
         """
 }

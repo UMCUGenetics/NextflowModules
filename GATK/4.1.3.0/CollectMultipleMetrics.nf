@@ -1,4 +1,3 @@
-
 process CollectMultipleMetrics {
   tag {"GATK CollectMultipleMetrics ${sample_id}"}
   label 'GATK_4_1_3_0'
@@ -19,6 +18,7 @@ process CollectMultipleMetrics {
     -I $bam \
     -O ${sample_id}.multiple_metrics\
     -R ${params.genome_fasta} \
+    --TMP_DIR \$TMPDIR \
     ${params.optional}
     """
 }

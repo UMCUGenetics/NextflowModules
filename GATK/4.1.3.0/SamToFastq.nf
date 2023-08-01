@@ -1,4 +1,3 @@
-
 process SamToFastq {
     tag {"GATK SamToFastq ${sample_id} "}
     label 'GATK_4_1_3_0'
@@ -23,5 +22,6 @@ process SamToFastq {
         --FASTQ ${sample_id}_${flowcell}_R1_001.fastq.gz \
         --SECOND_END_FASTQ ${sample_id}_${flowcell}_R2_001.fastq.gz \
         --INCLUDE_NON_PF_READS true \
+        --TMP_DIR \$TMPDIR
         """
 }

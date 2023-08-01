@@ -13,6 +13,10 @@ process EstimateLibraryComplexity {
 
     script:
         """
-        picard -Xmx${task.memory.toGiga()-4}G EstimateLibraryComplexity TMP_DIR=\$TMPDIR INPUT=${bam_file} OUTPUT=${sample_id}.LibraryComplexity.txt ${params.optional}
+        picard -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR EstimateLibraryComplexity \
+        TMP_DIR=\$TMPDIR \
+        INPUT=${bam_file} \
+        OUTPUT=${sample_id}.LibraryComplexity.txt \
+        ${params.optional}
         """
 }

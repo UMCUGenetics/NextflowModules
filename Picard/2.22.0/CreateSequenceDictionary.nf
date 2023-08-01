@@ -13,6 +13,8 @@ process CreateSequenceDictionary  {
 
     script:
         """
-        picard -Xmx${task.memory.toGiga()-4}G CreateSequenceDictionary REFERENCE=${genome_fasta} OUTPUT=${genome_fasta.baseName}.dict
+        picard -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR CreateSequenceDictionary \
+        REFERENCE=${genome_fasta} \
+        OUTPUT=${genome_fasta.baseName}.dict
         """
 }
