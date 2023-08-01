@@ -20,11 +20,12 @@ process SelectVariantsSample {
         ext_vcf = params.compress || vcf_file.getExtension() == ".gz" ? ".vcf.gz" : ".vcf"
         ext_vcf_index = params.compress || vcf_file.getExtension() == ".gz" ? ".tbi" : ".idx"
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" SelectVariants \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" SelectVariants \
         --reference ${params.genome} \
         --variant ${vcf_file} \
         --output ${sample_id}_${vcf_file.simpleName}${ext_vcf} \
         --sample-name ${sample_id} \
+        --tmp-dir \$TMPDIR \
         ${params.optional}
         """
 }
