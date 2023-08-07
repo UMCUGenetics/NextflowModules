@@ -13,7 +13,8 @@ process IntervalListTools {
 
     script:
         """
-        picard -Xmx${task.memory.toGiga()-4}G IntervalListTools TMP_DIR=\$TMPDIR \
+        picard -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR IntervalListTools \
+        TMP_DIR=\$TMPDIR \
         INPUT=${interval_list} OUTPUT=. \
         SUBDIVISION_MODE=BALANCING_WITHOUT_INTERVAL_SUBDIVISION_WITH_OVERFLOW \
         SCATTER_COUNT=${params.scatter_count} \

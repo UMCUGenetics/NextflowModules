@@ -13,6 +13,10 @@ process SelectVariantsSample {
 
     script:
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T SelectVariants --reference_sequence ${params.genome} -V ${vcf_file} --out ${sample_id}_${vcf_file.baseName}.vcf -sn ${sample_id}
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T SelectVariants \
+        --reference_sequence ${params.genome} \
+        -V ${vcf_file} \
+        --out ${sample_id}_${vcf_file.baseName}.vcf \
+        -sn ${sample_id}
         """
 }

@@ -17,9 +17,10 @@ process SplitIntervals {
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\${TMPDIR}" \
         IntervalListTools \
-            -I ${scatter_interval_list} \
-            ${params.optional} \
-          --BREAK_BANDS_AT_MULTIPLES_OF $break_bands_at_multiples_of \
-            -O .
+        -I ${scatter_interval_list} \
+        ${params.optional} \
+        --BREAK_BANDS_AT_MULTIPLES_OF $break_bands_at_multiples_of \
+        -O . \
+        --TMP_DIR \$TMPDIR
         """
 }
