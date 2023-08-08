@@ -13,6 +13,10 @@ process CollectWgsMetrics {
 
     script:
         """
-        picard -Xmx${task.memory.toGiga()-4}G CollectWgsMetrics TMP_DIR=\$TMPDIR R=${params.genome} INPUT=${bam_file} OUTPUT=${sample_id}.wgs_metrics.txt ${params.optional}
+        picard -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR CollectWgsMetrics \
+        TMP_DIR=\$TMPDIR R=${params.genome} \
+        INPUT=${bam_file} \
+        OUTPUT=${sample_id}.wgs_metrics.txt \
+        ${params.optional}
         """
 }

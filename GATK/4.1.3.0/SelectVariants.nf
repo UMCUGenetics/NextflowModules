@@ -19,6 +19,7 @@ process SelectVariants {
         -R ${params.genome_fasta} \
         -V $vcf \
         -O ${run_id}.${interval}.${type}.tmp.vcf \
-        $select_type
+        $select_type \
+        --tmp-dir \$TMPDIR
         """
 }

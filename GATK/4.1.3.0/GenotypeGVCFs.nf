@@ -19,6 +19,7 @@ process GenotypeGVCFs {
         -O ${run_id}.${interval}.vcf \
         -R ${params.genome_fasta} \
         -D ${params.genome_dbsnp} \
-        -L $interval_file
+        -L $interval_file \
+        --tmp-dir \$TMPDIR
         """
 }

@@ -1,4 +1,3 @@
-
 process GatherBaseRecalibrationTables {
     tag {"GATK GatherBaseRecalibrationTables ${sample_id}"}
     label 'GATK_4_1_3_0'
@@ -19,5 +18,6 @@ process GatherBaseRecalibrationTables {
         GatherBQSRReports \
         -I $tables \
         --output ${sample_id}.recal.table \
+        --tmp-dir \$TMPDIR
         """
 }

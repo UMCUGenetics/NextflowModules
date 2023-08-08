@@ -13,7 +13,7 @@ process RealignerTargetCreator {
 
     script:
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T RealignerTargetCreator \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar $params.gatk_path -T RealignerTargetCreator \
         --reference_sequence ${params.genome} \
         --input_file ${bam_file} \
         --intervals ${chr} \

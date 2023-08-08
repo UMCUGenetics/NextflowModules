@@ -1,5 +1,3 @@
-
-
 process BaseRecalibration {
     tag {"GATK BaseRecalibration ${sample_id}.${int_tag}"}
     label 'GATK_4_1_3_0'
@@ -16,13 +14,14 @@ process BaseRecalibration {
     script:
         int_tag = interval_file.toRealPath().toString().split("/")[-2]
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR"\
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
         ApplyBQSR \
         --input $bam \
         --output ${sample_id}.${int_tag}_recalibrated.bam \
         -R ${params.genome_fasta} \
         --create-output-bam-index true \
         --bqsr-recal-file ${recal_table} \
-        -L $interval_file
+        -L $interval_file \
+        --tmp-dir \$TMPDIR
         """
 }

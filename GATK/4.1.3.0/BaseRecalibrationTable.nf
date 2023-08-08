@@ -1,4 +1,3 @@
-
 process BaseRecalibrationTable {
     tag {"GATK BaseRecalibrationTable ${sample_id}.${int_tag}"}
     label 'GATK_4_1_3_0'
@@ -23,7 +22,8 @@ process BaseRecalibrationTable {
         --output ${sample_id}.${int_tag}.recal.table \
         -R ${params.genome_fasta} \
         $known \
-        -L $interval_file
+        -L $interval_file \
+        --tmp-dir \$TMPDIR
         """
 }
 

@@ -13,7 +13,7 @@ process IndelRealigner {
 
     script:
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T IndelRealigner \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T IndelRealigner \
         --reference_sequence ${params.genome} \
         --input_file ${bam_file} \
         --intervals ${chr} \

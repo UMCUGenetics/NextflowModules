@@ -1,4 +1,3 @@
-
 process CollectWGSMetrics {
   tag {"GATK CollectWGSMetrics ${sample_id}"}
   label 'GATK_4_1_3_0'
@@ -19,6 +18,7 @@ process CollectWGSMetrics {
     -I $bam \
     -O ${sample_id}.wgs_metrics.txt \
     -R ${params.genome_fasta} \
+    --TMP_DIR \$TMPDIR \
     ${params.optional}
     sed -i 's/picard\\.analysis\\.WgsMetrics/picard\\.analysis\\.CollectWgsMetrics\\\$WgsMetrics/' ${sample_id}.wgs_metrics.txt
     """

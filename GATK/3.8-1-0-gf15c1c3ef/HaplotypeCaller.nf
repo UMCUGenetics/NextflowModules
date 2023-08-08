@@ -14,7 +14,7 @@ process HaplotypeCaller {
     script:
         def input_files = bam_files.collect{"$it"}.join(" --input_file ")
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T HaplotypeCaller \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T HaplotypeCaller \
         --reference_sequence ${params.genome} \
         --input_file ${input_files} \
         --intervals ${interval_file} \
@@ -38,7 +38,7 @@ process HaplotypeCallerGVCF {
 
     script:
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T HaplotypeCaller \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T HaplotypeCaller \
         --reference_sequence ${params.genome} \
         --input_file ${bam_file} \
         --intervals ${interval_file} \
