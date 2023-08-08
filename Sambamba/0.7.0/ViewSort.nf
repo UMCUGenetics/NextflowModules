@@ -6,10 +6,10 @@ process ViewSort {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, rg_id, path(sam_file))
+        tuple(val(sample_id), val(rg_id), path(sam_file))
 
     output:
-        tuple(sample_id, rg_id, path("${sam_file.baseName}.sort.bam"), path("${sam_file.baseName}.sort.bam.bai"), emit: bam_file)
+        tuple(val(sample_id), val(rg_id), path("${sam_file.baseName}.sort.bam"), path("${sam_file.baseName}.sort.bam.bai"), emit: bam_file)
 
     script:
         """
