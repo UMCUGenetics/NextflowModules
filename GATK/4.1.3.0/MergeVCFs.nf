@@ -17,8 +17,7 @@ process MergeVCFs {
         vcfs = vcf_chunks.join(' -INPUT ')
 
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-        SortVcf \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" SortVcf \
         --INPUT $vcfs \
         --OUTPUT ${id}${ext} \
         --TMP_DIR \$TMPDIR

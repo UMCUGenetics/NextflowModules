@@ -5,6 +5,7 @@ process VariantAnnotator {
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
+
     input:
         tuple(val(run_id), path(vcf), path(vcfidx))
 
@@ -16,8 +17,7 @@ process VariantAnnotator {
         db_name = db_file.replaceFirst(~/\.[^\.]+$/, '')
 
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-        VariantAnnotator \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" VariantAnnotator \
         -R ${params.genome_fasta} \
         -V $vcf \
         --output ${vcf.baseName}_${db_name}.vcf \

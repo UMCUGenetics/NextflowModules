@@ -5,6 +5,7 @@ process BaseRecalibration {
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
+
     input:
         tuple(val(sample_id), file(bam), path(bai),path(recal_table), path(interval_file))
 
@@ -14,8 +15,7 @@ process BaseRecalibration {
     script:
         int_tag = interval_file.toRealPath().toString().split("/")[-2]
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-        ApplyBQSR \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" ApplyBQSR \
         --input $bam \
         --output ${sample_id}.${int_tag}_recalibrated.bam \
         -R ${params.genome_fasta} \

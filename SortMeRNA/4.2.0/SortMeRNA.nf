@@ -1,5 +1,5 @@
 process SortMeRNA {
-    tag {"SortMeRNA ${sample_id} - ${rg_id}"}
+    tag {"SortMeRNA ${sample_id}"}
     label 'SortMeRNA_4_2_0'
     container = 'quay.io/biocontainers/sortmerna:4.2.0--0'
     shell = ['/bin/bash', '-euo', 'pipefail']
@@ -8,18 +8,17 @@ process SortMeRNA {
         tuple(val(sample_id), val(rg_id), path(fastq_files))
         path(db_fasta)
 
-
     output:
         tuple(val(sample_id), val(rg_id), path("*_non_rRNA.fastq.gz"), emit: non_rRNA_fastqs)
         path("*_filtered_rRNA.fastq.gz", emit: rRNA_fastqs)
         path("*_rRNA_report.txt", emit: qc_report)
 
     script:
-        def Refs =  db_fasta.collect{ "$it" }.join(" -ref ")
+        def refs =  db_fasta.collect{ "$it" }.join(" -ref ")
         def report_title = fastq_files[0].simpleName.split("_R1_")[0]
         if (params.single_end) {
             """
-            sortmerna -ref ${Refs} \
+            sortmerna -ref ${refs} \
                 -reads ${fastq_files} \
                 --num_alignments 1 \
                 --threads ${task.cpus} \
@@ -36,7 +35,7 @@ process SortMeRNA {
             """
         } else {
             """
-            sortmerna -ref ${Refs} \
+            sortmerna -ref ${refs} \
                 -reads ${fastq_files[0]} -reads ${fastq_files[1]} \
                 --num_alignments 1 \
                 --threads ${task.cpus} \
