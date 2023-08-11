@@ -6,18 +6,18 @@ process FilterVcfs {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(val(sample_id), path(bam_file), path(bai_file), path(vcf_files), path(vcf_index), val(ploidy))
+        tuple(val(sample_id), path(bam_file), path(bai_file), path(vcf_file), path(vcf_index), val(ploidy))
         
     output:
-        tuple (val(sample_id), path(bam_file), path(bai_file), "${sample_id}_snv.vcf", ploidy)              
+        tuple (val(sample_id), path(bam_file), path(bai_file), "${vcf_file.simpleName}_snv.vcf", ploidy)
         
     script:
-        def input_files = vcf_files.collect{"$it"}.join(" --V ")
+        //def input_files = vcf_files.collect{"$it"}.join(" --V ")
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" SelectVariants \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" SelectVariants \
             --reference $params.genome \
-            -V ${input_files} \
+            -V ${vcf_file} \
             --select-type-to-include $params.filter \
-            -O ${sample_id}_snv.vcf
+            -O ${vcf_file.simpleName}_snv.vcf
         """
 }

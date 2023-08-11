@@ -13,8 +13,8 @@ process HaplotypeCaller_SMN {
             val(sample_id),
             path(bam_file),
             path(bai_file),
-            path("${bam_file.simpleName}${ext_vcf}"),
-            path("${bam_file.simpleName}${ext_vcf}${ext_vcf_index}"),
+            path("${bam_file.simpleName}${params.extention}${ext_vcf}"),
+            path("${bam_file.simpleName}${params.extention}${ext_vcf}${ext_vcf_index}"),
             val(ploidy),
             emit: vcf_file
         )
@@ -25,10 +25,10 @@ process HaplotypeCaller_SMN {
         ext_vcf = params.compress ? ".vcf.gz" : ".vcf"
         ext_vcf_index = params.compress ? ".tbi" : ".idx"
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" HaplotypeCaller \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" HaplotypeCaller \
         --reference ${params.genome} \
         --input ${input_file} \
-        --output ${sample_id}${ext_vcf} \
+        --output ${sample_id}${params.extention}${ext_vcf} \
         --ploidy $ploidy \
         ${params.optional}
         """
@@ -58,7 +58,7 @@ process HaplotypeCaller {
         ext_vcf = params.compress ? ".vcf.gz" : ".vcf"
         ext_vcf_index = params.compress ? ".tbi" : ".idx"
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" HaplotypeCaller \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" HaplotypeCaller \
         --reference ${params.genome} \
         --input ${input_files} \
         --intervals ${interval_file} \
@@ -91,7 +91,7 @@ process HaplotypeCallerGVCF {
         ext_gvcf = params.compress ? ".g.vcf.gz" : ".g.vcf"
         ext_gvcf_index = params.compress ? ".tbi" : ".idx"
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" HaplotypeCaller \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" HaplotypeCaller \
         --reference ${params.genome} \
         --input ${bam_file} \
         --intervals ${interval_file} \

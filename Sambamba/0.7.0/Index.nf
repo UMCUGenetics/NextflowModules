@@ -1,16 +1,15 @@
 process Index {
-  tag {"Sambamba Index ${sample_id}"}
+  tag {"Sambamba Index ${bam_fil}"}
   label 'Sambamba_0_7_0'
   label 'Sambamba_0_7_0_Index'
   container = 'quay.io/biocontainers/sambamba:0.7.0--h89e63da_1'
   shell = ['/bin/bash', '-euo', 'pipefail']
 
   input:
-      val(sample_id)
       path(bam_file)
 
   output:
-      tuple(sample_id, path(bam_file), path("${bam_file}.bai"), emit: bai_file)
+      tuple(path(bam_file), path("${bam_file}.bai"), emit: bai_file)
 
   script:
       """
