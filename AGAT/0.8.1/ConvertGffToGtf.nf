@@ -3,7 +3,6 @@ process ConvertGffToGtf {
     label 'AGAT_0_8_1'
     label 'AGAT_0_8_1_ConvertGffToGtf'
     container = 'quay.io/biocontainers/agat:0.8.1--pl5262hdfd78af_0'
-
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
