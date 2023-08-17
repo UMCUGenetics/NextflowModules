@@ -1,5 +1,5 @@
 process Index {
-  tag {"Sambamba Index ${bam_fil}"}
+  tag {"Sambamba Index ${bam_file}"}
   label 'Sambamba_0_7_0'
   label 'Sambamba_0_7_0_Index'
   container = 'quay.io/biocontainers/sambamba:0.7.0--h89e63da_1'
