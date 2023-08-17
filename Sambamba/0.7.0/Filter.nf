@@ -5,7 +5,7 @@ process Filter_ROI {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(path(bam_file))
+        path(bam_file)
 
     output:
         tuple(path("${bam_file.simpleName}_roi.bam"), path("${bam_file.simpleName}_roi.bam.bai"))
