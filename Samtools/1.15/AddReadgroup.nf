@@ -13,9 +13,8 @@ process AddReadgroup {
         path("${bam_file.baseName}_rg.bam", emit: bam_rg_file)
 
     script:
-        //read_group = '@RG\tID:${sample_id}\tSM:{sample_id}'
         readgroup = "\"@RG\\tID:${bam_file.simpleName}\\tSM:${sample_id}\\tPL:ONT\\tLB:${sample_id}\""
         """
-        samtools addreplacerg -r $readgroup ${bam_file} -o ${bam_file.baseName}_rg.bam --output-fmt BAM 
+        samtools addreplacerg -w -r $readgroup ${bam_file} -o ${bam_file.baseName}_rg.bam --output-fmt BAM 
         """
 }
