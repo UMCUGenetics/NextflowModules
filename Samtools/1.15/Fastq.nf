@@ -6,7 +6,7 @@ process Fastq {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(path(bam_file), path(bai_file))
+        path(bam_file)
 
     output:
         path("${bam_file.baseName}.fastq")
