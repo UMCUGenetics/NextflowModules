@@ -1,14 +1,14 @@
 process LongshotPhase {
-    tag {"LongshotPhase ${sample_id}"}
+    tag {"LongshotPhase ${bam_file}"}
     label 'LongshotPhase_0_4_1'
     container = 'quay.io/biocontainers/longshot:0.4.1--hc4ca7c3_2'
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-        tuple(sample_id, path(bam_file), path(bai_file))
+        tuple(path(bam_file), path(bai_file))
     
     output:
-        tuple (sample_id, path("${bam_file.simpleName}_phased.bam"), path("${bam_file.simpleName}_phased.vcf"))
+        tuple (path("${bam_file.simpleName}_phased.bam"), path("${bam_file.simpleName}_phased.vcf"))
 
     script:
         """
