@@ -1,13 +1,13 @@
 process FilterPairs {
-    tag {"duplex_tools FilterPairs ${sample_id}"}
-    label 'duplex_tools'
-    label 'duplex_tools_FilterPairs'
+    tag {"Duplex_Tools FilterPairs ${bam_file}"}
+    label 'Duplex_Tools'
+    label 'Duplex_Tools_FilterPairs'
     container = 'quay.io/biocontainers/duplex-tools:0.2.17--pyh7cba7a3_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
         path(read_pairs)
-        tuple(val(sample_id), path(bam_file), path(bai_file))
+        tuple(path(bam_file), path(bai_file))
 
     output:
         path("duplex_reads.txt")
