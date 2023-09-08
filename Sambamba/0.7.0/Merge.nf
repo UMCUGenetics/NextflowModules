@@ -10,7 +10,7 @@ process Merge {
         path(bam_files)
 
     output:
-        tuple(sample_id, path("${sample_id}.bam"), path("${sample_id}.bam.bai"), emit: bam_file)
+        tuple(path("${sample_id}.bam"), path("${sample_id}.bam.bai"), emit: bam_file)
 
     script:
         def bam_files_input =  bam_files.collect{ "$it" }.join(" ")
