@@ -1,12 +1,12 @@
 process FilterSamReads {
-    tag {"PICARD FilterSamReads ${sample_id}"}
+    tag {"PICARD FilterSamReads ${bam_file}"}
     label 'PICARD_2_26_4'
     label 'PICARD_2_26_4_FilterSamReads'
     container = 'quay.io/biocontainers/picard:2.26.4--hdfd78af_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file))
+        tuple(path(bam_file), path(bai_file))
         path(duplex_reads)
 
     output:
