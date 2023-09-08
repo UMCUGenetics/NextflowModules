@@ -7,7 +7,7 @@ process AddReadgroup {
 
     input:
         val(sample_id)
-        path(bam_file)
+        tuple(path(bam_file), path(bai_file))
 
     output:
         path("${bam_file.baseName}_rg.bam", emit: bam_rg_file)
