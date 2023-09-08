@@ -9,7 +9,7 @@ process ViewSort {
         tuple(sample_id, rg_id, path(sam_file))
 
     output:
-        tuple(sample_id, path("${sam_file.simpleName}.sort.bam"), path("${sam_file.simpleName}.sort.bam.bai"), emit: bam_file)
+        tuple(path("${sam_file.simpleName}.sort.bam"), path("${sam_file.simpleName}.sort.bam.bai"), emit: bam_file)
 
     script:
         """
