@@ -26,7 +26,7 @@ process Filter_Condition {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(path(bam_file))
+        tuple(path(bam_file), path(bai_file))
 
     output:
         tuple(path("${bam_file.simpleName}_condition.bam"), path("${bam_file.simpleName}_condition.bam.bai"))
