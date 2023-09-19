@@ -6,7 +6,7 @@ process Haplotag {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(val(sample_id), path(bam_file), path(bai_file), path(vcf_file), path(vcf_index), ploidy)
+        tuple(val(sample_id), path(bam_file), path(bai_file), ploidy, path(vcf_file), path(vcf_index))
 
     output:
         path("${bam_file.simpleName}_tagged${params.extention}.bam")
