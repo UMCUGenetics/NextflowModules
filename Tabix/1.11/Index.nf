@@ -6,10 +6,10 @@ process Zip_Index {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(val(sample_id), path(vcf_file), val(ploidy))
+        tuple(val(sample_id), path(vcf_file))
 
     output:
-        tuple(val(sample_id), path("${vcf_file}.gz"), path("${vcf_file}.gz.tbi"), val(ploidy))
+        tuple(val(sample_id), path("${vcf_file}.gz"), path("${vcf_file}.gz.tbi"))
 
     script:
         """
