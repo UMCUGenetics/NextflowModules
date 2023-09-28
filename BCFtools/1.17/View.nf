@@ -7,13 +7,14 @@ process View_bcf_vcf {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple sample_id, file(bcf_file)
+        tuple(val(sample_id), file(input_file))
 
     output:
-        tuple sample_id, file("${bcf_file.baseName}.vcf")
+        tuple(val(sample_id), file("${input_file.baseName}.${extension}"))
 
     script:
+        extension = input_file.getExtension() == "vcf" ? "bcf" : "vcf"
         """
-        bcftools view ${params.optional} ${bcf_file} > ${bcf_file.baseName}.vcf
+        bcftools view ${params.optional} ${input_file} > ${input_file.baseName}.${extension}
         """
 }

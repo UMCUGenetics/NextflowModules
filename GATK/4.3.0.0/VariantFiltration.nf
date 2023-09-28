@@ -2,7 +2,6 @@ process VariantFiltration {
     tag {"GATK VariantFiltration ${run_id}.${interval}.${type}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_VariantFiltration'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'broadinstitute/gatk:4.3.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -10,7 +9,14 @@ process VariantFiltration {
         tuple(val(run_id), val(interval), val(type), path(vcf), path(vcftbi))
 
     output:
-        tuple(val(run_id), val(interval), val(type), path("${run_id}.${interval}.${type}.filtered_variants.${ext_vcf}"), path("${run_id}.${interval}.${type}.filtered_variants.${ext_index}"), emit: filtered_vcfs)
+        tuple(
+            val(run_id),
+            val(interval),
+            val(type),
+            path("${run_id}.${interval}.${type}.filtered_variants.${ext_vcf}"),
+            path("${run_id}.${interval}.${type}.filtered_variants.${ext_index}"),
+            emit: filtered_vcfs
+        )
 
     script:
         if (type == 'SNP'){
@@ -20,8 +26,8 @@ process VariantFiltration {
         } else {
            filter_criteria = params.gatk_indel_filter
         }
-        ext_vcf = params.compress || vcf.getExtension() == ".gz" ? "vcf.gz" : "vcf"
-        ext_index = params.compress || vcf.getExtension() == ".gz" ? "vcf.gz.tbi" : "vcf.idx"
+        ext_vcf = params.compress || vcf.getExtension() == "gz" ? "vcf.gz" : "vcf"
+        ext_index = params.compress || vcf.getExtension() == "gz" ? "vcf.gz.tbi" : "vcf.idx"
 
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" VariantFiltration \

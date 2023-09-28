@@ -2,7 +2,6 @@ process BaseRecalibration {
     tag {"GATK BaseRecalibration ${sample_id}.${int_tag}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_BaseRecalibration'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'broadinstitute/gatk:4.3.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -10,7 +9,14 @@ process BaseRecalibration {
         tuple(val(sample_id), file(bam), path(bai),path(recal_table), path(interval_file))
 
     output:
-        tuple(val(sample_id), val(int_tag), path("${sample_id}.${int_tag}_recalibrated.bam"), path("${sample_id}.${int_tag}_recalibrated.bai"), path(interval_file), emit: recalibrated_bams)
+        tuple(
+            val(sample_id),
+            val(int_tag),
+            path("${sample_id}.${int_tag}_recalibrated.bam"),
+            path("${sample_id}.${int_tag}_recalibrated.bai"),
+            path(interval_file),
+            emit: recalibrated_bams
+        )
 
     script:
         int_tag = interval_file.toRealPath().toString().split("/")[-2]

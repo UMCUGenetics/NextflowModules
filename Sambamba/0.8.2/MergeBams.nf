@@ -2,7 +2,6 @@ process MergeBams {
     tag {"Sambamba MergeBams ${sample_id}"}
     label 'Sambamba_0_8_2'
     label 'Sambamba_0_8_2_MergeBams'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'quay.io/biocontainers/sambamba:0.8.2--h98b6b92_2'
     shell = ['/bin/bash', '-euo', 'pipefail']
 

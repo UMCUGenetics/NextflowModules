@@ -2,7 +2,6 @@ process CollectMultipleMetrics {
     tag {"GATK CollectMultipleMetrics ${sample_id}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_CollectMultipleMetrics'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'broadinstitute/gatk:4.3.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -15,7 +14,7 @@ process CollectMultipleMetrics {
     script:
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" CollectMultipleMetrics \
-        --tmp-dir \$TMPDIR \
+        --TMP_DIR \$TMPDIR \
         -I $bam \
         -O ${sample_id}.multiple_metrics\
         -R ${params.genome_fasta} \

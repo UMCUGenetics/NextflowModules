@@ -10,11 +10,18 @@ process GenotypeGVCFs {
         tuple(val(run_id), val(interval), path(gvcf), path(gvcftbi), path(interval_file))
 
     output:
-        tuple(val(run_id), val(interval), path("${run_id}.${interval}.${ext_vcf}"),path("${run_id}.${interval}.${ext_index}"),path(interval_file), emit : genotyped_vcfs)
+        tuple(
+            val(run_id),
+            val(interval),
+            path("${run_id}.${interval}.${ext_vcf}"),
+            path("${run_id}.${interval}.${ext_index}"),
+            path(interval_file),
+            emit : genotyped_vcfs
+        )
 
     script:
-        ext_vcf = params.compress || gvcf.getExtension() == ".gz" ? "vcf.gz" : "vcf"
-        ext_index = params.compress || gvcf.getExtension() == ".gz" ? "vcf.gz.tbi" : "vcf.idx"
+        ext_vcf = params.compress || gvcf.getExtension() == "gz" ? "vcf.gz" : "vcf"
+        ext_index = params.compress || gvcf.getExtension() == "gz" ? "vcf.gz.tbi" : "vcf.idx"
         db = params.genome_dbsnp ? "-D ${params.genome_dbsnp}" : ""
 
         """

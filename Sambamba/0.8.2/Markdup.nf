@@ -9,11 +9,11 @@ process Markdup {
         tuple(val(sample_id), val(rg_id), path(bam_file), path(bai_file))
 
     output:
-        tuple(val(sample_id), val(rg_id), path("${bam_file.baseName}.markdup.bam"), path("${bam_file.baseName}.markdup.bam.bai"), emit: bam_file)
+        tuple(val(sample_id), val(rg_id), path("${sample_id}.markdup.bam"), path("${sample_id}.markdup.bam.bai"), emit: bam_file)
 
     script:
         """
-        sambamba markdup -t ${task.cpus} ${bam_file} ${bam_file.baseName}.markdup.bam
+        sambamba markdup -t ${task.cpus} ${bam_file} ${sample_id}.markdup.bam
         """
 }
 

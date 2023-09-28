@@ -2,7 +2,6 @@ process BaseRecalibrationTable {
     tag {"GATK BaseRecalibrationTable ${sample_id}.${int_tag}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_BaseRecalibrationTable'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'broadinstitute/gatk:4.3.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 

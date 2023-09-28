@@ -2,7 +2,6 @@ process HaplotypeCaller {
     tag {"GATK HaplotypeCaller ${sample_id}.${int_tag}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_HaplotypeCaller'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'broadinstitute/gatk:4.3.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -10,7 +9,14 @@ process HaplotypeCaller {
         tuple(val(sample_id), path(bam), path(bai), path(interval_file))
 
     output:
-        tuple(val(sample_id), val(int_tag) ,path("${sample_id}.${int_tag}.${ext_vcf}"), path("${sample_id}.${int_tag}.${ext_index}"), path(interval_file), emit: htcaller_vcfs)
+        tuple(
+            val(sample_id),
+            val(int_tag),
+            path("${sample_id}.${int_tag}.${ext_vcf}"),
+            path("${sample_id}.${int_tag}.${ext_index}"),
+            path(interval_file),
+            emit: htcaller_vcfs
+        )
 
     script:
         int_tag = interval_file.toRealPath().toString().split("/")[-2]

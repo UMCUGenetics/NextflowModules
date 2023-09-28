@@ -9,7 +9,7 @@ process AddOrReplaceReadGroups {
         tuple(val(sample_id), path(bam_file), path(bai_file))
 
     output:
-        tuple(val(sample_id), val(sample_id), path("${sample_id}.RG.bam"), path("${sample_id}.RG.bai"), emit: readgroup_bams)
+        tuple(val(sample_id), path("${sample_id}.RG.bam"), path("${sample_id}.RG.bai"), emit: readgroup_bams)
 
     script:
 	//check if custom settings have been specified, otherwise use defaults

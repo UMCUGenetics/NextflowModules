@@ -2,7 +2,6 @@ process Deseq2Normalize {
     tag "deseq2normalize ${run_id}"
     label 'biconductor_1_28_0'
     label 'biconductor_1_28_0_deseq2normalize'
-    
     container = 'quay.io/biocontainers/bioconductor-deseq2:1.28.0--r40h5f743cb_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 

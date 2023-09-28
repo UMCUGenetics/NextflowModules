@@ -2,7 +2,6 @@ process CollectWGSMetrics {
     tag {"GATK CollectWGSMetrics ${sample_id}"}
     label 'GATK_4_3_0_0'
     label 'GATK_4_3_0_0_CollectWGSMetrics'
-    clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'broadinstitute/gatk:4.3.0.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
@@ -15,7 +14,7 @@ process CollectWGSMetrics {
     script:
         """
         gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" CollectWgsMetrics \
-        --tmp-dir \$TMPDIR \
+        --TMP_DIR \$TMPDIR \
         -I $bam \
         -O ${sample_id}.wgs_metrics.txt \
         -R ${params.genome_fasta} \
