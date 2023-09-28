@@ -5,6 +5,7 @@ process GenotypeGVCFs {
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
+
     input:
         tuple(val(run_id), val(interval), path(gvcf), path(gvcfidx), path(interval_file))
 
@@ -13,8 +14,7 @@ process GenotypeGVCFs {
 
     script:
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-        GenotypeGVCFs \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" GenotypeGVCFs \
         -V $gvcf \
         -O ${run_id}.${interval}.vcf \
         -R ${params.genome_fasta} \

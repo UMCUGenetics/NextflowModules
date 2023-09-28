@@ -1,5 +1,5 @@
 process SortMeRNA {
-    tag {"SortMeRNA ${sample_id} - ${rg_id}"}
+    tag {"SortMeRNA ${sample_id}"}
     label 'SortMeRNA_4_3_3'
     container = 'quay.io/biocontainers/sortmerna:4.3.3--h9ee0642_0'
     shell = ['/bin/bash', '-euo', 'pipefail']

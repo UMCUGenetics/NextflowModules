@@ -16,6 +16,7 @@ process MarkdownToPdf {
         """
         pandoc ${md_file} \
             --variable urlcolor=blue \
+            --variable linkcolor=blue \
             -s \
             --toc \
             -f markdown \

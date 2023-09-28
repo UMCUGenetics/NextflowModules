@@ -10,15 +10,12 @@ process AlignReads {
         path(star_genome_index)
         path(genome_gtf)
 
-
     output:
         tuple(val(sample_id), val(rg_id), path("${sample_id}_Aligned.sortedByCoord.out.bam"), emit: bam_file)
         path("*Log.final.out", emit: final_log)
         path("*Log.out", emit: log)
         path("*SJ.out.tab", emit: sj_table)
         path("*Unmapped*", optional: true, emit: fastqs_unaligned)
-
-
 
     script:
         def barcode = rg_id.split('_')[1]
@@ -34,5 +31,7 @@ process AlignReads {
             --outSAMtype BAM SortedByCoordinate \
             --runThreadN ${task.cpus} \
             --outSAMattrRGline ID:${sample_id} LB:${sample_id} PL:IllUMINA PU:${barcode} SM:${sample_id}
+
+        for f in *_Unmapped.*; do gzip \${f}; done
         """
 }

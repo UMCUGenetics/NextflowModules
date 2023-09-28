@@ -7,13 +7,13 @@ process View_bcf_vcf {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-    tuple(val(sample_id), file(bcf_file))
+        tuple(val(sample_id), file(bcf_file))
 
     output:
-    tuple(val(sample_id), file("${bcf_file.baseName}.vcf"))
+        tuple(val(sample_id), file("${bcf_file.baseName}.vcf"))
 
     script:
-    """
-    bcftools view ${params.optional} ${bcf_file} > ${bcf_file.baseName}.vcf
-    """
+        """
+        bcftools view ${params.optional} ${bcf_file} > ${bcf_file.baseName}.vcf
+        """
 }

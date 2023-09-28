@@ -17,7 +17,7 @@ def flowcellLaneFromFastq(path) {
     def fields = line.split(' ')[0].split(':')
     String machine
     int run_nr
-    String fcid
+    String fcid = line.split(' ')[0].replaceAll("[./*@,?]", "_")
     int lane
 
     if (fields.size() == 7 || fields.size() == 8) {

@@ -5,6 +5,7 @@ process VariantFiltration {
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
+
     input:
         tuple(val(run_id), val(interval), val(type), path(vcf), path(vcfidx))
 
@@ -19,9 +20,9 @@ process VariantFiltration {
         } else {
            filter_criteria = "--filter-expression 'QD < 2.0' --filter-expression 'ReadPosRankSum < -20.0' --filter-expression 'FS > 200.0' --filter-name 'INDEL_LowQualityDepth' --filter-name 'INDEL_ReadPosRankSumLow' --filter-name 'INDEL_StrandBias'"
         }
+
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-        VariantFiltration \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" VariantFiltration \
         ${params.optional} \
         -R $params.genome_fasta \
         -V $vcf \

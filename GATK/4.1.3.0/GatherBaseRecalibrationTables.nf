@@ -5,6 +5,7 @@ process GatherBaseRecalibrationTables {
     clusterOptions = workflow.profile == "sge" ? "-l h_vmem=${params.mem}" : ""
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
+
     input:
         tuple(val(sample_id), path(bqsr_tables))
 
@@ -13,9 +14,9 @@ process GatherBaseRecalibrationTables {
 
     script:
         tables = bqsr_tables.join(' -I ')
+
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" \
-        GatherBQSRReports \
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR" GatherBQSRReports \
         -I $tables \
         --output ${sample_id}.recal.table \
         --tmp-dir \$TMPDIR
