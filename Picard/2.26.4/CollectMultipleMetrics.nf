@@ -1,7 +1,7 @@
 process CollectMultipleMetrics {
     tag {"PICARD CollectMultipleMetrics ${sample_id}"}
-    label 'PICARD_2_22_0'
-    label 'PICARD_2_22_0_CollectMultipleMetrics'
+    label 'PICARD_2_26_4'
+    label 'PICARD_2_26_4_CollectMultipleMetrics'
     container = 'quay.io/biocontainers/picard:2.26.4--hdfd78af_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
