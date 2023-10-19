@@ -6,11 +6,10 @@ process Merge {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        val(sample_id)
-        path(bam_files)
+        tuple(val(sample_id), path(bam_files), path(bai_files))
 
     output:
-        tuple(path("${sample_id}.bam"), path("${sample_id}.bam.bai"), emit: bam_file)
+        tuple(val(sample_id), path("${sample_id}.bam"), path("${sample_id}.bam.bai"), emit: bam_file)
 
     script:
         def bam_files_input =  bam_files.collect{ "$it" }.join(" ")

@@ -4,10 +4,10 @@ process MergeFastqLanes {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, rg_id, path(fastqs))
+        tuple(val(sample_id), val(rg_id), path(fastqs))
 
     output:
-        tuple(sample_id, rg_id, path("${sample_id}_${barcode}_merged_*.fastq.gz"), emit: fastqs_merged)
+        tuple(val(sample_id), val(rg_id), path("${sample_id}_${barcode}_merged_*.fastq.gz"), emit: fastqs_merged)
 
 
     script:
@@ -18,10 +18,10 @@ process MergeFastqLanes {
             """
             cat \$( ls ${R1_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R1_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R1.fastq.gz
             """
-        } else { 
+        } else {
             """
             cat \$( ls ${R1_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R1_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R1.fastq.gz
-            cat \$( ls ${R2_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R2_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R2.fastq.gz 
+            cat \$( ls ${R2_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R2_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R2.fastq.gz
             """
         }
 }

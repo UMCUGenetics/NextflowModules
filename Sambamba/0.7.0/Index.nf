@@ -6,10 +6,10 @@ process Index {
   shell = ['/bin/bash', '-euo', 'pipefail']
 
   input:
-      path(bam_file)
+      tuple(val(sample_id), path(bam_file))
 
   output:
-      tuple(path(bam_file), path("${bam_file}.bai"), emit: bai_file)
+      tuple(val(sample_id), path("${bam_file}.bai"), emit: bai_file)
 
   script:
       """

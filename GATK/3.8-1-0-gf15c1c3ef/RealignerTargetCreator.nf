@@ -6,14 +6,14 @@ process RealignerTargetCreator {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file), chr)
+        tuple(val(sample_id), path(bam_file), path(bai_file), val(chr))
 
     output:
-        tuple(sample_id, chr, path("${bam_file.baseName}.target_intervals.${chr}.list"), emit: interval_list)
+        tuple(val(sample_id), val(chr), path("${bam_file.baseName}.target_intervals.${chr}.list"), emit: interval_list)
 
     script:
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T RealignerTargetCreator \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar $params.gatk_path -T RealignerTargetCreator \
         --reference_sequence ${params.genome} \
         --input_file ${bam_file} \
         --intervals ${chr} \

@@ -34,7 +34,6 @@ process HaplotypeCaller_SMN {
         """
 }
 
-
 process HaplotypeCaller {
     tag {"GATK HaplotypeCaller ${analysis_id} - ${interval_file.baseName}"}
     label 'GATK_4_2_1_0'
@@ -43,7 +42,7 @@ process HaplotypeCaller {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(bam_files), path(bai_files), path(interval_file))
+        tuple(val(analysis_id), path(bam_files), path(bai_files), path(interval_file))
 
     output:
         tuple(
@@ -63,6 +62,7 @@ process HaplotypeCaller {
         --input ${input_files} \
         --intervals ${interval_file} \
         --output ${analysis_id}.${interval_file.simpleName}${ext_vcf} \
+        --tmp-dir \$TMPDIR \
         ${params.optional}
         """
 }
@@ -76,7 +76,7 @@ process HaplotypeCallerGVCF {
     params.emit_ref_confidence = 'GVCF'
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file), path(interval_file))
+        tuple(val(sample_id), path(bam_file), path(bai_file), path(interval_file))
 
     output:
         tuple(
@@ -97,7 +97,7 @@ process HaplotypeCallerGVCF {
         --intervals ${interval_file} \
         --output ${sample_id}_${interval_file.simpleName}${ext_gvcf} \
         --emit-ref-confidence ${params.emit_ref_confidence} \
+        --tmp-dir \$TMPDIR \
         ${params.optional}
         """
 }
-

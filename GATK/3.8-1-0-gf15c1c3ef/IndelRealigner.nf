@@ -6,14 +6,14 @@ process IndelRealigner {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file), chr, path(target_intervals))
+        tuple(val(sample_id), path(bam_file), path(bai_file), val(chr), path(target_intervals))
 
     output:
-        tuple(sample_id, path("${bam_file.baseName}.realigned.${chr}.bam"), path("${bam_file.baseName}.realigned.${chr}.bai"), emit: bam_file)
+        tuple(val(sample_id), path("${bam_file.baseName}.realigned.${chr}.bam"), path("${bam_file.baseName}.realigned.${chr}.bai"), emit: bam_file)
 
     script:
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T IndelRealigner \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T IndelRealigner \
         --reference_sequence ${params.genome} \
         --input_file ${bam_file} \
         --intervals ${chr} \

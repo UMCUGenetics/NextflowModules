@@ -6,14 +6,14 @@ process BaseRecalibrator {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file), chr)
+        tuple(val(sample_id), path(bam_file), path(bai_file), val(chr))
 
     output:
-        tuple(sample_id, path("${bam_file.baseName}.bqsr.${chr}.bam"), path("${bam_file.baseName}.bqsr.${chr}.bai"), emit: bam_file)
+        tuple(val(sample_id), path("${bam_file.baseName}.bqsr.${chr}.bam"), path("${bam_file.baseName}.bqsr.${chr}.bai"), emit: bam_file)
 
     script:
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar $params.gatk_path -T BaseRecalibrator \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar $params.gatk_path -T BaseRecalibrator \
         --num_cpu_threads_per_data_thread ${task.cpus} \
         --reference_sequence ${params.genome} \
         --input_file ${bam_file} \
@@ -21,7 +21,7 @@ process BaseRecalibrator {
         --out ${bam_file.baseName}.bqsr.${chr}.table \
         ${params.optional_bqsr}
 
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T PrintReads \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T PrintReads \
         --num_cpu_threads_per_data_thread ${task.cpus} \
         --reference_sequence ${params.genome} \
         --input_file ${bam_file} \

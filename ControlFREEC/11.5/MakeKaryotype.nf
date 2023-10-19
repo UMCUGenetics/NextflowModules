@@ -2,14 +2,14 @@ process MakeKaryotype {
     tag {"Control Freec MakeKaryotype ${sample_id}"}
     label 'ControlFreec_11_5'
     label 'ControlFreec_11_5_MakeKaryotype'
-    container = 'library://sawibo/default/bioinf-tools:freec11.5'
+    container = 'library://library.sylabs.io/sawibo/default/bioinf-tools:freec11.5'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(ratio_file), path(cnv_file))
+        tuple(val(sample_id), path(ratio_file), path(cnv_file))
 
     output:
-        tuple(sample_id, path("*_karyotype.pdf"), emit: karyotype_pdf)
+        tuple(val(sample_id), path("*_karyotype.pdf"), emit: karyotype_pdf)
 
     script:
         """

@@ -6,19 +6,29 @@ process VariantFiltrationSnpIndel {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(vcf_file), path(vcf_idx_file))
+        tuple(val(analysis_id), path(vcf_file), path(vcf_idx_file))
 
     output:
-        tuple(analysis_id, path("${vcf_file.baseName}.filter.vcf"), path("${vcf_file.baseName}.filter.vcf.idx"), emit: vcf_file)
+        tuple(val(analysis_id), path("${vcf_file.baseName}.filter.vcf"), path("${vcf_file.baseName}.filter.vcf.idx"), emit: vcf_file)
 
     script:
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T SelectVariants --reference_sequence ${params.genome} -V $vcf_file --out ${vcf_file.baseName}.snp.vcf --selectTypeToExclude INDEL
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T SelectVariants --reference_sequence ${params.genome} -V $vcf_file --out ${vcf_file.baseName}.indel.vcf --selectTypeToInclude INDEL
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T SelectVariants \
+        --reference_sequence ${params.genome} -V $vcf_file --out ${vcf_file.baseName}.snp.vcf --selectTypeToExclude INDEL
 
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T VariantFiltration --reference_sequence ${params.genome} -V ${vcf_file.baseName}.snp.vcf --out ${vcf_file.baseName}.snp_filter.vcf ${params.snp_filter} ${params.snp_cluster}
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T VariantFiltration --reference_sequence ${params.genome} -V ${vcf_file.baseName}.indel.vcf --out ${vcf_file.baseName}.indel_filter.vcf ${params.indel_filter}
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T SelectVariants \
+        --reference_sequence ${params.genome} -V $vcf_file --out ${vcf_file.baseName}.indel.vcf --selectTypeToInclude INDEL
 
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T CombineVariants --reference_sequence ${params.genome} -V ${vcf_file.baseName}.snp_filter.vcf -V ${vcf_file.baseName}.indel_filter.vcf --out ${vcf_file.baseName}.filter.vcf --assumeIdenticalSamples
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T VariantFiltration \
+        --reference_sequence ${params.genome} -V ${vcf_file.baseName}.snp.vcf --out ${vcf_file.baseName}.snp_filter.vcf \
+        ${params.snp_filter} ${params.snp_cluster}
+        
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T VariantFiltration \
+        --reference_sequence ${params.genome} -V ${vcf_file.baseName}.indel.vcf --out ${vcf_file.baseName}.indel_filter.vcf \
+        ${params.indel_filter}
+
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T CombineVariants \
+        --reference_sequence ${params.genome} -V ${vcf_file.baseName}.snp_filter.vcf -V ${vcf_file.baseName}.indel_filter.vcf \
+        --out ${vcf_file.baseName}.filter.vcf --assumeIdenticalSamples
         """
 }

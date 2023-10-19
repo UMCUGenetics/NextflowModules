@@ -6,15 +6,19 @@ process CombineVariants {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(vcf_files), path(vcf_idx_files))
+        tuple(val(analysis_id), path(vcf_files), path(vcf_idx_files))
 
     output:
-        tuple(analysis_id, path("${analysis_id}.vcf"), path("${analysis_id}.vcf.idx"), emit:vcf_file)
+        tuple(val(analysis_id), path("${analysis_id}.vcf"), path("${analysis_id}.vcf.idx"), emit:vcf_file)
 
     script:
         def input_files = vcf_files.collect{"$it"}.join(" -V ")
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T CombineVariants --reference_sequence ${params.genome} -V ${input_files} --out ${analysis_id}.vcf ${params.optional}
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T CombineVariants \
+        --reference_sequence ${params.genome} \
+        -V ${input_files} \
+        --out ${analysis_id}.vcf \
+        ${params.optional}
         """
 }
 
@@ -26,14 +30,18 @@ process CombineVariantsGVCF {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(vcf_files), path(vcf_idx_files))
+        tuple(val(sample_id), path(vcf_files), path(vcf_idx_files))
 
     output:
-        tuple(sample_id, path("${sample_id}.g.vcf"), path("${sample_id}.g.vcf.idx"), emit:vcf_file)
+        tuple(val(sample_id), path("${sample_id}.g.vcf"), path("${sample_id}.g.vcf.idx"), emit:vcf_file)
 
     script:
         def input_files = vcf_files.collect{"$it"}.join(" -V ")
         """
-        java -Xmx${task.memory.toGiga()-4}G -jar ${params.gatk_path} -T CombineVariants --reference_sequence ${params.genome} -V ${input_files} --out ${sample_id}.g.vcf ${params.optional}
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -jar ${params.gatk_path} -T CombineVariants \
+        --reference_sequence ${params.genome} \
+        -V ${input_files} \
+        --out ${sample_id}.g.vcf \
+        ${params.optional}
         """
 }
