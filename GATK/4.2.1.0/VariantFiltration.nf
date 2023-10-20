@@ -48,6 +48,6 @@ process VariantFiltrationSnpIndel {
         --INPUT ${vcf_file.simpleName}.snp_filter${ext_vcf} \
         --INPUT ${vcf_file.simpleName}.indel_filter${ext_vcf} \
         --OUTPUT ${vcf_file.simpleName}.filter${ext_vcf} \
-        --tmp-dir \$TMPDIR
+        --TMP_DIR \$TMPDIR
         """
 }
