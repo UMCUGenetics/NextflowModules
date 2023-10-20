@@ -8,7 +8,7 @@ process Mapping {
         path(fastq)
 
     output:
-        tuple (val(fastq.simpleName), val(fastq.simpleName), path("${fastq.simpleName}.sam"), emit: mapped_sams)
+        tuple (val(fastq.simpleName), path("${fastq.simpleName}.sam"), emit: mapped_sams)
 
     script:
         def fastq_id = fastq.simpleName
