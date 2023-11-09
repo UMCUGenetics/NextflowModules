@@ -1,4 +1,4 @@
-process Filter_ROI {
+process FilterROI {
     tag {"Sambamba Filter_ROI ${bam_file}"}
     label 'Sambamba_1_0_0_Filter_ROI'
     container = 'quay.io/biocontainers/sambamba:1.0--h98b6b92_0'
@@ -19,7 +19,7 @@ process Filter_ROI {
         """
 }
 
-process Filter_Condition {
+process FilterCondition {
     tag {"Sambamba Filter Condition ${bam_file}"}
     label 'Sambamba_1_0_0_Filter_Condition'
     container = 'quay.io/biocontainers/sambamba:1.0--h98b6b92_0'
@@ -36,3 +36,22 @@ process Filter_Condition {
         sambamba view -t ${task.cpus} -f bam -F "${params.conditions}" ${bam_file} -o  ${bam_file.simpleName}_condition.bam
         """
 }
+
+process FilterHaplotype {
+    tag {"Sambamba Filter Haplotype ${bam_file} ${hp}"}
+    label 'Sambamba_1_0_0_Filter_Haplotype'
+    container = 'quay.io/biocontainers/sambamba:1.0--h98b6b92_0'
+    shell = ['/bin/bash', '-euo', 'pipefail']
+
+    input:
+        tuple(path(bam_file), path(bai_file), val(hp))
+
+    output:
+        tuple(path("${bam_file.simpleName}_hap${hp}.bam"), path("${bam_file.simpleName}_hap${hp}.bam.bai"))
+
+    script:
+        """
+        sambamba view -t ${task.cpus} -f bam -F "[HP] == ${hp}" ${bam_file} -o  ${bam_file.simpleName}_hap${hp}.bam
+        """
+}
+
