@@ -54,4 +54,3 @@ process FilterHaplotype {
         sambamba view -t ${task.cpus} -f bam -F "[HP] == ${hp}" ${bam_file} -o  ${bam_file.simpleName}_hap${hp}.bam
         """
 }
-
