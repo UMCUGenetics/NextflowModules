@@ -1,4 +1,4 @@
-process Zip_Index {
+process ZipIndex {
     tag {"Tabix_Zip_Index ${sample_id}"}
     label 'Tabix_Zip_Index'
     label 'Tabix_1_11_Zip_Index'
