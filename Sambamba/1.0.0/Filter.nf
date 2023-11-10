@@ -51,6 +51,6 @@ process FilterHaplotypePhaseset {
 
     script:
         """
-        sambamba view -t ${task.cpus} -f bam -F "[HP] == ${hp} and [PS] == ${ps}" ${bam_file} -o  ${bam_file.simpleName}_hap${hp}.bam
+        sambamba view -t ${task.cpus} -f bam -F "[HP] == ${hp} and [PS] == ${ps}" ${bam_file} -o  ${bam_file.simpleName}_hap${hp}_ps${ps}.bam
         """
 }
