@@ -37,20 +37,20 @@ process FilterCondition {
         """
 }
 
-process FilterHaplotype {
+process FilterHaplotypePhaseset {
     tag {"Sambamba Filter Haplotype ${bam_file} ${hp}"}
     label 'Sambamba_1_0_0_Filter_Haplotype'
     container = 'quay.io/biocontainers/sambamba:1.0--h98b6b92_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(path(bam_file), path(bai_file), val(hp))
+        tuple(path(bam_file), path(bai_file), val(hp), val(ps))
 
     output:
         tuple(path("${bam_file.simpleName}_hap${hp}.bam"), path("${bam_file.simpleName}_hap${hp}.bam.bai"))
 
     script:
         """
-        sambamba view -t ${task.cpus} -f bam -F "[HP] == ${hp}" ${bam_file} -o  ${bam_file.simpleName}_hap${hp}.bam
+        sambamba view -t ${task.cpus} -f bam -F "[HP] == ${hp} and [PS] == ${ps}" ${bam_file} -o  ${bam_file.simpleName}_hap${hp}.bam
         """
 }
