@@ -47,7 +47,7 @@ process FilterHaplotypePhaseset {
         tuple(path(bam_file), path(bai_file), val(hp), val(ps))
 
     output:
-        tuple(path("${bam_file.simpleName}_hap${hp}.bam"), path("${bam_file.simpleName}_hap${hp}.bam.bai"))
+        tuple(path("${bam_file.simpleName}_hap${hp}_ps${ps}.bam"), path("${bam_file.simpleName}_hap${hp}_ps${ps}.bam.bai"))
 
     script:
         """
