@@ -5,14 +5,11 @@ process VariantCaller {
     container = 'quay.io/biocontainers/clair3:1.0.4--py39hf5e1c6e_3'
     shell = ['/bin/bash', '-euo', 'pipefail']
 
-    publishDir "clair3/", saveAs: { filename -> "${bam_file.baseName}.vcf.gz" }, mode: 'copy', pattern: 'merge_output.vcf.gz'
-    publishDir "clair3/", saveAs: { filename -> "${bam_file.baseName}.vcf.gz.tbi" }, mode: 'copy', pattern: 'merge_output.vcf.gz.tbi'
-
     input:
         tuple(path(bam_file), path(bai_file))
 
     output:
-        path("*")
+        tuple(path("${bam_file.baseName}.vcf.gz"), path( "${bam_file.baseName}.vcf.gz.tbi"))
 
     script:
         """
@@ -24,5 +21,7 @@ process VariantCaller {
             --sample_name=${bam_file.baseName} \
             --threads=${task.cpus} \
             ${params.optional}
+        mv merge_output.vcf.gz ${bam_file.baseName}.vcf.gz
+        mv merge_output.vcf.gz.tbi ${bam_file.baseName}.vcf.gz.tbi
         """
 }
