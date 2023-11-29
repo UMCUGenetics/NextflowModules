@@ -16,7 +16,7 @@ process MergeVcfs {
         ext_vcf = params.compress ? ".vcf.gz" : ".vcf"
         ext_vcf_index = params.compress ? ".tbi" : ".idx"
         """
-        gatk --java-options "-Xmx${task.memory.toGiga()-4}G" MergeVcfs --INPUT ${input_files} --OUTPUT ${output_name}${ext_vcf}
+        gatk --java-options "-Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR" MergeVcfs \
         --INPUT ${input_files} \
         --OUTPUT ${output_name}${ext_vcf} \
         --TMP_DIR \$TMPDIR
