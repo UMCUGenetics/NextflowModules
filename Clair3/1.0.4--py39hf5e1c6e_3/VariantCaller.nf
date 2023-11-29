@@ -22,6 +22,12 @@ process VariantCaller {
             --threads=${task.cpus} \
             ${params.optional}
         mv merge_output.vcf.gz ${bam_file.baseName}.vcf.gz
-        mv merge_output.vcf.gz.tbi ${bam_file.baseName}.vcf.gz.tbi
+        if test -f "merge_output.vcf.gz.tbi";
+        then
+            mv merge_output.vcf.gz.tbi ${bam_file.baseName}.vcf.gz.tbi
+        else
+            touch ${bam_file.baseName}.vcf.gz.tbi
+        fi
+
         """
 }
