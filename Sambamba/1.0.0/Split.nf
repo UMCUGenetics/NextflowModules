@@ -6,10 +6,12 @@ process Split {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file))
+        tuple(val(sample_id), path(bam_file), path(bai_file))
 
     output:
-        tuple(sample_id, path("${bam_file.simpleName}_hap1.bam"), path("${bam_file.simpleName}_hap1.bam.bai"), path("${bam_file.simpleName}_hap2.bam"), path("${bam_file.simpleName}_hap2.bam.bai"),path("${bam_file.simpleName}_nohap.bam"), path("${bam_file.simpleName}_nohap.bam.bai"))
+        tuple(val(sample_id), path("${bam_file.simpleName}_hap1.bam"), path("${bam_file.simpleName}_hap1.bam.bai"), emit hap1_bam)
+        tuple(val(sample_id), path("${bam_file.simpleName}_hap2.bam"), path("${bam_file.simpleName}_hap2.bam.bai"), emit hap2_bam)
+        tuple(val(sample_id), path("${bam_file.simpleName}_nohap.bam"), path("${bam_file.simpleName}_nohap.bam.bai")), emit no_hap)
 
     script:
         """
