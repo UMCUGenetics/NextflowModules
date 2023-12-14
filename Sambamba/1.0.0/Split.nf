@@ -11,7 +11,7 @@ process Split {
     output:
         tuple(val(sample_id), path("${bam_file.simpleName}_hap1.bam"), path("${bam_file.simpleName}_hap1.bam.bai"), emit hap1_bam)
         tuple(val(sample_id), path("${bam_file.simpleName}_hap2.bam"), path("${bam_file.simpleName}_hap2.bam.bai"), emit hap2_bam)
-        tuple(val(sample_id), path("${bam_file.simpleName}_nohap.bam"), path("${bam_file.simpleName}_nohap.bam.bai")), emit no_hap)
+        tuple(val(sample_id), path("${bam_file.simpleName}_nohap.bam"), path("${bam_file.simpleName}_nohap.bam.bai")), emit nohap_bam)
 
     script:
         """
