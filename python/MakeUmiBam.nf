@@ -9,7 +9,7 @@ process MakeUMIBam {
         tuple (val(sample_id), val(flowcell), val(machine), val(run_nr), path(fastq))
 
     output:
-        tuple (sample_id, flowcell, machine, run_nr, path("${sample_id}.u.grouped.bam"), emit: umi_bams)
+        tuple (val(sample_id), val(flowcell), val(machine), val(run_nr), path("${sample_id}.u.grouped.bam"), emit: umi_bams)
 
 
     script:

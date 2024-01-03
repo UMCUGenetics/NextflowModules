@@ -6,7 +6,7 @@ process MergeVcfs {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(output_name, path(vcf_files), path(vcf_idx_files))
+        tuple(val(output_name), path(vcf_files), path(vcf_idx_files))
 
     output:
         tuple(output_name, path("${output_name}${ext_vcf}"), path("${output_name}${ext_vcf}${ext_vcf_index}"), emit:vcf_file)

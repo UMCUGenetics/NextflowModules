@@ -9,7 +9,7 @@ process CallMolecularConsensusReads {
         tuple (val(sample_id), val(flowcell), val(machine), val(run_nr), path(bam))
 
     output:
-        tuple (sample_id, flowcell, machine, run_nr, path("${sample_id}.u.consensus.bam"), emit : consensus_bams)
+        tuple (val(sample_id), val(flowcell), val(machine), val(run_nr), path("${sample_id}.u.consensus.bam"), emit : consensus_bams)
 
     script:
         """

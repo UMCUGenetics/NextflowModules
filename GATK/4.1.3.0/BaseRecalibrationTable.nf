@@ -9,7 +9,7 @@ process BaseRecalibrationTable {
         tuple (val(sample_id), path(bam), path(bai), path(interval_file))
 
     output:
-        tuple (sample_id, path("${sample_id}.${int_tag}.recal.table"), emit: recalibration_tables)
+        tuple (val(sample_id), path("${sample_id}.${int_tag}.recal.table"), emit: recalibration_tables)
 
     script:
         known = params.genome_known_sites ? '--known-sites ' + params.genome_known_sites.join(' --known-sites ') : ''

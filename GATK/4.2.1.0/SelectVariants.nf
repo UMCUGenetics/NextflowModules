@@ -10,7 +10,7 @@ process SelectVariantsSample {
 
     output:
         tuple(
-            sample_id,
+            val(sample_id),
             path("${sample_id}_${vcf_file.simpleName}${ext_vcf}"),
             path("${sample_id}_${vcf_file.simpleName}${ext_vcf}${ext_vcf_index}"),
             emit: vcf_file

@@ -10,7 +10,7 @@ process GenotypeGVCFs {
 
     output:
         tuple(
-            analysis_id,
+            val(analysis_id),
             path("${analysis_id}_${interval_file.simpleName}${ext_vcf}"),
             path("${analysis_id}_${interval_file.simpleName}${ext_vcf}${ext_vcf_index}"),
             emit:vcf_file

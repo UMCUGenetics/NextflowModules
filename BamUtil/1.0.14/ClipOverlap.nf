@@ -9,7 +9,7 @@ process ClipOverlap {
     tuple val(sample_id), val(rg_id), file(bam_file), file(bai_file)
 
     output:
-    tuple sample_id, rg_id, file("${bam_file.baseName}.clipped.bam")
+    tuple val(sample_id), val(rg_id), file("${bam_file.baseName}.clipped.bam")
 
     script:
     """

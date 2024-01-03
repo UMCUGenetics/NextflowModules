@@ -9,7 +9,7 @@ process Manta {
         tuple (val(sample_id), path(bam_file), path(bai_file))
 
     output:
-        tuple (sample_id, path("*.candidateSmallIndels.*"),path("*.candidateSV.*"),path("*.diploidSV.*"), emit: sv )
+        tuple (val(sample_id), path("*.candidateSmallIndels.*"),path("*.candidateSV.*"),path("*.diploidSV.*"), emit: sv )
 
     script:
         """
