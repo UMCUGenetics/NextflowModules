@@ -12,7 +12,7 @@ process AlignReads {
      
 
     output:
-        tuple(sample_id, rg_id, path("${sample_id}_Aligned.sortedByCoord.out.bam"), emit: bam_file)
+        tuple(val(sample_id), val(rg_id), path("${sample_id}_Aligned.sortedByCoord.out.bam"), emit: bam_file)
         path("*Log.final.out", emit: final_log)
         path("*Log.out", emit: log)
         path("*SJ.out.tab", emit: sj_table)

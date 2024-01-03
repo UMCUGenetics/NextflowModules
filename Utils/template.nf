@@ -10,7 +10,7 @@ process Command {
         tuple(val(sample_id), path(input_file))
      
     output:
-        tuple(sample_id, path(output_file), emit: output_file)
+        tuple(val(sample_id), path(output_file), emit: output_file)
         path("log.txt", emit: log)
 
     script:

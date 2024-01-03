@@ -9,7 +9,7 @@ process RealignerTargetCreator {
         tuple(val(sample_id), path(bam_file), path(bai_file), chr)
 
     output:
-        tuple(sample_id, chr, path("${bam_file.baseName}.target_intervals.${chr}.list"), emit: interval_list)
+        tuple(val(sample_id), val(chr), path("${bam_file.baseName}.target_intervals.${chr}.list"), emit: interval_list)
 
     script:
         """
