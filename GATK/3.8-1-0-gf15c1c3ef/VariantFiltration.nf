@@ -6,10 +6,10 @@ process VariantFiltrationSnpIndel {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(vcf_file), path(vcf_idx_file))
+        tuple(val(analysis_id), path(vcf_file), path(vcf_idx_file))
 
     output:
-        tuple(analysis_id, path("${vcf_file.baseName}.filter.vcf"), path("${vcf_file.baseName}.filter.vcf.idx"), emit: vcf_file)
+        tuple(val(analysis_id), path("${vcf_file.baseName}.filter.vcf"), path("${vcf_file.baseName}.filter.vcf.idx"), emit: vcf_file)
 
     script:
         """

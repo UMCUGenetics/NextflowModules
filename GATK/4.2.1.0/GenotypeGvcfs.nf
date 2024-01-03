@@ -6,7 +6,7 @@ process GenotypeGVCFs {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(gvcf_files), path(gvcf_idx_files), path(interval_file))
+        tuple(val(analysis_id), path(gvcf_files), path(gvcf_idx_files), path(interval_file))
 
     output:
         tuple(

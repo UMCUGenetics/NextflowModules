@@ -6,7 +6,7 @@ process HaplotypeCaller {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(analysis_id, path(bam_files), path(bai_files), path(interval_file))
+        tuple(val(analysis_id), path(bam_files), path(bai_files), path(interval_file))
 
     output:
         tuple(
