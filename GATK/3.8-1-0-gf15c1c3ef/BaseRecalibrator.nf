@@ -6,7 +6,7 @@ process BaseRecalibrator {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(val(sample_id), path(bam_file), path(bai_file), chr)
+        tuple(val(sample_id), path(bam_file), path(bai_file), val(chr))
 
     output:
         tuple(val(sample_id), path("${bam_file.baseName}.bqsr.${chr}.bam"), path("${bam_file.baseName}.bqsr.${chr}.bai"), emit: bam_file)
