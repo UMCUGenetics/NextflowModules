@@ -9,7 +9,7 @@ process MakeKaryotype {
         tuple(val(sample_id), path(ratio_file), path(cnv_file))
 
     output:
-        tuple(sample_id, path("*_karyotype.pdf"), emit: karyotype_pdf)
+        tuple(val(sample_id), path("*_karyotype.pdf"), emit: karyotype_pdf)
 
     script:
         """

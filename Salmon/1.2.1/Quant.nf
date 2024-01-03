@@ -10,7 +10,7 @@ process Quant {
         path(salmon_index)
    
     output:
-        tuple(sample_id, path("${sample_id}/"), emit: quant_table)
+        tuple(val(sample_id), path("${sample_id}/"), emit: quant_table)
 
     script:
         //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén

@@ -9,7 +9,7 @@ process View {
         tuple(val(sample_id), path(bam_file), path(bai_file))
 
     output:
-        tuple(sample_id, path("${bam_file.baseName}.sam"), emit: sam_file)
+        tuple(val(sample_id), path("${bam_file.baseName}.sam"), emit: sam_file)
 
     script:
         """

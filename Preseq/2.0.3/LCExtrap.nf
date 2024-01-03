@@ -9,7 +9,7 @@
           tuple(val(sample_id), path(bam_file), path(bai_file))
 
       output:
-          tuple(sample_id, path("${bam_file.baseName}.ccurve.txt") , emit: ccurve_table)
+          tuple(val(sample_id), path("${bam_file.baseName}.ccurve.txt") , emit: ccurve_table)
 
       script:
           //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén

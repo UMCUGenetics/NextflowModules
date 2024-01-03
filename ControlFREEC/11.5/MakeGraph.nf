@@ -9,7 +9,7 @@ process MakeGraph {
         tuple(val(sample_id), path(ratio_file), path(cnv_file))
 
     output:
-        tuple(sample_id, path("${ratio_file.name}.png"), path("${ratio_file.name}.log2.png"), emit: ratio_png)
+        tuple(val(sample_id), path("${ratio_file.name}.png"), path("${ratio_file.name}.log2.png"), emit: ratio_png)
 
     script:
         """
