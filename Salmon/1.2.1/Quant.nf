@@ -6,7 +6,7 @@ process Quant {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-        tuple(sample_id, path(fastq_files))
+        tuple(val(sample_id), path(fastq_files))
         path(salmon_index)
    
     output:

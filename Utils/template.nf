@@ -7,7 +7,7 @@ process Command {
 
     input:
         val(analysis_id)
-        tuple(sample_id, path(input_file))
+        tuple(val(sample_id), path(input_file))
      
     output:
         tuple(sample_id, path(output_file), emit: output_file)

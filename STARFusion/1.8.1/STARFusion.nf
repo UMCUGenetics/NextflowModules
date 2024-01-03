@@ -5,7 +5,7 @@ process STARFusion {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(fastq_files)) 
+        tuple(val(sample_id), path(fastq_files))
         path(star_index)
         path(genome_lib)
 

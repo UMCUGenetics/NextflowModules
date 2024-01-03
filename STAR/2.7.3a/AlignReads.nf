@@ -6,7 +6,7 @@ process AlignReads {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, rg_id, path(fastqs))
+        tuple(val(sample_id), rg_id, path(fastqs))
         path(star_genome_index)
         path(genome_gtf)
      

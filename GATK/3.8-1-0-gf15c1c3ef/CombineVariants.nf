@@ -30,7 +30,7 @@ process CombineVariantsGVCF {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(vcf_files), path(vcf_idx_files))
+        tuple(val(sample_id), path(vcf_files), path(vcf_idx_files))
 
     output:
         tuple(sample_id, path("${sample_id}.g.vcf"), path("${sample_id}.g.vcf.idx"), emit:vcf_file)

@@ -45,7 +45,7 @@ See `utils/template.nf` for a process template which uses the following guidelin
     ```
     input:
           val(analysis_id)
-          tuple(sample_id, path(bam), path(bai))
+          tuple(val(sample_id), path(bam), path(bai))
     ```
 - Define named process output channels. This ensures that outputs can be referenced in external scope by their respective names. Indicate whether an output channel is optional. 
     ```

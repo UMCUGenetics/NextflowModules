@@ -31,7 +31,7 @@ process HaplotypeCallerGVCF {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file), path(interval_file))
+        tuple(val(sample_id), path(bam_file), path(bai_file), path(interval_file))
 
     output:
         tuple(val(sample_id), path("${sample_id}_${interval_file.baseName}.g.vcf"), path("${sample_id}_${interval_file.baseName}.g.vcf.idx"), path(interval_file), emit: vcf_file)

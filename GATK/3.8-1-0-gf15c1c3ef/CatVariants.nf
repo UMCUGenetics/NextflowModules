@@ -6,7 +6,7 @@ process CatVariantsGVCF {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(gvcf_files), path(gvcf_idx_files))
+        tuple(val(sample_id,) path(gvcf_files), path(gvcf_idx_files))
 
     output:
         tuple(sample_id, path("${sample_id}.g.vcf.gz"), path("${sample_id}.g.vcf.gz.tbi"), emit:vcf_file)

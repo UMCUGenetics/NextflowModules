@@ -5,7 +5,7 @@ process SortMeRNA {
     shell = ['/bin/bash', '-euo', 'pipefail']
     
     input:
-        tuple(sample_id, rg_id, path(fastq_files))
+        tuple(val(sample_id), val(rg_id), path(fastq_files))
         path(db_fasta) 
     
     output:
