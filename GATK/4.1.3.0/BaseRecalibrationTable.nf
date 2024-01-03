@@ -6,7 +6,7 @@ process BaseRecalibrationTable {
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-        tuple (sample_id, path(bam), path(bai), path(interval_file))
+        tuple (val(sample_id), path(bam), path(bai), path(interval_file))
 
     output:
         tuple (sample_id, path("${sample_id}.${int_tag}.recal.table"), emit: recalibration_tables)

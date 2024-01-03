@@ -6,7 +6,7 @@ process VerifyBamID2 {
     shell = ['/bin/bash', '-eo', 'pipefail']
 
     input:
-        tuple (sample_id, path(bam), path(bai))
+        tuple (val(sample_id), path(bam), path(bai))
 
     output:
         tuple (sample_id, path("${output_prefix}.selfSM"))
