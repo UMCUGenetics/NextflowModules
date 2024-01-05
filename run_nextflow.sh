@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-workflow_path='/hpc/diaggen/users/lonneke/github/DxNextflowRNA'
+workflow_path='/hpc/diaggen/users/lonneke/github/DxNextflowRNA/NextflowModules'
 
 # Set input and output dirs
 input=`realpath $1`
@@ -31,8 +31,8 @@ sbatch <<EOT
 #SBATCH --mail-type FAIL
 #SBATCH --account=diaggen
 
-/hpc/diaggen/software/development/DxNextflowRNA/tools/nextflow run /hpc/diaggen/users/lonneke/github/DxNextflowRNA/main.nf  \
--c /hpc/diaggen/users/lonneke/github/DxNextflowRNA/nextflow.config -resume -ansi-log false -profile slurm \
+/hpc/diaggen/software/development/DxNextflowRNA/tools/nextflow run /hpc/diaggen/users/lonneke/github/DxNextflowRNA/NextflowModules/main.nf  \
+-c /hpc/diaggen/users/lonneke/github/DxNextflowRNA/NextflowModules/nextflow.config -resume -ansi-log false -profile slurm \
 --input $input \
 --outdir $output \
 --email $email
