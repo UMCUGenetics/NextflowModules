@@ -4,12 +4,12 @@ process OUTRIDER {
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-/*    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/fastqc:0.12.1--hdfd78af_0' :
-        'biocontainers/fastqc:0.12.1--hdfd78af_0' }"*/
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/bioconductor-outrider:1.20.0--r43hf17093f_0 ' :
+        'biocontainers/bioconductor-outrider:1.20.0--r43hf17093f_0 ' }"
 
     input:
-    tuple val(meta), path(counts)
+    tuple val(meta), path(counts), path(ref)
 
     output:
     tuple val(meta), path("*.tsv"), emit: tsv
@@ -20,9 +20,9 @@ process OUTRIDER {
 
     script:
     """
-    printf "%s %s\\n" $rename_to | while read old_name new_name; do
-        [ -f "\${new_name}" ] || ln -s \$old_name \$new_name
-    done
+    echo $counts
+    echo $ref
+    Rscript "outrider.R" "$counts" "/out" -r "$ref" 
     """
 
 }
