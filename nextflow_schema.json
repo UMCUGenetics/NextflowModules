@@ -1,0 +1,97 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://raw.githubusercontent.com/UMCUGenetics/DxNextflowRNA/master/nextflow_schema.json",
+    "title": "UMCUGenetics/DxNextflowRNA pipeline parameters",
+    "description": "UMCU Genetics RNA Workflow",
+    "type": "object",
+    "definitions": {
+      "input_output_options": {
+        "title": "Input/output options",
+        "type": "object",
+        "fa_icon": "fas fa-terminal",
+        "description": "Define where the pipeline should find input data and save output data.",
+        "required": ["input", "outdir"],
+        "properties": {
+            "input": {
+                "type": "string",
+                "format": "directory-path",
+                "exists": true,
+                "description": "Path to input data.",
+                "fa_icon": "fas fa-folder-open"
+            },
+            "outdir": {
+                "type": "string",
+                "format": "directory-path",
+                "description": "The output directory where the results will be saved.",
+                "fa_icon": "fas fa-folder-open"
+            },
+            "email": {
+                "type": "string",
+                "description": "Email address for completion summary.",
+                "fa_icon": "fas fa-envelope",
+                "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+            }
+        }
+      },
+      "reference_genome_options": {
+        "title": "Reference genome options",
+        "type": "object",
+        "fa_icon": "fas fa-dna",
+        "description": "Reference genome related files and options required for the workflow.",
+        "properties": {
+          "genome": {
+            "type": "string",
+            "description": "Path of genome reference.",
+            "fa_icon": "fas fa-book",
+            "help_text": ""
+          },
+          "gtf": {
+            "type": "string",
+            "format": "file-path",
+            "exists": true,
+            "mimetype": "text/plain",
+            "pattern": "^\\S+\\.gtf(\\.gz)?$",
+            "description": "Path to GTF annotation file.",
+            "fa_icon": "fas fa-code-branch",
+            "help_text": "This parameter is *mandatory* if `--genome` is not specified."
+          },      
+          "star_index": {
+            "type": "string",
+            "format": "path",
+            "exists": true,
+            "fa_icon": "fas fa-bezier-curve",
+            "description": "Path to directory or tar.gz archive for pre-built STAR index."
+        }
+       }
+      },
+      "generic_options": {
+        "title": "Generic options",
+        "type": "object",
+        "fa_icon": "fas fa-file-import",
+        "description": "Less common options for the pipeline, typically set in a config file.",
+        "properties": {
+          "publish_dir_mode": {
+              "type": "string",
+              "default": "copy",
+              "description": "Method used to save pipeline results to output directory.",
+              "help_text": "The Nextflow `publishDir` option specifies which intermediate files should be saved to the output directory. This option tells the pipeline what method should be used to move these files. See [Nextflow docs](https://www.nextflow.io/docs/latest/process.html#publishdir) for details.",
+              "fa_icon": "fas fa-copy",
+              "enum": ["symlink", "rellink", "link", "copy", "copyNoFollow", "move"],
+              "hidden": true
+          }
+        }
+      }
+    },
+    "allOf": [
+      {
+        "$ref": "#/definitions/input_output_options"
+      },
+      {
+        "$ref": "#/definitions/reference_genome_options"
+      },
+      {
+        "$ref": "#/definitions/generic_options"
+      }
+    ]
+  }
+  
