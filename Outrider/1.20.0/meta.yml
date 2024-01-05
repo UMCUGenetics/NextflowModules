@@ -1,0 +1,26 @@
+name: outrider
+description: Run Outrider on feature counts
+keywords:
+  - outrider
+  - abberant expression
+tools:
+  - outrider:
+      description: |
+      homepage: 
+      documentation: 
+      licence: 
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+authors:
+  - 
+maintainers:
+  - 

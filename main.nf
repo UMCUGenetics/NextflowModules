@@ -118,6 +118,12 @@ workflow {
     )
 */
     // Input channel
-    ch_outrider = Channel.fromPath("$params.input/featureCounts/*_.txt")
+    ch_outrider_in = Channel.fromPath("$params.input/feature_counts/*CHX*.txt")
+    ch_outrider_ref = Channel.fromPath("$params.input/feature_counts/*Cntrl*.txt")
+
     //Outrider
+    OUTRIDER(
+        ch_outrider_in,
+        ch_outrider_ref
+    )
 }
