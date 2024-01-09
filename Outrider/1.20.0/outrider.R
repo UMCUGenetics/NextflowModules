@@ -12,8 +12,8 @@ suppressPackageStartupMessages(library("dplyr"))
 parser <- ArgumentParser(description = "Process some integers")
 parser$add_argument("query", metavar = "query_input_files", nargs = "+", 
                     help = "Files or directories containing the query input files.")
-parser$add_argument("output_path", metavar = "output_path", nargs = "+", 
-                    help = "Path where output of OUTRIDER will be stored.")
+parser$add_argument("-o","--output_path", metavar = "output_path", nargs = "+", 
+                    help = "Path where output of OUTRIDER will be stored.", default="./")
 parser$add_argument("-r", "--ref", metavar = "reference_input_files", nargs = "+", 
                     help = "Files or directories containing the reference input files.")
 args <- parser$parse_args()

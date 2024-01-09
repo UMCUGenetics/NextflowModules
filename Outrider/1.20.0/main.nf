@@ -1,18 +1,16 @@
-
 process OUTRIDER {
-    tag "$meta.id"
+//    tag "$meta.id"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/bioconductor-outrider:1.20.0--r43hf17093f_0 ' :
-        'biocontainers/bioconductor-outrider:1.20.0--r43hf17093f_0 ' }"
+    container "ghcr.io/umcugenetics/outrider_custom:0.0.1"
 
     input:
-    tuple val(meta), path(counts), path(ref)
-
+    path(counts)
+    path(ref)
+    
     output:
-    tuple val(meta), path("*.tsv"), emit: tsv
+    path("*.tsv"), emit: tsv
 //    path  "versions.yml"           , emit: versions
 
  /*   when:
@@ -20,9 +18,9 @@ process OUTRIDER {
 
     script:
     """
-    echo $counts
-    echo $ref
-    Rscript "outrider.R" "$counts" "/out" -r "$ref" 
+#    mkdir -p ${params.outdir}/outrider
+#    Rscript "/hpc/diaggen/users/lonneke/github/DxNextflowRNA/NextflowModules/Outrider/1.20.0/outrider.R" "${counts}" -o "${params.outdir}/outrider/" -r "${ref}" 
+    Rscript "/hpc/diaggen/users/lonneke/github/DxNextflowRNA/NextflowModules/Outrider/1.20.0/outrider.R" "${counts}" -r "${ref}"
     """
 
 }
