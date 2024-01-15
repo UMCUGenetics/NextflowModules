@@ -10,7 +10,8 @@ process SNPSiftDbnsfp {
         tuple(val(run_id), path(vcf), path(vcfidx))
 
     output:
-        tuple(val(run_id), path("${vcf.baseName}_dbnsfp.vcf"), path("${vcf.baseName}_dbnsfp.vcf.idx"), emit : snpsift_dbnsfp_vcfs)
+        tuple(val(run_id), path("${vcf.baseName}_dbnsfp.vcf"), path("${vcf.baseName}_dbnsfp.vcf.idx"),
+            emit:snpsift_dbnsfp_vcfs)
 
     script:
         """

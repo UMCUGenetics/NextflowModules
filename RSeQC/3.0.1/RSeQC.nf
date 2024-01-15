@@ -19,7 +19,8 @@ process RSeQC {
         read_distribution.py -i ${bam_file} -r ${genome_bed12} > ${bam_file.baseName}.read_distribution.txt
         infer_experiment.py -i ${bam_file} -r ${genome_bed12} > ${bam_file.baseName}.infer_experiment.txt
         junction_annotation.py -i ${bam_file} -o ${bam_file.baseName}.rseqc -r ${genome_bed12}
-        junction_saturation.py -i ${bam_file} -o ${bam_file.baseName}.rseqc -r ${genome_bed12} 2> ${bam_file.baseName}.junction_annotation_log.txt
+        junction_saturation.py -i ${bam_file} -o ${bam_file.baseName}.rseqc -r ${genome_bed12} 2> \
+        ${bam_file.baseName}.junction_annotation_log.txt
         read_duplication.py -i ${bam_file} -o ${bam_file.baseName}.read_duplication
         """
 }

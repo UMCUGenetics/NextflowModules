@@ -16,12 +16,15 @@ process MergeFastqLanes {
         def R2_pattern="${sample_id}_*_S*_L00*_R2_001*.fastq.gz"
         if (params.single_end) {
             """
-            cat \$( ls ${R1_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R1_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R1.fastq.gz
+            cat \$( ls ${R1_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R1_pattern} | wc -l)))) > \
+            ${sample_id}_${barcode}_merged_R1.fastq.gz
             """
         } else { 
             """
-            cat \$( ls ${R1_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R1_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R1.fastq.gz
-            cat \$( ls ${R2_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R2_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R2.fastq.gz 
+            cat \$( ls ${R1_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R1_pattern} | wc -l)))) > \
+            ${sample_id}_${barcode}_merged_R1.fastq.gz
+            cat \$( ls ${R2_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R2_pattern} | wc -l)))) > \
+            ${sample_id}_${barcode}_merged_R2.fastq.gz
             """
         }
 }

@@ -9,7 +9,8 @@ process BaseRecalibration {
         tuple(val(sample_id), file(bam), path(bai),path(recal_table), path(interval_file))
 
     output:
-        tuple(val(sample_id), val(int_tag), path("${sample_id}.${int_tag}_recalibrated.bam"), path("${sample_id}.${int_tag}_recalibrated.bai"), path(interval_file), emit: recalibrated_bams)
+        tuple(val(sample_id), val(int_tag), path("${sample_id}.${int_tag}_recalibrated.bam"),
+            path("${sample_id}.${int_tag}_recalibrated.bai"), path(interval_file), emit: recalibrated_bams)
 
     script:
         int_tag = interval_file.toRealPath().toString().split("/")[-2]

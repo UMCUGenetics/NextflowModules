@@ -9,7 +9,8 @@ process VariantAnnotator {
         tuple(val(run_id), path(vcf), path(vcfidx))
 
     output:
-        tuple(val(run_id), path("${vcf.baseName}_${db_name}.vcf"), path("${vcf.baseName}_${db_name}.vcf.idx"), emit: annotated_vcfs)
+        tuple(val(run_id), path("${vcf.baseName}_${db_name}.vcf"), path("${vcf.baseName}_${db_name}.vcf.idx"),
+            emit: annotated_vcfs)
 
     script:
         db_file = file(params.genome_variant_annotator_db).getBaseName()

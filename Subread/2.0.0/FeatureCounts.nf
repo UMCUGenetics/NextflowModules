@@ -30,11 +30,16 @@ process FeatureCounts {
             featureCounts_direction = 2
         }  
         //optional biotype QC
-        def biotype_qc = params.biotypeQC ? "featureCounts -a ${genome_gtf} -g ${biotype} -o ${run_id}_biotype_featureCounts.txt -s ${featureCounts_direction} ${fragment_mode} ${params.optional} ${bam_file}": ''
-        def mod_biotype = params.biotypeQC ? "cut -f 1,7 ${run_id}_biotype_featureCounts.txt | tail -n +2 | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g'  > ${run_id}_biotype_featureCounts.matrix.txt": ''
+        def biotype_qc = params.biotypeQC ? "featureCounts -a ${genome_gtf} -g ${biotype} -o \
+        ${run_id}_biotype_featureCounts.txt -s ${featureCounts_direction} ${fragment_mode} ${params.optional} ${bam_file}": ''
+        def mod_biotype = params.biotypeQC ? "cut -f 1,7 ${run_id}_biotype_featureCounts.txt | tail -n +2 | \
+        sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g'  > ${run_id}_biotype_featureCounts.matrix.txt": ''
         """
-        featureCounts -T ${task.cpus} -a ${genome_gtf} -t ${params.fc_count_type} -g ${params.fc_group_features} -o ${run_id}_${params.fc_count_type}_featureCounts.txt -s ${featureCounts_direction} ${fragment_mode} ${params.optional} ${extraAttributes} ${bam_list}   
-        tail -n +2 ${run_id}_${params.fc_count_type}_featureCounts.txt | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' > "${run_id}_${params.fc_count_type}_featureCounts.raw.txt"
+        featureCounts -T ${task.cpus} -a ${genome_gtf} -t ${params.fc_count_type} -g ${params.fc_group_features} -o \
+        ${run_id}_${params.fc_count_type}_featureCounts.txt -s ${featureCounts_direction} ${fragment_mode} ${params.optional} \
+        ${extraAttributes} ${bam_list}
+        tail -n +2 ${run_id}_${params.fc_count_type}_featureCounts.txt | sed 's/\\_Aligned.sortedByCoord.out.bam\\>//g' > \
+        "${run_id}_${params.fc_count_type}_featureCounts.raw.txt"
         ${biotype_qc}
         ${mod_biotype}
         """

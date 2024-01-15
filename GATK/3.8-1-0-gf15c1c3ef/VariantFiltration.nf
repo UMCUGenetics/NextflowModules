@@ -9,7 +9,8 @@ process VariantFiltrationSnpIndel {
         tuple(val(analysis_id), path(vcf_file), path(vcf_idx_file))
 
     output:
-        tuple(val(analysis_id), path("${vcf_file.baseName}.filter.vcf"), path("${vcf_file.baseName}.filter.vcf.idx"), emit: vcf_file)
+        tuple(val(analysis_id), path("${vcf_file.baseName}.filter.vcf"), path("${vcf_file.baseName}.filter.vcf.idx"),
+            emit: vcf_file)
 
     script:
         """

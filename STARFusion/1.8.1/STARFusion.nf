@@ -17,7 +17,8 @@ process STARFusion {
     script:
         //Adapted code from: https://github.com/nf-core/rnafusion - MIT License - Copyright (c) Martin Proks
         def avail_mem = task.memory ? "--limitGenomeGenerateRAM ${task.memory.toBytes() - 100000000}" : ''
-        def read_args = params.single_end ? "--left_fq ${fastq_files[0]}" : "--left_fq ${fastq_files[0]} --right_fq ${fastq_files[1]}"
+        def read_args = params.single_end ? "--left_fq ${fastq_files[0]}" : "--left_fq ${fastq_files[0]} --right_fq \
+        ${fastq_files[1]}"
         """
         STAR \
             --genomeDir ${star_index} \

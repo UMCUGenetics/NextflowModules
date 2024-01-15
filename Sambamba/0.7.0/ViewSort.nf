@@ -9,10 +9,12 @@ process ViewSort {
         tuple(val(sample_id), val(rg_id), path(sam_file))
 
     output:
-        tuple(val(sample_id), val(rg_id), path("${sam_file.baseName}.sort.bam"), path("${sam_file.baseName}.sort.bam.bai"), emit: bam_file)
+        tuple(val(sample_id), val(rg_id), path("${sam_file.baseName}.sort.bam"), path("${sam_file.baseName}.sort.bam.bai"),
+            emit: bam_file)
 
     script:
         """
-        sambamba view -t ${task.cpus} -S -f bam ${sam_file} | sambamba sort -t ${task.cpus} -m ${task.memory.toGiga()}G -o ${sam_file.baseName}.sort.bam /dev/stdin
+        sambamba view -t ${task.cpus} -S -f bam ${sam_file} | sambamba sort -t ${task.cpus} -m ${task.memory.toGiga()}G \
+        -o ${sam_file.baseName}.sort.bam /dev/stdin
         """
 }
