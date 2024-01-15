@@ -18,9 +18,9 @@ process OUTRIDER {
 
     script:
     """
-#    mkdir -p ${params.outdir}/outrider
-#    Rscript "/hpc/diaggen/users/lonneke/github/DxNextflowRNA/NextflowModules/Outrider/1.20.0/outrider.R" "${counts}" -o "${params.outdir}/outrider/" -r "${ref}" 
-    Rscript "/hpc/diaggen/users/lonneke/github/DxNextflowRNA/NextflowModules/Outrider/1.20.0/outrider.R" "${counts}" -r "${ref}"
+    Rscript "${moduleDir}/outrider.R" "${counts}" -r "${ref}"
     """
 
+//    mkdir -p ${params.outdir}/outrider
+//   Rscript "/hpc/diaggen/users/lonneke/github/DxNextflowRNA/NextflowModules/Outrider/1.20.0/outrider.R" "${counts}" -o "${params.outdir}/outrider/" -r "${ref}" 
 }
