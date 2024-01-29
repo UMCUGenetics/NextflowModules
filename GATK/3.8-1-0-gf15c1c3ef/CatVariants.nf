@@ -14,8 +14,7 @@ process CatVariantsGVCF {
     script:
         def input_files = gvcf_files.collect{"$it"}.join(" -V ")
         """
-        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -cp ${params.gatk_path} \
-        org.broadinstitute.gatk.tools.CatVariants \
+        java -Xmx${task.memory.toGiga()-4}G -Djava.io.tmpdir=\$TMPDIR -cp ${params.gatk_path} org.broadinstitute.gatk.tools.CatVariants \
         --reference ${params.genome} \
         -V ${input_files} \
         --outputFile ${sample_id}.g.vcf.gz \

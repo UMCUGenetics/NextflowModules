@@ -10,8 +10,7 @@ process SNPEffFilter {
         tuple(val(run_id), path(vcf), path(vcfidx))
 
     output:
-        tuple(val(run_id), path("${vcf.baseName}.filtered_variants.vcf"), path("${vcf.baseName}.filtered_variants.vcf.idx"),
-            emit: snpeff_filtered_vcfs)
+        tuple(val(run_id), path("${vcf.baseName}.filtered_variants.vcf"), path("${vcf.baseName}.filtered_variants.vcf.idx"), emit: snpeff_filtered_vcfs)
 
     script:
         """
@@ -20,7 +19,6 @@ process SNPEffFilter {
         -v $vcf \
         > ${vcf.baseName}.filtered_variants.vcf
 
-        java -Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR -jar /bin/igvtools.jar index \
-        ${vcf.baseName}.filtered_variants.vcf
+        java -Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR -jar /bin/igvtools.jar index ${vcf.baseName}.filtered_variants.vcf
         """
 }

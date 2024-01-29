@@ -12,17 +12,14 @@ process Fastp {
         path("${sample_id}_fastp.json", emit: qc_report)
 
     script:
-        // adapted from https://github.com/nf-core/eager/blob/master/LICENSE, Copyright (c) Alexander Peltzer, Stephen Clayton,
-        // James A. Fellows Yates, Maxime Borry
+        //adapted from https://github.com/nf-core/eager/blob/master/LICENSE, Copyright (c) Alexander Peltzer, Stephen Clayton, James A. Fellows Yates, Maxime Borry
         if (params.single_end) {
             """
-            fastp --in1 ${fastq_files[0]} --out1 "${fastq_files[0].simpleName}.trim.fastq.gz" \
-            -j ${sample_id}_fastp.json ${params.optional}
+            fastp --in1 ${fastq_files[0]} --out1 "${fastq_files[0].simpleName}.trim.fastq.gz" -j ${sample_id}_fastp.json ${params.optional}
             """
         } else {
             """
-            fastp --in1 ${fastq_files[0]} --in2 ${fastq_files[1]} --out1 "${fastq_files[0].simpleName}.trim.fastq.gz"  \
-            --out2 "${fastq_files[1].simpleName}.trim.fastq.gz" -j ${sample_id}_fastp.json ${params.optional}
+            fastp --in1 ${fastq_files[0]} --in2 ${fastq_files[1]} --out1 "${fastq_files[0].simpleName}.trim.fastq.gz" --out2 "${fastq_files[1].simpleName}.trim.fastq.gz" -j ${sample_id}_fastp.json ${params.optional}
             """
         }
 }

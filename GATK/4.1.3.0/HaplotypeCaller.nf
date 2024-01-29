@@ -9,8 +9,7 @@ process HaplotypeCaller {
         tuple(val(sample_id), path(bam), path(bai), path(interval_file))
 
     output:
-        tuple(val(sample_id), val(int_tag) ,path("${sample_id}.${int_tag}${ext}"), path("${sample_id}.${int_tag}${ext}.idx"),
-            path(interval_file), emit: htcaller_vcfs)
+        tuple(val(sample_id), val(int_tag) ,path("${sample_id}.${int_tag}${ext}"), path("${sample_id}.${int_tag}${ext}.idx"), path(interval_file), emit: htcaller_vcfs)
 
     script:
         int_tag = interval_file.toRealPath().toString().split("/")[-2]

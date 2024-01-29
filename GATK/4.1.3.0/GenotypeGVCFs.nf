@@ -9,8 +9,7 @@ process GenotypeGVCFs {
         tuple(val(run_id), val(interval), path(gvcf), path(gvcfidx), path(interval_file))
 
     output:
-        tuple(val(run_id), val(interval), path("${run_id}.${interval}.vcf"),path("${run_id}.${interval}.vcf.idx"),
-            path(interval_file), emit : genotyped_vcfs)
+        tuple(val(run_id), val(interval), path("${run_id}.${interval}.vcf"),path("${run_id}.${interval}.vcf.idx"),path(interval_file), emit : genotyped_vcfs)
 
     script:
         """

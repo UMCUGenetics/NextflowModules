@@ -15,8 +15,7 @@ process Index {
     script:
         def gencode = params.gencode  ? "--gencode" : ""
         """
-        salmon index --threads ${task.cpus} -t ${transcripts_fasta} ${params.optional} ${gencode} \
-        -i ${transcripts_fasta.baseName}
+        salmon index --threads ${task.cpus} -t ${transcripts_fasta} ${params.optional} ${gencode} -i ${transcripts_fasta.baseName}       
         """
 }
 

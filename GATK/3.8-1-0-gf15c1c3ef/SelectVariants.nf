@@ -9,8 +9,7 @@ process SelectVariantsSample {
         tuple(val(analysis_id), path(vcf_file), path(vcf_idx_file), val(sample_id))
 
     output:
-        tuple(val(sample_id), path("${sample_id}_${vcf_file.baseName}.vcf"), path("${sample_id}_${vcf_file.baseName}.vcf.idx"),
-            emit: vcf_file)
+        tuple(val(sample_id), path("${sample_id}_${vcf_file.baseName}.vcf"), path("${sample_id}_${vcf_file.baseName}.vcf.idx"), emit: vcf_file)
 
     script:
         """

@@ -10,8 +10,7 @@ process SNPSiftAnnotate {
         tuple(val(run_id), path(vcf), path(vcfidx))
 
     output:
-        tuple(val(run_id), path("${vcf.baseName}_${db_name}.vcf"), path("${vcf.baseName}_${db_name}.vcf.idx"),
-            emit: snpsift_annoted_vcfs)
+        tuple(val(run_id), path("${vcf.baseName}_${db_name}.vcf"), path("${vcf.baseName}_${db_name}.vcf.idx"), emit: snpsift_annoted_vcfs)
 
     script:
         db_file = file(params.genome_snpsift_annotate_db).getBaseName()
@@ -24,8 +23,7 @@ process SNPSiftAnnotate {
         ${params.optional} ${params.genome_snpsift_annotate_db} \
         $vcf > ${vcf.baseName}_${db_name}.vcf
 
-        java -Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR -jar /bin/igvtools.jar index \
-        ${vcf.baseName}_${db_name}.vcf
+        java -Xmx${task.memory.toGiga()-4}g -Djava.io.tmpdir=\$TMPDIR -jar /bin/igvtools.jar index ${vcf.baseName}_${db_name}.vcf
 
         """
 }

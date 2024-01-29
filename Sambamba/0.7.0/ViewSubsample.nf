@@ -9,12 +9,10 @@ process Subsample {
         tuple(val(sample_id), val(fraction), path(bam_file), path(bai_file))
 
     output:
-        tuple(val(sample_id), path("${bam_file.baseName}.subsample.bam"), path("${bam_file.baseName}.subsample.bam.bai"),
-            emit: bam_file)
+        tuple(val(sample_id), path("${bam_file.baseName}.subsample.bam"), path("${bam_file.baseName}.subsample.bam.bai"), emit: bam_file)
 
     script:
         """
-        sambamba view -t ${task.cpus} -f bam -s ${fraction} ${params.optional} ${bam_file} \
-        -o ${bam_file.baseName}.subsample.bam
+        sambamba view -t ${task.cpus} -f bam -s ${fraction} ${params.optional} ${bam_file} -o ${bam_file.baseName}.subsample.bam
         """
 }

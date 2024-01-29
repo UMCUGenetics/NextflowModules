@@ -9,8 +9,7 @@ process MergeVcfs {
         tuple(val(output_name), path(vcf_files), path(vcf_idx_files))
 
     output:
-        tuple(val(output_name), path("${output_name}${ext_vcf}"), path("${output_name}${ext_vcf}${ext_vcf_index}"),
-            emit:vcf_file)
+        tuple(val(output_name), path("${output_name}${ext_vcf}"), path("${output_name}${ext_vcf}${ext_vcf_index}"), emit:vcf_file)
 
     script:
         def input_files = vcf_files.collect{"$it"}.join(" --INPUT ")
@@ -36,8 +35,7 @@ process MergeGvcfs {
         tuple(val(output_name), path(vcf_files), path(vcf_idx_files))
 
     output:
-        tuple(val(output_name), path("${output_name}${ext_gvcf}"), path("${output_name}${ext_gvcf}${ext_gvcf_index}"),
-            emit:vcf_file)
+        tuple(val(output_name), path("${output_name}${ext_gvcf}"), path("${output_name}${ext_gvcf}${ext_gvcf_index}"), emit:vcf_file)
 
     script:
         def input_files = vcf_files.collect{"$it"}.join(" --INPUT ")

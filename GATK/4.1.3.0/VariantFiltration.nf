@@ -9,8 +9,7 @@ process VariantFiltration {
         tuple(val(run_id), val(interval), val(type), path(vcf), path(vcfidx))
 
     output:
-        tuple(val(run_id), val(interval), val(type), path("${run_id}.${interval}.${type}.filtered_variants.vcf"),
-            path("${run_id}.${interval}.${type}.filtered_variants.vcf.idx"), emit: filtered_vcfs)
+        tuple(val(run_id), val(interval), val(type), path("${run_id}.${interval}.${type}.filtered_variants.vcf"), path("${run_id}.${interval}.${type}.filtered_variants.vcf.idx"), emit: filtered_vcfs)
 
     script:
         if (type == 'SNP'){

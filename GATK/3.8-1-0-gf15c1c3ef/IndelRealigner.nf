@@ -9,8 +9,7 @@ process IndelRealigner {
         tuple(val(sample_id), path(bam_file), path(bai_file), val(chr), path(target_intervals))
 
     output:
-        tuple(val(sample_id), path("${bam_file.baseName}.realigned.${chr}.bam"),
-            path("${bam_file.baseName}.realigned.${chr}.bai"), emit: bam_file)
+        tuple(val(sample_id), path("${bam_file.baseName}.realigned.${chr}.bam"), path("${bam_file.baseName}.realigned.${chr}.bai"), emit: bam_file)
 
     script:
         """

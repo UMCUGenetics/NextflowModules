@@ -9,8 +9,7 @@ process FilterConsensusReads {
         tuple(val(sample_id), val(flowcell), val(machine), val(run_nr), path(bam))
 
     output:
-        tuple(val(sample_id), val(flowcell), val(machine), val(run_nr), path("${sample_id}.u.consensus.filtered.bam"),
-            emit: filtered_bams)
+        tuple(val(sample_id), val(flowcell), val(machine), val(run_nr), path("${sample_id}.u.consensus.filtered.bam"), emit: filtered_bams)
 
     script:
         """
