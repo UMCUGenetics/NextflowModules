@@ -8,7 +8,8 @@ process Markdup {
     input:
         tuple(val(sample_id), val(rg_id), path(bam_file), path(bai_file))
     output:
-        tuple(val(sample_id), val(rg_id), path("${bam_file.baseName}.markdup.bam"), path("${bam_file.baseName}.markdup.bam.bai"), emit: bam_file)
+        tuple(val(sample_id), val(rg_id), path("${bam_file.baseName}.markdup.bam"),
+            path("${bam_file.baseName}.markdup.bam.bai"), emit: bam_file)
 
     script:
         """

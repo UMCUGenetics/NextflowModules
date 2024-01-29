@@ -10,7 +10,8 @@ process MergeFastqs {
         tuple(val(sample_id), val(flowcell), path(fastq))
 
     output:
-        tuple(val(sample_id), val(flowcell), val(read_nr) ,path("${sample_id}_${flowcell}_${read_nr}.fastq.gz"), emit : merged_fastqs)
+        tuple(val(sample_id), val(flowcell), val(read_nr) ,path("${sample_id}_${flowcell}_${read_nr}.fastq.gz"),
+            emit: merged_fastqs)
 
 
     script:

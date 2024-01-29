@@ -9,7 +9,8 @@ process SelectVariants {
         tuple(val(run_id), val(interval), path(vcf), path(vcfidx), val(type))
 
     output:
-        tuple(val(run_id), val(interval), val(type), path("${run_id}.${interval}.${type}.tmp.vcf"), path("${run_id}.${interval}.${type}.tmp.vcf.idx"), emit: selected_vcfs)
+        tuple(val(run_id), val(interval), val(type), path("${run_id}.${interval}.${type}.tmp.vcf"),
+            path("${run_id}.${interval}.${type}.tmp.vcf.idx"), emit: selected_vcfs)
 
     script:
         select_type = type == 'SNP' ? '--select-type SNP --select-type NO_VARIATION' : '--select-type INDEL --select-type MIXED'

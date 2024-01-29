@@ -9,7 +9,8 @@ process ViewUnmapped {
         tuple(val(sample_id), path(bam_file), path(bai_file))
 
     output:
-        tuple(val(sample_id), path("${bam_file.baseName}.unmapped.bam"), path("${bam_file.baseName}.unmapped.bam.bai"), emit: bam_file)
+        tuple(val(sample_id), path("${bam_file.baseName}.unmapped.bam"), path("${bam_file.baseName}.unmapped.bam.bai"),
+            emit: bam_file)
 
     script:
         """
