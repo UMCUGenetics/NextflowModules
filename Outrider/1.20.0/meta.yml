@@ -6,21 +6,32 @@ keywords:
 tools:
   - outrider:
       description: |
-      homepage: 
-      documentation: 
-      licence: 
+      homepage:
+      documentation:
+      licence:
 input:
   - meta:
       type: map
       description: |
         Groovy Map containing sample information
+ - counts:
+      type: file
+      description: |
+        Input file to measure aberrant expression
+ - ref:
+      type: file
+      description: |
+        List of files as a reference to measure aberrant expression to
+ - feature:
+      type: value
+      description: |
+        Value for the feature exon or gene to be used in the output file
 output:
   - meta:
-      type: map
+      type: file
       description: |
-        Groovy Map containing sample information
-        e.g. [ id:'test', single_end:false ]
+        tsv file with gene or exon values regarding aberrant expression
 authors:
-  - 
+  -
 maintainers:
-  - 
+  -
