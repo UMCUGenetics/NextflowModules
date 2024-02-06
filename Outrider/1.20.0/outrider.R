@@ -10,17 +10,19 @@ suppressPackageStartupMessages(library("dplyr"))
 
 # Argument parser
 parser <- ArgumentParser(description = "Process some integers")
-parser$add_argument("query", metavar = "query_input_files", nargs = "+", 
+parser$add_argument("query", metavar = "query_input_files", nargs = "+",
                     help = "Files or directories containing the query input files.")
-parser$add_argument("-o","--output_path", metavar = "output_path", nargs = "+", 
+parser$add_argument("-o","--output_path", metavar = "output_path", nargs = "+",
                     help = "Path where output of OUTRIDER will be stored.", default="./")
-parser$add_argument("-r", "--ref", metavar = "reference_input_files", nargs = "+", 
+parser$add_argument("-r", "--ref", metavar = "reference_input_files", nargs = "+",
                     help = "Files or directories containing the reference input files.")
+parser$add_argument("-f", "--feat", metavar = "feature", nargs = "+",
+                    help = "Choose gene or exon level. Gene is default.", default="gene")
 args <- parser$parse_args()
 
 
 read_input_files <- function(input){
-  sampleIDs <- c() 
+  sampleIDs <- c()
   count_tables <- lapply(input, function(f) {
     input_ext <- tools::file_ext(f)
     if(input_ext == "Rds") {
@@ -79,23 +81,24 @@ run_outrider <- function(all_counts) {
 }
 
 
-save_output <- function(out_path, out_outrider, ref_samples, padj_thres=0.05, zscore_thres=0, all=True) {
+save_output <- function(out_path, out_outrider, ref_samples, feature, padj_thres=0.05, zscore_thres=0, all=True) {
 #  res <- as_tibble(results(ods, padjCutoff=padj_thres, zScoreCutoff=zscore_thres, all=TRUE))
   res <- as_tibble(results(out_outrider, padjCutoff=padj_thres, zScoreCutoff=zscore_thres, all=TRUE))
   # Reference samples are excluded from final results. 
   query_res <- filter(res, !(sampleID %in% ref_samples))
   # Write output table with aberrant expressed targets.
-  write_tsv(query_res, paste0(out_path, "outrider_result.tsv"))
+  write_tsv(query_res, paste0(out_path, "outrider_result_", feature, ".tsv"))
 }
 
 
 # TODO: investigate memory usage and if possible reduced / parallel.
-main <- function(query, ref, output_path){
+main <- function(query, ref, output_path, feature){
   query_data <- get_input(query)
   ref_data <- get_input(ref)
   all_counts <- merge_count_tables(query_data$count_tables, ref_data$count_tables)
   output <- run_outrider(all_counts)
-  save_output(output_path, output, ref_data$sampleIDs)
+  save_output(output_path, output, ref_data$sampleIDs, feature)
 }
 
-main(args$query, args$ref, args$output_path)
+
+main(args$query, args$ref, args$output_path, args$feat)
