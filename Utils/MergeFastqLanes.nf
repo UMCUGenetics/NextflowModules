@@ -18,10 +18,10 @@ process MergeFastqLanes {
             """
             cat \$( ls ${R1_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R1_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R1.fastq.gz
             """
-        } else { 
+        } else {
             """
             cat \$( ls ${R1_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R1_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R1.fastq.gz
-            cat \$( ls ${R2_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R2_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R2.fastq.gz 
+            cat \$( ls ${R2_pattern} | sort | paste \$(printf "%0.s- " \$(seq 1 \$( ls ${R2_pattern} | wc -l)))) > ${sample_id}_${barcode}_merged_R2.fastq.gz
             """
         }
 }

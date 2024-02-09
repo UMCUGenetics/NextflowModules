@@ -7,8 +7,8 @@ process SplitNCigarReads {
     shell = ['/bin/bash', '-euo', 'pipefail']
     input:
         tuple(val(sample_id), path(bam_file), path(bai_file))
-   
-    output:  
+
+    output:
         tuple(val(sample_id), path("${sample_id}.split.bam"), path("${sample_id}.split.bai"), emit: bam_file)
 
     script:
