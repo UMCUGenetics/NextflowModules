@@ -132,8 +132,8 @@ run_outrider <- function(all_counts) {
 save_output <- function(out_path, out_outrider, ref_samples, feature, padj_thres=0.05, zscore_thres=0, a=TRUE) {
   res <- as_tibble(results(out_outrider, padjCutoff=padj_thres, zScoreCutoff=zscore_thres, all=a))
   # Reference samples are excluded from final results. 
-  query_res <- filter(res, !(sampleID %in% ref_samples))
-  #query_res <- query_res[order(query_res$pValue),]
+  #query_res <- filter(res, !(sampleID %in% ref_samples))
+  query_res <- res
   # Write output table with aberrant expressed targets.
   write_tsv(query_res, paste0(out_path, "outrider_result_", feature, ".tsv"))
 }
