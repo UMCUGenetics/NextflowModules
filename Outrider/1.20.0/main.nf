@@ -12,7 +12,7 @@ process OUTRIDER {
 
     output:
     path("*.tsv"), emit: tsv
-    path  "versions.yml"           , emit: versions
+    //path  "versions.yml"           , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
