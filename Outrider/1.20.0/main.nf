@@ -6,26 +6,19 @@ process OUTRIDER {
     container "ghcr.io/umcugenetics/outrider_custom:0.0.1"
 
     input:
-    tuple val(meta), path(counts), val(feature)
-    path(ref_gene)
-    path(ref_exon)
+    tuple val(meta), path(counts)
+    path(refset)
 
     output:
     path("*.tsv"), emit: tsv
-    //path  "versions.yml"           , emit: versions
+//    path  "versions.yml"           , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
-    def refset = ref_gene
-    if (feature == 'exon') {
-        refset = ref_exon
-    }
+    def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    echo "${meta}"
-    echo "${counts}"
-    echo "${refset}"
-    Rscript ${moduleDir}/outrider.R ${counts} -r ${refset} -f ${feature}
+    Rscript ${moduleDir}/outrider.R ${counts} -r ${refset} -p ${prefix}
     """
 }

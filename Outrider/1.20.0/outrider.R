@@ -16,8 +16,8 @@ parser$add_argument("-o","--output_path", metavar = "output_path", nargs = "+",
                     help = "Path where output of OUTRIDER will be stored.", default="./")
 parser$add_argument("-r", "--ref", metavar = "reference_input_files", nargs = "+",
                     help = "Files or directories containing the reference input files.")
-parser$add_argument("-f", "--feat", metavar = "feature", nargs = "+",
-                    help = "Choose gene or exon level. Gene is default.", default="gene")
+parser$add_argument("-p", "--pref", metavar = "prefix", nargs = "+",
+                    help = "Prefix of file.", default="gene")
 args <- parser$parse_args()
 
 
@@ -97,24 +97,25 @@ run_outrider <- function(all_counts) {
 
   Nsteps <- min(maxSteps, b)   # Do at most 20 steps or N/3
   # Do unique in case 2 were repeated
-
   pars_q <- round(exp(seq(log(a),log(b),length.out = Nsteps))) %>% unique
+
   #help suggestion:
   #pars_q <- seq(2, min(100, ncol(ods) - 1, nrow(ods) - 1), 2)
   print(pars_q)
 
   ods <- findEncodingDim(ods, params = pars_q, implementation = implementation, BPPARAM=MulticoreParam(8))
 
-  print("getbestQ")
+  #find best q (dimension)
   opt_q <- getBestQ(ods)
+  print("getbestQ")
   print(opt_q)
+  
+  ##exclude sample of interest from the fitting bc of possible replicates..
+  message(date(), ": sample Exclusion Mask ...")
+  sampleExclusionMask(ods) <- FALSE
+  sampleExclusionMask(ods[,c(1)]) <- TRUE
 
   ods <- controlForConfounders(ods, q=opt_q, implementation=implementation, BPPARAM=MulticoreParam(8))
-  
-  #exclude sample of interest from the fitting bc of possible replicates..
-  #message(date(), ": sample Exclusion Mask ...")
-  #sampleExclusionMask(ods) <- FALSE
-  #sampleExclusionMask(ods[,c(1)]) <- TRUE
 
   #if(grepl("^(peer|pca)$", implementation)){ 
   #   message(date(), ": Fitting the data ...")
@@ -129,24 +130,25 @@ run_outrider <- function(all_counts) {
 }
 
 
-save_output <- function(out_path, out_outrider, ref_samples, feature, padj_thres=0.05, zscore_thres=0, a=TRUE) {
+save_output <- function(out_path, out_outrider, ref_samples, prefix, padj_thres=0.05, zscore_thres=0, a=TRUE) {
   res <- as_tibble(results(out_outrider, padjCutoff=padj_thres, zScoreCutoff=zscore_thres, all=a))
   # Reference samples are excluded from final results. 
-  #query_res <- filter(res, !(sampleID %in% ref_samples))
+#  query_res <- filter(res, !(sampleID %in% ref_samples))
   query_res <- res
+  #query_res <- query_res[order(query_res$pValue),]
   # Write output table with aberrant expressed targets.
-  write_tsv(query_res, paste0(out_path, "outrider_result_", feature, ".tsv"))
+  write_tsv(query_res, paste0(out_path, prefix, ".outrider_result.tsv"))
 }
 
 
 # TODO: investigate memory usage and if possible reduced / parallel.
-main <- function(query, ref, output_path, feature){
+main <- function(query, ref, output_path, prefix){
   query_data <- get_input(query)
   ref_data <- get_input(ref)
   all_counts <- merge_count_tables(query_data$count_tables, ref_data$count_tables)
   output <- run_outrider(all_counts)
-  save_output(output_path, output, ref_data$sampleIDs, feature)
+  save_output(output_path, output, ref_data$sampleIDs, prefix)
 }
 
 
-main(args$query, args$ref, args$output_path, args$feat)
+main(args$query, args$ref, args$output_path, args$pref)
