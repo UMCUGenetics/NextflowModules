@@ -1,0 +1,37 @@
+name: outrider
+description: Run Outrider on feature counts
+keywords:
+  - outrider
+  - abberant expression
+tools:
+  - outrider:
+      description: |
+      homepage:
+      documentation:
+      licence:
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+ - counts:
+      type: file
+      description: |
+        Input file to measure aberrant expression
+ - ref:
+      type: file
+      description: |
+        List of files as a reference to measure aberrant expression to
+ - feature:
+      type: value
+      description: |
+        Value for the feature exon or gene to be used in the output file
+output:
+  - meta:
+      type: file
+      description: |
+        tsv file with gene or exon values regarding aberrant expression
+authors:
+  -
+maintainers:
+  -
