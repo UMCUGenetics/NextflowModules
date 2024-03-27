@@ -6,16 +6,16 @@ process SortMeRNA {
 
     input:
         tuple(val(sample_id), val(rg_id), path(fastq_files))
-        path(db_fasta)
-
+        path(db_fasta) 
+    
     output:
         tuple(val(sample_id), val(rg_id), path("*_non_rRNA.fastq.gz"), emit: non_rRNA_fastqs)
         path("*_filtered_rRNA.fastq.gz", emit: rRNA_fastqs)
         path("*_rRNA_report.txt", emit: qc_report)
-
+    
     script:
         def refs =  db_fasta.collect{ "$it" }.join(" -ref ")
-        def report_title = fastq_files[0].simpleName.split("_R1_")[0]
+        def report_title = fastq_files[0].simpleName.split("_R1_")[0]  
         if (params.single_end) {
             """
             sortmerna -ref ${refs} \
@@ -27,7 +27,7 @@ process SortMeRNA {
                 --aligned rRNA-reads \
                 --other non-rRNA-reads  \
                 --zip-out
-
+ 
             mv non-rRNA-reads.fq.gz ${fastq_files[0].simpleName}_non_rRNA.fastq.gz
             mv rRNA-reads.fq.gz ${fastq_files[0].simpleName}_filtered_rRNA.fastq.gz
             mv rRNA-reads.log ${report_title}_rRNA_report.txt

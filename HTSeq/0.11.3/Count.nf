@@ -7,8 +7,8 @@ process Count {
 
     input:
         tuple(val(sample_id), path(bam_file), path(bai_file))
-        path(genome_gtf)
-
+        path(genome_gtf)   
+  
     output:
         tuple(val(sample_id), path("${sample_id}_readCounts_raw.txt"), emit: count_table)
 
@@ -17,8 +17,8 @@ process Count {
         if (params.stranded && !params.unstranded) {
             s_val = 'yes'
         } else if (params.revstranded && !params.unstranded) {
-            s_val = 'reverse'
-        }
+            s_val = 'reverse'   
+        } 
         """
         htseq-count ${params.optional} -s ${s_val} -t ${params.hts_count_type} -i ${params.hts_group_features} -f bam ${bam_file} ${genome_gtf}  > ${sample_id}_readCounts_raw.txt
         """

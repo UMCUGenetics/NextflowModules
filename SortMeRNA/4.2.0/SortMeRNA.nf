@@ -8,7 +8,6 @@ process SortMeRNA {
         tuple(val(sample_id), val(rg_id), path(fastq_files))
         path(db_fasta)
 
-
     output:
         tuple(val(sample_id), val(rg_id), path("*_non_rRNA.fastq.gz"), emit: non_rRNA_fastqs)
         path("*_filtered_rRNA.fastq.gz", emit: rRNA_fastqs)
