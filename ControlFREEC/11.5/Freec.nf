@@ -6,11 +6,12 @@ process Freec {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file))
+        tuple(val(sample_id), path(bam_file), path(bai_file))
 
     output:
-        tuple(sample_id, path("${bam_file.name}_ratio.txt"), path("${bam_file.name}_CNVs"), emit: cnv)
-        tuple(sample_id, path("${bam_file.name}_sample.cpn"), path("${bam_file.name}_ratio.BedGraph"), path("${bam_file.name}_info.txt"), emit: other)
+        tuple(val(sample_id), path("${bam_file.name}_ratio.txt"), path("${bam_file.name}_CNVs"), emit: cnv)
+        tuple(val(sample_id), path("${bam_file.name}_sample.cpn"), path("${bam_file.name}_ratio.BedGraph"),
+            path("${bam_file.name}_info.txt"), emit: other)
 
     script:
         def config = "${sample_id}.config"

@@ -4,13 +4,13 @@ process Quant {
     label 'Salmon_1_2_1_Quant'
     container = 'quay.io/biocontainers/salmon:1.2.1--hf69c8f4_0'
     shell = ['/bin/bash', '-euo', 'pipefail']
-    
+
     input:
-        tuple(sample_id, path(fastq_files))
+        tuple(val(sample_id), path(fastq_files))
         path(salmon_index)
-   
+
     output:
-        tuple(sample_id, path("${sample_id}/"), emit: quant_table)
+        tuple(val(sample_id), path("${sample_id}/"), emit: quant_table)
 
     script:
         //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
@@ -30,7 +30,7 @@ process Quant {
                     --libType=${rnastrandness} \
                     --index ${salmon_index} \
                     ${endedness} ${unmapped} \
-                    -o ${sample_id}              
+                    -o ${sample_id}
         """
 }
 
