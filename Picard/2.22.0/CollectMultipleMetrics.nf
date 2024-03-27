@@ -6,7 +6,7 @@ process CollectMultipleMetrics {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file))
+        tuple(val(sample_id), path(bam_file), path(bai_file))
 
     output:
         path("*.txt", emit: txt_files)

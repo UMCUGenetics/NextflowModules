@@ -5,12 +5,12 @@ process STARFusion {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(fastq_files)) 
+        tuple(val(sample_id), path(fastq_files))
         path(star_index)
         path(genome_lib)
 
     output:
-        tuple(sample_id, path("${sample_id}_star-fusion.tsv"), emit: fusion_predictions) 
+        tuple(val(sample_id), path("${sample_id}_star-fusion.tsv"), emit: fusion_predictions)
         path("*.{tsv,txt}", emit: fusion_abridged)
 
 

@@ -5,10 +5,10 @@ process Fastp {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, rg_id, path(fastq_files))
+        tuple(val(sample_id), val(rg_id), path(fastq_files))
 
     output:
-        tuple(sample_id, rg_id, path("*.fastq.gz"), emit: fastqs_cleaned)
+        tuple(val(sample_id), val(rg_id), path("*.fastq.gz"), emit: fastqs_cleaned)
         path("${sample_id}_fastp.json", emit: qc_report)
 
     script:

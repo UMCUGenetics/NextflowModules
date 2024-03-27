@@ -41,13 +41,13 @@ See `utils/template.nf` for a process template which uses the following guidelin
 - Do not define any runtime settings like cpus, memory and time.
 - Set process parameters on include:
    - `include process from 'path/to/process.nf' params(optional: '')`
-- Use separate process input channels as much as possible. Use tuples for linked inputs only. 
+- Use separate process input channels as much as possible. Use tuples for linked inputs only.
     ```
     input:
           val(analysis_id)
-          tuple(sample_id, path(bam), path(bai))
+          tuple(val(sample_id), path(bam), path(bai))
     ```
-- Define named process output channels. This ensures that outputs can be referenced in external scope by their respective names. Indicate whether an output channel is optional. 
+- Define named process output channels. This ensures that outputs can be referenced in external scope by their respective names. Indicate whether an output channel is optional.
     ```
     output:
           path("my_file.txt", emit: my_file)

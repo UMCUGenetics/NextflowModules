@@ -6,10 +6,10 @@ process AssessSignificance {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(ratio_file), path(cnv_file))
+        tuple(val(sample_id), path(ratio_file), path(cnv_file))
 
     output:
-        tuple(sample_id, path("${cnv_file.name}.p.value.txt"), emit: cnv_pvalue)
+        tuple(val(sample_id), path("${cnv_file.name}.p.value.txt"), emit: cnv_pvalue)
 
     script:
         """

@@ -6,10 +6,10 @@ process MarkDup {
   container = 'library://sawibo/default/bioinf-tools:sambamba-0.6.8'
   shell = ['/bin/bash', '-euo', 'pipefail']
   input:
-    tuple (sample_id, rg_ids, path(bams), path(bais))
+    tuple(val(sample_id), val(rg_ids), path(bams), path(bais))
 
   output:
-    tuple (sample_id, path("${sample_id}_dedup.bam"), path("${sample_id}_dedup.bai"), emit: deduplicated_bams)
+    tuple(val(sample_id), path("${sample_id}_dedup.bam"), path("${sample_id}_dedup.bai"), emit: deduplicated_bams)
 
   script:
     """

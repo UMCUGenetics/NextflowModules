@@ -6,11 +6,11 @@ process RSeQC {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file))
+        tuple(val(sample_id), path(bam_file), path(bai_file))
         path(genome_bed12)
 
     output:
-        tuple(sample_id, path("*.{txt,pdf,r,xls}"), emit: qc_files)
+        tuple(val(sample_id), path("*.{txt,pdf,r,xls}"), emit: qc_files)
 
     script:
         //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén
@@ -32,11 +32,11 @@ process RSeQC_TIN {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file))
+        tuple(val(sample_id), path(bam_file), path(bai_file))
         path(genome_bed12)
 
     output:
-        tuple(sample_id, path("*.{txt,xls}"), emit: tin_stats)
+        tuple(val(sample_id), path("*.{txt,xls}"), emit: tin_stats)
 
     script:
         //Adapted code from: https://github.com/nf-core/rnaseq - MIT License - Copyright (c) Phil Ewels, Rickard Hammarén

@@ -6,7 +6,7 @@ process CountUMIFamilies {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple (sample_id, flowcell, machine, run_nr, path(bam))
+        tuple(val(sample_id), val(flowcell), val(machine), val(run_nr), path(bam))
 
     output:
         path("${sample_id}_${flowcell}.family_counts", emit:family_counts)

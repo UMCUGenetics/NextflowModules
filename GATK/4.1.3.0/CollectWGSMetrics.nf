@@ -6,7 +6,7 @@ process CollectWGSMetrics {
   container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
   shell = ['/bin/bash', '-euo', 'pipefail']
   input:
-    tuple (sample_id, path(bam))
+    tuple(val(sample_id), path(bam))
 
   output:
     path ("${sample_id}.wgs_metrics.txt" , emit: wgs_metrics)
