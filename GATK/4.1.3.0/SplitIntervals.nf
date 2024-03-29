@@ -5,7 +5,7 @@ process SplitIntervals {
     container = 'library://sawibo/default/bioinf-tools:gatk4.1.3.0'
     shell = ['/bin/bash', '-euo', 'pipefail']
     input:
-        val mode
+        val(mode)
         path(scatter_interval_list)
 
     output:

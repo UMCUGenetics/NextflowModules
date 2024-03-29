@@ -6,11 +6,11 @@ process Count {
     shell = ['/bin/bash', '-euo', 'pipefail']
 
     input:
-        tuple(sample_id, path(bam_file), path(bai_file))
+        tuple(val(sample_id), path(bam_file), path(bai_file))
         path(genome_gtf)   
   
     output:
-        tuple(sample_id, path("${sample_id}_readCounts_raw.txt"), emit: count_table) 
+        tuple(val(sample_id), path("${sample_id}_readCounts_raw.txt"), emit: count_table)
 
     script:
         def s_val = 'no'
