@@ -17,4 +17,3 @@
           preseq lc_extrap ${params.optional} ${bam_file} -o ${bam_file.baseName}.ccurve.txt
           """
   }
-

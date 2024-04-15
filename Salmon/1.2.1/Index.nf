@@ -18,4 +18,3 @@ process Index {
         salmon index --threads ${task.cpus} -t ${transcripts_fasta} ${params.optional} ${gencode} -i ${transcripts_fasta.baseName}       
         """
 }
-

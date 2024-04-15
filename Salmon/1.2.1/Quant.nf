@@ -33,4 +33,3 @@ process Quant {
                     -o ${sample_id}
         """
 }
-

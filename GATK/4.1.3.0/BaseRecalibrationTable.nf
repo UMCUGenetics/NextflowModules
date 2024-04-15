@@ -26,4 +26,3 @@ process BaseRecalibrationTable {
         --tmp-dir \$TMPDIR
         """
 }
-

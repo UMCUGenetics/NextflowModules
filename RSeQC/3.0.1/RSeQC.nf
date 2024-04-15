@@ -44,7 +44,3 @@ process RSeQC_TIN {
         tin.py -i ${bam_file} -r ${genome_bed12}
         """
 }
-
-
-
-

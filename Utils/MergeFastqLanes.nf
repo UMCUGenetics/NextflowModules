@@ -25,4 +25,3 @@ process MergeFastqLanes {
             """
         }
 }
-

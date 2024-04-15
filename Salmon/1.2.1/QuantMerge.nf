@@ -21,4 +21,3 @@ process QuantMerge {
         salmon quantmerge --column elen --quants {${quants}} -o ${run_name}_transcripts_quantmerge_EffectiveLength.txt
         """
 }
-
