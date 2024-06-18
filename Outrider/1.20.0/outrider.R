@@ -95,11 +95,11 @@ run_outrider <- function(all_counts, query, prefix) {
     mcols(ods)$passedFilter <- perc95e>1
     mcols(ods)$basepairs <- ct$Length
 
+    ##FOR RATIO FPKM
+#   print("RATIO FPKM")
+#   ods <- filterExpression(ods, minCounts = TRUE, filterGenes = FALSE)
+  }
 
-##FOR RATIO FPKM
-#  print("RATIO FPKM")
-#  ods <- filterExpression(ods, minCounts = TRUE, filterGenes = FALSE)
-#  }
 # display the FPKM distribution of counts.
 #  plotFPKM(ods)
   message(date(), ": dim before filtering...")
