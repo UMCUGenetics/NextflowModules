@@ -11,6 +11,8 @@ process OUTRIDER {
 
     output:
     path("*.tsv"), emit: tsv
+    path("*.csv"), emit: csv
+    path("*.pdf"), emit: pdf
 //    path  "versions.yml"           , emit: versions
 
     when:
