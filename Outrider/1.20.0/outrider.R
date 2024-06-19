@@ -69,17 +69,7 @@ merge_count_tables <- function(lst_query, lst_ref){
 }
 
 
-run_outrider <- function(all_counts, query, prefix) {
-  # TODO: change to add to single object (ods) in case OOM, instead of renaming the vars.
-  all_counts_matrix <- as.matrix(all_counts)[,-1]
-  mode(all_counts_matrix) <- "integer"
-  rownames(all_counts_matrix) <- all_counts$rownames
-
-  ods <- OutriderDataSet(countData=all_counts_matrix)
-
-  plotheat = "counts_heatplots.pdf"
-  pdf(plotheat,onefile = TRUE)
-
+filter_expression <- function(ods, query, prefix){
   if(grepl("gene", prefix)){
     ##FOR GENE LEVEL
     ods <- filterExpression(ods, fpkmCutoff = 1, minCounts = FALSE, filterGenes = FALSE, gtfFile="/hpc/diaggen/data/databases/gencode/gencode.v44.primary_assembly.basic.annotation.gtf")
@@ -96,25 +86,41 @@ run_outrider <- function(all_counts, query, prefix) {
     mcols(ods)$basepairs <- ct$Length
 
     ##FOR RATIO FPKM
-#   print("RATIO FPKM")
-#   ods <- filterExpression(ods, minCounts = TRUE, filterGenes = FALSE)
+#    print("RATIO FPKM")
+#    ods <- filterExpression(ods, minCounts = TRUE, filterGenes = FALSE)
   }
 
-# display the FPKM distribution of counts.
-#  plotFPKM(ods)
+  # display the FPKM distribution of counts.
+  #  plotFPKM(ods)
   message(date(), ": dim before filtering...")
   print(dim(assays(ods)$counts))
 
-##SUBSETTING
+  ##SUBSETTING
   ods <- ods[mcols(ods)$passedFilter,]
   message(date(), ": dim after filtering...")
   print(dim(assays(ods)$counts))
+  return(ods)
+}
 
-# Heatmap of the sample correlation
-# it can also annotate the clusters resulting from the dendrogram
+
+run_outrider <- function(all_counts, query, prefix) {
+  # TODO: change to add to single object (ods) in case OOM, instead of renaming the vars.
+  all_counts_matrix <- as.matrix(all_counts)[,-1]
+  mode(all_counts_matrix) <- "integer"
+  rownames(all_counts_matrix) <- all_counts$rownames
+
+  ods <- OutriderDataSet(countData=all_counts_matrix)
+
+  plotheat = "counts_heatplots.pdf"
+  pdf(plotheat,onefile = TRUE)
+
+  ods <- filter_expression(ods, query, prefix)
+
+  # Heatmap of the sample correlation
+  # it can also annotate the clusters resulting from the dendrogram
   ods <- plotCountCorHeatmap(ods, normalized=FALSE, nRowCluster=4)
 
-# Heatmap of the gene/sample expression
+  # Heatmap of the gene/sample expression
   ods <- plotCountGeneSampleHeatmap(ods, normalized=FALSE, nRowCluster=4)
 
   ods <- estimateSizeFactors(ods)
@@ -134,8 +140,8 @@ run_outrider <- function(all_counts, query, prefix) {
 
   ods <- controlForConfounders(ods, q = opt_q, BPPARAM = MulticoreParam(8))
 
-# After controlling for confounders the heatmap should be plotted again. 
-# If it worked, no batches should be present and the correlations between samples should be reduced and close to zero. [1]*
+  # After controlling for confounders the heatmap should be plotted again. 
+  # If it worked, no batches should be present and the correlations between samples should be reduced and close to zero. [1]*
   ods <- plotCountCorHeatmap(ods, normalized=TRUE)
   dev.off()
 
@@ -147,7 +153,7 @@ run_outrider <- function(all_counts, query, prefix) {
   ods <- computePvalues(ods, alternative="two.sided", method="BY", BPPARAM = MulticoreParam(8))
   out <- computeZscores(ods)
 
-# run full OUTRIDER pipeline (control, fit model, calculate P-values)
+  # run full OUTRIDER pipeline (control, fit model, calculate P-values)
 # out <- OUTRIDER(ods, BPPARAM=MulticoreParam(8))
   return(out)
 }
