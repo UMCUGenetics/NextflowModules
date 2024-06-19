@@ -192,9 +192,10 @@ save_res_emcapp <- function(ct, res, prefix, out_path){
    fragment <- "genes"
     treatment <- "untreated"
     if(grepl("exon",prefix)){ fragment <- "exons"}
-    if(grepl("chx|CHX",prefix)){ treatment <- "chx"}
+    if(grepl("chx|CHX",prefix)){ treatment <- "CHX"}
     write_csv(res_merge[,c(1:18,20:23)], paste0(out_path, "umcu_rnaseq_fib_",treatment,"_res_outrider_",fragment,"_counts.tsv"), append=FALSE, col_names = TRUE)
 }
+
 
 ##Only necessary for Erasmus app
 save_count_meta_emcapp <- function(ct, all_counts, out_path, prefix){
@@ -213,7 +214,7 @@ save_count_meta_emcapp <- function(ct, all_counts, out_path, prefix){
 
   ##Meta output table EMC app
   treatment <- "untreated"
-  if(grepl("chx|CHX",prefix)){ treatment <- "chx"}
+  if(grepl("chx|CHX",prefix)){ treatment <- "CHX"}
   metadata<-data.frame(colnames(counts_out[,2:ncol(counts_out)]),treatment,"fib","umcu_rnaseq",0,"")
   colnames(metadata)<-c("sample_id","treatment","species","experiment_GS","gender","drop")
   if(grepl("gene",prefix)){
@@ -221,6 +222,7 @@ save_count_meta_emcapp <- function(ct, all_counts, out_path, prefix){
   }else{
     write.csv2(metadata,paste0(out_path, "umcu_rnaseq_metadata_exons.csv"), row.names = FALSE, quote=FALSE)}
 }
+
 
 save_output <- function(out_path, out_outrider, ref_samples, prefix, query, padj_thres=0.05, zscore_thres=0, a=TRUE) {
 #  res <- as_tibble(results(out_outrider, padjCutoff=padj_thres, zScoreCutoff=zscore_thres, all=a))
