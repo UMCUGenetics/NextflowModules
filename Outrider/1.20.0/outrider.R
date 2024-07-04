@@ -91,7 +91,7 @@ filter_expression <- function(ods, query, prefix){
   }
 
   # display the FPKM distribution of counts.
-  #  plotFPKM(ods)
+  ods <- plotFPKM(ods)
   message(date(), ": dim before filtering...")
   print(dim(assays(ods)$counts))
 
@@ -118,10 +118,10 @@ run_outrider <- function(all_counts, query, prefix) {
 
   # Heatmap of the sample correlation
   # it can also annotate the clusters resulting from the dendrogram
-  ods <- plotCountCorHeatmap(ods, normalized=FALSE, nRowCluster=4)
+  ods <- plotCountCorHeatmap(ods, normalized=FALSE)
 
   # Heatmap of the gene/sample expression
-  ods <- plotCountGeneSampleHeatmap(ods, normalized=FALSE, nRowCluster=4)
+  ods <- plotCountGeneSampleHeatmap(ods, normalized=FALSE)
 
   ods <- estimateSizeFactors(ods)
   message(date(), ": sizeFactors...")
@@ -143,6 +143,7 @@ run_outrider <- function(all_counts, query, prefix) {
   # After controlling for confounders the heatmap should be plotted again. 
   # If it worked, no batches should be present and the correlations between samples should be reduced and close to zero. [1]*
   ods <- plotCountCorHeatmap(ods, normalized=TRUE)
+  ods <- plotCountGeneSampleHeatmap(ods, normalized=TRUE)
   dev.off()
 
 #  if(grepl("^(peer|pca)$", implementation)){ 
