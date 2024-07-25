@@ -85,8 +85,10 @@ filter_expression <- function(ods, query, prefix){
     mcols(ods)$passedFilter <- perc95e>1
     mcols(ods)$basepairs <- ct$Length
 
-    ##FOR RATIO FPKM
-#    print("RATIO FPKM")
+    ##FOR EXON RATIO
+    ##REMOVE ##FOR EXON LEVEL code above
+    ##UNCOMMENT BELOW STEPS
+#    print("EXON RATIO")
 #    ods <- filterExpression(ods, minCounts = TRUE, filterGenes = FALSE)
   }
 
