@@ -56,7 +56,7 @@ get_input <- function(input){
   } else {  # If both dir and files are provided, or different tyes (character, int etc)
     stop("Input is neither dir or file.")
   }
-
+  
   return(read_input_files(retrieved_files))
 }
 
@@ -161,7 +161,6 @@ run_outrider <- function(all_counts, query, prefix) {
   return(out)
 }
 
-
 ##Only necessary for Erasmus app
 get_ct_emcapp <- function(query, prefix){
   count_table <- read_delim(query, show_col_types=FALSE, skip=1)
@@ -181,7 +180,6 @@ get_ct_emcapp <- function(query, prefix){
   return(ct)
 }
 
-
 ##Only necessary for Erasmus app
 save_res_emcapp <- function(ct, res, prefix, out_path){
     res <- as_tibble(results(res, all=TRUE))[,c(2,1,3:14)]
@@ -191,14 +189,13 @@ save_res_emcapp <- function(ct, res, prefix, out_path){
     res_merge$sample_name<-NA
     res_merge$TIN_mean<-NA
     res_merge$link_bam<-NA
-
-   fragment <- "genes"
+    
+    fragment <- "genes"
     treatment <- "untreated"
     if(grepl("exon",prefix)){ fragment <- "exons"}
     if(grepl("chx|CHX",prefix)){ treatment <- "CHX"}
     write_csv(res_merge[,c(1:18,20:23)], paste0(out_path, "umcu_rnaseq_fib_",treatment,"_res_outrider_",fragment,"_counts.tsv"), append=FALSE, col_names = TRUE)
 }
-
 
 ##Only necessary for Erasmus app
 save_count_meta_emcapp <- function(ct, all_counts, out_path, prefix){
@@ -214,10 +211,10 @@ save_count_meta_emcapp <- function(ct, all_counts, out_path, prefix){
     write_tsv(counts_out, paste0(out_path, "umcu_rnaseq_genes_counts.tsv"))
   }else{
     write_tsv(counts_out, paste0(out_path, "umcu_rnaseq_exons_counts.tsv"))}
-
+  
   ##Meta output table EMC app
   treatment <- "untreated"
-  if(grepl("chx|CHX",prefix)){ treatment <- "CHX"}
+  if(grepl("chx|CHX",prefix)){ treatment <- "chx"}
   metadata<-data.frame(colnames(counts_out[,2:ncol(counts_out)]),treatment,"fib","umcu_rnaseq",0,"")
   colnames(metadata)<-c("sample_id","treatment","species","experiment_GS","gender","drop")
   if(grepl("gene",prefix)){
@@ -225,7 +222,6 @@ save_count_meta_emcapp <- function(ct, all_counts, out_path, prefix){
   }else{
     write.csv2(metadata,paste0(out_path, "umcu_rnaseq_metadata_exons.csv"), row.names = FALSE, quote=FALSE)}
 }
-
 
 save_output <- function(out_path, out_outrider, ref_samples, prefix, query, padj_thres=0.05, zscore_thres=0, a=TRUE) {
 #  res <- as_tibble(results(out_outrider, padjCutoff=padj_thres, zScoreCutoff=zscore_thres, all=a))
@@ -237,7 +233,6 @@ save_output <- function(out_path, out_outrider, ref_samples, prefix, query, padj
   # Write output table with aberrant expressed targets.
   write_tsv(query_res, paste0(out_path, prefix, ".outrider_result.tsv"))
 }
-
 
 # TODO: investigate memory usage and if possible reduced / parallel.
 main <- function(query, ref, output_path, prefix){
