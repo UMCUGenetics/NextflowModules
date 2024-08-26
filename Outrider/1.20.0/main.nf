@@ -6,9 +6,8 @@ process OUTRIDER {
     container "ghcr.io/umcugenetics/outrider_custom:0.0.1"
 
     input:
-        tuple val(meta), 
-        path(counts), 
-        path(refset),
+        tuple val(meta), path(counts) 
+        path(refset)
         path(genome_gtf)   
 
     output:
