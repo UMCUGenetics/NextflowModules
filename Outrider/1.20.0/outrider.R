@@ -20,7 +20,7 @@ parser$add_argument("-r", "--ref", metavar = "reference_input_files", nargs = "+
 parser$add_argument("-p", "--pref", metavar = "prefix", nargs = "+",
                     help = "Prefix of file.", default="gene")
 parser$add_argument("-g", "--gtf", metavar = "genome_gtf", nargs = "+",
-                    help = "Genome gtf.")
+                    help = "Genome gtf file")
 args <- parser$parse_args()
 
 
@@ -71,10 +71,10 @@ merge_count_tables <- function(lst_query, lst_ref){
 }
 
 
-filter_expression <- function(ods, query, prefix, genome_gtf){
+filter_expression <- function(ods, query, prefix, gtf){
     if(grepl("gene", prefix)){
         ##FOR GENE LEVEL
-        ods <- filterExpression(ods, fpkmCutoff = 1, minCounts = FALSE, filterGenes = FALSE, gtfFile=genome_gtf)
+        ods <- filterExpression(ods, fpkmCutoff = 1, minCounts = FALSE, filterGenes = FALSE, gtfFile=gtf)
     }
     else{
         ##FOR EXON LEVEL
@@ -90,12 +90,12 @@ filter_expression <- function(ods, query, prefix, genome_gtf){
         ##FOR EXON RATIO
         ##REMOVE ##FOR EXON LEVEL code above
         ##UNCOMMENT BELOW STEPS
-#        print("EXON RATIO")
-#        ods <- filterExpression(ods, minCounts = TRUE, filterGenes = FALSE)
+ #       print("EXON RATIO")
+ #       ods <- filterExpression(ods, minCounts = TRUE, filterGenes = FALSE)
     }
 
     # display the FPKM distribution of counts.
-    ods <- plotFPKM(ods)
+    #ods <- plotFPKM(ods)
     message(date(), ": dim before filtering...")
     print(dim(assays(ods)$counts))
 
@@ -107,7 +107,7 @@ filter_expression <- function(ods, query, prefix, genome_gtf){
 }
 
 
-run_outrider <- function(all_counts, query, prefix, genome_gtf) {
+run_outrider <- function(all_counts, query, prefix, gtf) {
     # TODO: change to add to single object (ods) in case OOM, instead of renaming the vars.
     all_counts_matrix <- as.matrix(all_counts)[,-1]
     mode(all_counts_matrix) <- "integer"
@@ -118,7 +118,7 @@ run_outrider <- function(all_counts, query, prefix, genome_gtf) {
     plotheat = "counts_heatplots.pdf"
     pdf(plotheat,onefile = TRUE)
 
-    ods <- filter_expression(ods, query, prefix, genome_gtf)
+    ods <- filter_expression(ods, query, prefix, gtf)
 
     # Heatmap of the sample correlation
     # it can also annotate the clusters resulting from the dendrogram
@@ -150,15 +150,15 @@ run_outrider <- function(all_counts, query, prefix, genome_gtf) {
     dev.off()
 
 #    if(grepl("^(peer|pca)$", implementation)){ 
-#        message(date(), ": Fitting the data ...") # NOT with autoencoder
-#        ods <- fit(ods, BPPARAM=MulticoreParam(8))
+#         message(date(), ": Fitting the data ...") # NOT with autoencoder
+#         ods <- fit(ods, BPPARAM=MulticoreParam(8))
 #    }
 
     ods <- computePvalues(ods, alternative="two.sided", method="BY", BPPARAM = MulticoreParam(8))
     out <- computeZscores(ods)
 
-    # run full OUTRIDER pipeline (control, fit model, calculate P-values)
-    # out <- OUTRIDER(ods, BPPARAM=MulticoreParam(8))
+#    run full OUTRIDER pipeline (control, fit model, calculate P-values)
+#    out <- OUTRIDER(ods, BPPARAM=MulticoreParam(8))
     return(out)
 }
 
@@ -228,9 +228,9 @@ save_count_meta_emcapp <- function(ct, all_counts, out_path, prefix){
 
 save_output <- function(out_path, out_outrider, ref_samples, prefix, query, padj_thres=0.05, zscore_thres=0, a=TRUE) {
 #    res <- as_tibble(results(out_outrider, padjCutoff=padj_thres, zScoreCutoff=zscore_thres, all=a))
-#    # Reference samples are excluded from final results. 
+    ##Reference samples are excluded from final results. 
 #    query_res <- filter(res, !(sampleID %in% ref_samples))
-      res <- as_tibble(results(out_outrider, all=a))
+    res <- as_tibble(results(out_outrider, all=a))
     query_res <- res
 
     # Write output table with aberrant expressed targets.
@@ -238,12 +238,12 @@ save_output <- function(out_path, out_outrider, ref_samples, prefix, query, padj
 }
 
 # TODO: investigate memory usage and if possible reduced / parallel.
-main <- function(query, ref, output_path, prefix, genome_gtf){
+main <- function(query, ref, output_path, prefix, gtf){
     query_data <- get_input(query)
     ref_data <- get_input(ref)
     all_counts <- merge_count_tables(query_data$count_tables, ref_data$count_tables)
 
-    output <- run_outrider(all_counts, query, prefix, genome_gtf)
+    output <- run_outrider(all_counts, query, prefix, gtf)
     save_output(output_path, output, ref_data$sampleIDs, prefix, query)
 
     ##Only necessary for Erasmus app, to get the counts, meta and outrider results tables
@@ -253,4 +253,4 @@ main <- function(query, ref, output_path, prefix, genome_gtf){
 }
 
 
-main(args$query, args$ref, args$output_path, args$pref)
+main(args$query, args$ref, args$output_path, args$pref, args$gtf)
