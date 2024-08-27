@@ -1,0 +1,25 @@
+name: fraser
+description: Run FRASER on a set of bam files
+keywords:
+  - fraser
+  - abberant splicing
+tools:
+  - fraser:
+      description: FRASER - Find RAre Splicing Events in RNA-seq Data
+      homepage: 
+      documentation: https://www.bioconductor.org/packages/release/bioc/vignettes/FRASER/inst/doc/FRASER.pdf 
+      licence:
+input:
+ - bams:
+      type: path
+      description: |
+        path directory where bam files are located
+output:
+  - meta:
+      type: file
+      description: |
+        tsv file with aberrant spling output per sample
+authors:
+  -
+maintainers:
+  -
